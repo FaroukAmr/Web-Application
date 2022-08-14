@@ -1,0 +1,105 @@
+import Card from '../models/Card.js';
+import ErrorResponse from '../utils/errorResponse.js';
+import Lock from '../models/Lock.js';
+import User from '../models/User.js';
+
+export async function getCards(req, res, next) {
+  const userId = req.user.email;
+
+  try {
+    const userId = req.user.email;
+    const cards = await Card.find({ userId });
+    res.status(200).json({ success: true, data: cards });
+  } catch (error) {
+    return next(new ErrorResponse(error, 500));
+  }
+}
+
+export async function shareCard(req, res, next) {
+  const userId = req.user.email;
+  const { recipient, cardNumber, remark, cardName } = req.body;
+  if (recipient == '' || cardNumber == '' || cardName == '') {
+    return next(new ErrorResponse('Invalid input', 500));
+  }
+  try {
+    const existingUser = await User.findOne({ email: recipient });
+    if (!existingUser) {
+      return next(new ErrorResponse('User email does not exist', 500));
+    }
+    const userAlreadyHasCard = await Card.findOne({
+      userId: recipient,
+      cardNumber,
+    });
+    if (userAlreadyHasCard) {
+      return next(new ErrorResponse('User already has access', 500));
+    }
+    const card = await Card.create({
+      userId: recipient,
+      cardNumber,
+      remark,
+      cardName,
+    });
+    res.status(200).json({ success: true, data: card });
+  } catch (error) {
+    return next(new ErrorResponse(error, 500));
+  }
+}
+
+export async function updateCard(req, res, next) {
+  const { cardId, cardName, cardRemark, locks } = req.body;
+  try {
+    Card.findOneAndUpdate(
+      { _id: cardId },
+      { cardName, remark: cardRemark, locks },
+      { upsert: false },
+      function (err, doc) {
+        if (err) return res.send(500, { error: err });
+        return res.send('Succesfully saved.');
+      }
+    );
+  } catch (error) {
+    return next(new ErrorResponse(error, 500));
+  }
+}
+
+export async function deleteCard(req, res, next) {
+  const { email } = req.user;
+  const { _id } = req.body;
+
+  try {
+    const card = await Card.deleteOne({ userId: email, _id });
+    if (card.acknowledged == true && card.deletedCount == 1) {
+      res.status(200).json({ success: true, data: card });
+    }
+    if (card.acknowledged == true && card.deletedCount == 0) {
+      return next(
+        new ErrorResponse('Only lock owner can delete this lock', 500)
+      );
+    }
+  } catch (err) {
+    return next(new ErrorResponse(err, 500));
+  }
+}
+
+export async function createCard(req, res, next) {
+  const { cardNumber, remark, cardName } = req.body;
+  const userId = req.user.email;
+  if (cardNumber.length < 9) {
+    return next(new ErrorResponse('Invalid card number', 400));
+  }
+  try {
+    const existingCard = await Card.findOne({ userId, cardNumber });
+    if (existingCard) {
+      return next(new ErrorResponse('Card number already exists', 400));
+    }
+
+    const card = await Card.create({ userId, cardNumber, remark, cardName });
+
+    if (!card) {
+      return next(new ErrorResponse('Could not create card', 500));
+    }
+    res.status(200).json({ success: true, data: 'Card created' });
+  } catch (error) {
+    return next(new ErrorResponse(error, 400));
+  }
+}

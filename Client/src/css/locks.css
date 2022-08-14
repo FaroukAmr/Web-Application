@@ -1,0 +1,48 @@
+.home-locks-container{
+   display:flex;
+    flex-wrap: wrap;
+    gap:1em;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 90%;
+    margin: 8em auto 0 auto;
+}
+
+
+
+.locks-container{
+    display:flex;
+    flex-wrap: wrap;
+    gap:1em;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 90%;
+    margin: 1em auto 6em auto;
+}
+
+.locks-green{
+    filter: invert(54%) sepia(62%) saturate(528%) hue-rotate(94deg) brightness(103%) contrast(97%);
+    transform: translate(0,0.50em);
+}
+
+
+
+.locks-item{
+    /* border: aqua solid; */
+   
+    min-width: 20em;
+    
+    /* box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.4) ; */
+}
+
+
+
+
+@media screen and (max-width: 500px){
+    .locks-item{
+        min-width: 100%;
+        
+    }
+
+    
+}

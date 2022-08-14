@@ -1,0 +1,14 @@
+.home-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 80%;
+  margin: 10em auto 5em auto;
+  gap: 1em;
+}
+
+@media screen and (max-width: 500px) {
+  .home-container {
+    max-width: 100%;
+  }
+}

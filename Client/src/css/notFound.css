@@ -1,0 +1,12 @@
+.not-found{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.not-found-title{
+    color:#202124;
+    font-family:"Roboto",sans-serif ;
+    font-size: 3rem;
+    font-weight: 200;
+}

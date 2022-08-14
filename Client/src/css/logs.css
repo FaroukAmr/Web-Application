@@ -1,0 +1,10 @@
+.logs-container {
+  margin: 10em auto 8em auto;
+  max-width: 80%;
+}
+
+@media screen and (max-width: 900px) {
+  .logs-container {
+    min-width: 100%;
+  }
+}

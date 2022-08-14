@@ -1,0 +1,14 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+.mlocks-main-container {
+  max-width: 80%;
+  margin: 8em auto;
+}
+
+@media screen and (max-width: 900px) {
+  .mlocks-main-container {
+    min-width: 100%;
+  }
+}

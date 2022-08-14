@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  min-height: 30em;
+}
+
+.title {
+  color: #202124;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.3333;
+}
+
+.title-bottom {
+  color: #202124;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font: weight 400px;
+  letter-spacing: 0.1px;
+  line-height: 1.5;
+  margin-top: -1em;
+}
+
+.login-link {
+  font-family: 'Google Sans', 'Noto Sans Myanmar UI', arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.fb-btn {
+  background: #4267b2;
+  color: #fff;
+  width: 13.8em;
+  height: 2.5em;
+  border-color: transparent;
+}
+
+.title-or {
+  display: table;
+  width: 100%;
+  background-image: linear-gradient(to right, #ffffff, #dadde2);
+  margin: 1em 0em;
+}
+.title-row {
+  display: table-row;
+}
+.bar-container {
+  display: table-cell;
+  position: relative;
+  width: 50%;
+}
+.bar {
+  position: absolute;
+  width: 100%;
+  top: 55%;
+  border-bottom: 1px solid #202124;
+}
+.text-or {
+  display: table-cell;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #202124;
+}

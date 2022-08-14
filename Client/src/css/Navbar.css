@@ -1,0 +1,17 @@
+.nvbar {
+  background: linear-gradient(to right, #eeeeee, #a8b3bc, #82999f);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.logo-lg {
+  width: 7em;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.logo-lg:hover {
+  cursor: pointer;
+}
