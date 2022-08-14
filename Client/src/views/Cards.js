@@ -28,7 +28,6 @@ import { useTranslation } from 'react-i18next';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -45,7 +44,6 @@ const Cards = () => {
   const [cardRemark, setCardRemark] = useState('');
   const [editId, setEditId] = useState('');
   const [locks, setLocks] = useState([]);
-
   const handleShareOpen = (cardName, remark, cardNumber) => {
     setCardName(cardName);
     setCardRemark(remark);
