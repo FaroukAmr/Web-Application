@@ -58,7 +58,7 @@ export async function register(req, res, next) {
       authTokenExpire: Date.now() + 10 * (60 * 1000),
     }).save();
 
-    const url = `http://localhost:3000/verify/${user._id}/${authToken.token}`;
+    const url = `https://asg-smartlock.herokuapp.com/verify/${user._id}/${authToken.token}`;
 
     const message = `
         <h1>Welcome to ASG App!</h1>
@@ -110,7 +110,7 @@ export async function login(req, res, next) {
           authTokenExpire: Date.now() + 10 * (60 * 1000),
         }).save();
 
-        const url = `http://localhost:3000/verify/${user._id}/${authToken.token}`;
+        const url = `https://asg-smartlock.herokuapp.com/verify/${user._id}/${authToken.token}`;
 
         const message = `
         <h1>Verify Your Email</h1>
@@ -169,8 +169,9 @@ export async function forgotpassword(req, res, next) {
     await user.save();
 
     // Create reset url to email to provided email
-    const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
-    const forgotPasswordurl = 'http://localhost:3000/forgotpassword/';
+    const resetUrl = `https://asg-smartlock.herokuapp.com/passwordreset/${resetToken}`;
+    const forgotPasswordurl =
+      'https://asg-smartlock.herokuapp.com/forgotpassword/';
     // HTML Message
     const message = `
         <h1>You have requested a password reset</h1>

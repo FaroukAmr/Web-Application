@@ -165,8 +165,9 @@ export async function createEkey(req, res, next) {
         }`,
       });
       // Create reset url to email to provided email
-      const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
-      const forgotPasswordurl = 'http://localhost:3000/forgotpassword/';
+      const resetUrl = `https://asg-smartlock.herokuapp.com/passwordreset/${resetToken}`;
+      const forgotPasswordurl =
+        'https://asg-smartlock.herokuapp.com/forgotpassword/';
       // HTML Message
       const message = `
             <h1>You have recieved an eKey access from ${userId}</h1>
