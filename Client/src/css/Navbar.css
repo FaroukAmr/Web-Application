@@ -1,11 +1,24 @@
 .nvbar {
+  /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   background: linear-gradient(to right, #eeeeee, #a8b3bc, #82999f);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
-
+.nv-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+.nv-3 {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+}
 .logo-lg {
-  width: 7em;
-  user-drag: none;
+  width: 8em;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
@@ -14,4 +27,26 @@
 
 .logo-lg:hover {
   cursor: pointer;
+}
+
+.hover {
+  color: rgba(0, 0, 0, 0.55);
+}
+.hover:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 350px) {
+  .nv-2 {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    flex-grow: 0;
+  }
+  .nv-3 {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0;
+  }
 }

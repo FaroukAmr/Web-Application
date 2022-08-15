@@ -5,7 +5,6 @@ import SignUp from './SignUp';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import Footer from './Footer';
-import ResponsiveNavbar from './Navbar';
 import NewLock from './NewLock';
 import NotFound from './NotFound';
 import LockGroups from './LockGroups';
@@ -18,6 +17,7 @@ import Cards from './Cards';
 import NewCard from './NewCard';
 import EmailVerify from './EmailVerify';
 import Logs from './Logs';
+import ResponsiveAppBar from './ResponsiveAppBar';
 import 'flag-icons/css/flag-icons.min.css';
 const theme = createTheme({
   palette: {
@@ -34,7 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <ResponsiveNavbar />
+        <ResponsiveAppBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/cards" element={<Cards />} />
