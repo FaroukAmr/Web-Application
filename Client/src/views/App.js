@@ -18,6 +18,7 @@ import NewCard from './NewCard';
 import EmailVerify from './EmailVerify';
 import Logs from './Logs';
 import ResponsiveAppBar from './ResponsiveAppBar';
+import ScrollToTop from './ScrollToTop';
 import 'flag-icons/css/flag-icons.min.css';
 const theme = createTheme({
   palette: {
@@ -34,6 +35,7 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
+        <ScrollToTop />
         <ResponsiveAppBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
