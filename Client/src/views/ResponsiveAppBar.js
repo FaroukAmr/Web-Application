@@ -95,7 +95,7 @@ const ResponsiveAppBar = () => {
       .get('/api/auth/user', config)
       .then((res) => {
         setImage(res.data.data.image);
-        setName(res.data.data.name);
+        setName(res.data.data.username);
       })
       .catch((err) => {
         console.log(err);
@@ -196,7 +196,11 @@ const ResponsiveAppBar = () => {
                 <Box>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt={name} src={image} />
+                      {image ? (
+                        <Avatar alt={name} src={image} />
+                      ) : (
+                        <Avatar>{name.charAt(0)}</Avatar>
+                      )}
                     </IconButton>
                   </Tooltip>
                   <Menu
