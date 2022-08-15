@@ -8,7 +8,7 @@ export default function NotFound() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const iconStyle = {
-    margin: '8rem 0 0 0',
+    margin: '3rem 0 0 0',
     fontSize: '12em',
     color: '#000F14',
   };

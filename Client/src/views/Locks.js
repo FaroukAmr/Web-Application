@@ -51,7 +51,7 @@ const Locks = () => {
   const [search, setSearch] = useState('');
   const [locks, setLocks] = useState([]);
   const iconStyle = {
-    margin: '8rem 0 0 0',
+    margin: '3rem 0 0 0',
     fontSize: '12em',
     color: '#000F14',
   };

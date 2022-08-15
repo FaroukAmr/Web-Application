@@ -21,9 +21,9 @@ export default function NewCard() {
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState('');
   const navigate = useNavigate();
-  const iconStyle = { fontSize: '4em', color: '#152a2f' };
+  const iconStyle = { fontSize: '4em', marginTop: '1rem', color: '#152a2f' };
   const paperStyle = {
-    margin: '8rem auto 8rem auto',
+    margin: '4rem auto 8rem auto',
     backgroundImage: 'linear-gradient(to right, #FFFFFF,#DADDE2)',
     minWidth: 'fit-content',
     maxWidth: '25rem',

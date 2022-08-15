@@ -39,7 +39,7 @@ const ForgotPassword = () => {
   const paperStyle = {
     minWidth: 'fit-content',
     maxWidth: '25rem',
-    margin: '12rem auto 8rem auto',
+    margin: '4rem auto 8rem auto',
     backgroundImage: 'linear-gradient(to right, #FFFFFF,#DADDE2)',
     borderRadius: '20px',
   };

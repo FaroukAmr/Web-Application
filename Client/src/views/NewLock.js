@@ -19,7 +19,7 @@ function SignUp() {
   const navigate = useNavigate();
   const iconStyle = { fontSize: '4em', marginTop: '0.3em', color: '#152a2f' };
   const paperStyle = {
-    margin: '8rem auto 8rem auto',
+    margin: '3em auto 8rem auto',
     backgroundImage: 'linear-gradient(to right, #FFFFFF,#DADDE2)',
     minWidth: 'fit-content',
     maxWidth: '25rem',

@@ -20,7 +20,7 @@ export default function EmailVerify() {
   const [error, setError] = useState('');
   const { id, token } = useParams();
   const iconStyle = {
-    margin: '8rem 0 0 0',
+    margin: '3rem 0 0 0',
     fontSize: '10em',
     color: '#000F14',
   };
