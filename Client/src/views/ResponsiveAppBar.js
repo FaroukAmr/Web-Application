@@ -5,7 +5,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -17,10 +16,9 @@ import logo from '../imgs/logo.png';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import cookies from 'js-cookie';
-import Link from '@mui/material/Link';
+import axios from 'axios';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import '../css/Navbar.css';
-const pages = ['Products', 'Pricing', 'Blog'];
 const languages = [
   {
     code: 'en',
@@ -45,6 +43,8 @@ const ResponsiveAppBar = () => {
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('');
   const [signupButton, setsignupButton] = useState(true);
   const rendersignupButton = useCallback(() => {
     return !localStorage.getItem('authToken');
@@ -54,24 +54,17 @@ const ResponsiveAppBar = () => {
     document.body.dir = currentLanguage.dir || 'ltr';
     document.title = t('app_title');
     if (!rendersignupButton()) {
+      handleGetUserInfo();
       setsignupButton(false);
     } else {
       setsignupButton(true);
     }
   }, [rendersignupButton, currentLanguage]);
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -83,16 +76,30 @@ const ResponsiveAppBar = () => {
     navigate('/login');
   };
 
-  const handleRedirect = (e) => {
-    e.preventDefault();
-    navigate('/');
-  };
-
   const handleMenuClick = (req) => {
     if (req === 'Logout') {
       logoutHandler();
       return;
     }
+  };
+  const token = localStorage.getItem('authToken');
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const handleGetUserInfo = async () => {
+    await axios
+      .get('/api/auth/user', config)
+      .then((res) => {
+        setImage(res.data.data.image);
+        setName(res.data.data.name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -189,10 +196,7 @@ const ResponsiveAppBar = () => {
                 <Box>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar
-                        alt="Remy Sharp"
-                        src="/static/images/avatar/2.jpg"
-                      />
+                      <Avatar alt={name} src={image} />
                     </IconButton>
                   </Tooltip>
                   <Menu

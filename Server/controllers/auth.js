@@ -4,8 +4,20 @@ import sendEmail from '../utils/sendEmail.js';
 import crypto from 'crypto';
 import Token from '../models/Token.js';
 
+export async function getUser(req, res, next) {
+  const { email } = req.user;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return next(new ErrorResponse('Not found', 404));
+    }
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    return next(new ErrorResponse(error, 404));
+  }
+}
 export async function handleExternalAuth(req, res, next) {
-  const { username, email } = req.body;
+  const { username, email, image } = req.body;
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -16,6 +28,7 @@ export async function handleExternalAuth(req, res, next) {
       const user = await User.create({
         username,
         email,
+        image,
         password: crypto.randomBytes(20).toString('hex'),
         verified: true,
       });

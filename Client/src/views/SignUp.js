@@ -74,33 +74,6 @@ function SignUp() {
     }
   }, [navigate]);
 
-  async function handleCallbackFB(response) {
-    if (response.status === 'unknown') {
-      setError('Could not sign in with Facebook');
-      setSeverity('error');
-      setOpen(true);
-      return;
-    }
-    try {
-      const { data } = await axios.post('/api/auth/login/external', {
-        email: response.email,
-        username: response.name,
-      });
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-        navigate('/');
-      } else {
-        setError('Error signing in with Google');
-        setSeverity('error');
-        setOpen(true);
-      }
-    } catch (error) {
-      setError(error.response.data.error);
-      setSeverity('error');
-      setOpen(true);
-    }
-  }
-
   const registerHandler = async (e) => {
     e.preventDefault();
 
