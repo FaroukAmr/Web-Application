@@ -36,18 +36,17 @@ app.use('/api/ekey', ekeyRoutes);
 app.use('/api/logs', logsRoutes);
 app.use('/api/lockgroup', lockGroupRoutes);
 app.use('/api/user', userRoutes);
+//Keep errorhandler last middleware
+app.use(errorHandler);
 
-//production builds
+//PRODUCTION BUILD
 if (process.env.NODE_ENV === 'production') {
-  console.log('production');
   app.use(express.static('public'));
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
   });
 }
 
-//Keep errorhandler last middleware
-app.use(errorHandler);
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
