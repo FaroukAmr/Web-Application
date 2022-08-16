@@ -1,3 +1,0 @@
-# Robots.txt file for Ahram Secuirty Group smart lock application
-User-agent: *
-Allow: /
