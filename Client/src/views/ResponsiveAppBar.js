@@ -199,7 +199,12 @@ const ResponsiveAppBar = () => {
                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                   >
-                    <MenuItem onClick={handleClose}>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        navigate('/profile');
+                      }}
+                    >
                       <Avatar sx={{ width: 32, height: 32 }} src={image}>
                         {name.charAt(0)}
                       </Avatar>
@@ -263,7 +268,12 @@ const ResponsiveAppBar = () => {
                       </ListItemIcon>
                       {t('lorem4')}
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        navigate('/profile');
+                      }}
+                    >
                       <ListItemIcon>
                         <Settings fontSize="small" />
                       </ListItemIcon>

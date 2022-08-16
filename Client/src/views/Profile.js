@@ -2,6 +2,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import axios from 'axios';
+import * as React from 'react';
 import '../css/profile.css';
 import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
@@ -10,12 +11,26 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import FormLabel from '@mui/material/FormLabel';
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 export default function Profile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [image, setImage] = useState('');
   const [gender, setGender] = useState('');
+  const [error, setError] = useState('');
+  const [severity, setSeverity] = useState('error');
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+  const [open, setOpen] = useState(false);
   const btn = {
     width: '20em',
     backgroundColor: '#2da44e',
@@ -43,8 +58,10 @@ export default function Profile() {
           setGender('male');
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setError(error.response.data.error);
+        setSeverity('error');
+        setOpen(true);
       });
   };
 
@@ -52,10 +69,15 @@ export default function Profile() {
     await axios
       .post('/api/user', { username: name, gender, image }, config)
       .then((res) => {
-        console.log(res);
+        setError('User updated');
+        setSeverity('success');
+        setOpen(true);
+        handleGetUserInfo();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setError(error.response.data.error);
+        setSeverity('error');
+        setOpen(true);
       });
   };
 
@@ -103,6 +125,11 @@ export default function Profile() {
       <Button onClick={handleUpdateUser} variant="contained" style={btn}>
         Confirm
       </Button>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {error}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 }
