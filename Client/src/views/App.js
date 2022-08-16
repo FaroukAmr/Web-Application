@@ -19,6 +19,7 @@ import EmailVerify from './EmailVerify';
 import Logs from './Logs';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import ScrollToTop from './ScrollToTop';
+import Profile from './Profile';
 import 'flag-icons/css/flag-icons.min.css';
 const theme = createTheme({
   palette: {
@@ -49,6 +50,8 @@ function App() {
           <Route exact path="/forgotpassword" element={<ForgotPassword />} />
           <Route exact path="/lockgroups" element={<LockGroups />} />
           <Route exact path="/logs/:lockId" element={<Logs />} />
+          <Route exact path="/profile" element={<Profile />} />
+
           <Route
             exact
             path="/passwordreset/:resetToken"

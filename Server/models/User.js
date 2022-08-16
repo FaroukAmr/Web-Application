@@ -19,6 +19,9 @@ const UserSchema = new mongoose.Schema(
         'Please provide a valid email',
       ],
     },
+    gender: {
+      type: String,
+    },
     image: {
       type: String,
     },

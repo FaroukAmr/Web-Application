@@ -1,0 +1,13 @@
+.main-profile {
+  max-width: max-content;
+  margin: 3em auto 8em auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  gap: 1em;
+  align-items: flex-start;
+}
+
+.profile-avatar {
+  align-self: center;
+}

@@ -80,13 +80,13 @@ const ResponsiveAppBar = () => {
   };
   const handleGetUserInfo = async () => {
     await axios
-      .get('/api/auth/user', config)
+      .get('/api/user', config)
       .then((res) => {
         setImage(res.data.data.image);
         setName(res.data.data.username);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -158,7 +158,7 @@ const ResponsiveAppBar = () => {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                       >
-                        <Avatar sx={{ width: 32, height: 32 }} src={image}>
+                        <Avatar sx={{ width: 42, height: 42 }} src={image}>
                           {name.charAt(0)}
                         </Avatar>
                       </IconButton>
@@ -203,7 +203,7 @@ const ResponsiveAppBar = () => {
                       <Avatar sx={{ width: 32, height: 32 }} src={image}>
                         {name.charAt(0)}
                       </Avatar>
-                      <span style={{ marginRight: '1em' }}>{t('profile')}</span>
+                      <span style={{ marginRight: '1em' }}>{name}</span>
                     </MenuItem>
                     <Divider />
                     <MenuItem>

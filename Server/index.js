@@ -7,6 +7,7 @@ import cardRoutes from './routes/card.js';
 import ekeyRoutes from './routes/ekey.js';
 import logsRoutes from './routes/logs.js';
 import lockGroupRoutes from './routes/lockGroup.js';
+import userRoutes from './routes/user.js';
 import errorHandler from './middleware/error.js';
 import cors from 'cors';
 import herokuSSLRedirect from 'heroku-ssl-redirect';
@@ -32,6 +33,7 @@ app.use('/api/card', cardRoutes);
 app.use('/api/ekey', ekeyRoutes);
 app.use('/api/logs', logsRoutes);
 app.use('/api/lockgroup', lockGroupRoutes);
+app.use('/api/user', userRoutes);
 
 //production builds
 if (process.env.NODE_ENV === 'production') {
