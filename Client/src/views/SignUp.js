@@ -56,23 +56,25 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [severity, setSeverity] = useState('error');
-
-  useEffect(() => {
-    if (localStorage.getItem('authToken')) {
-      navigate('/');
-    } else {
+  const handleGoogleSetup = () => {
+    try {
       /*global google*/
       google.accounts.id.initialize({
         client_id:
           '825032223170-1tks61ufn0kqnicb345f0i9tdi3cve5m.apps.googleusercontent.com',
         callback: handleCallbackResponse,
-        state_cookie_domain: 'https://localhost:3000',
       });
       google.accounts.id.renderButton(document.getElementById('signInDiv'), {
-        theme: 'outline',
-        size: 'large',
+        width: '20em',
       });
       google.accounts.id.prompt();
+    } catch (error) {}
+  };
+  useEffect(() => {
+    if (localStorage.getItem('authToken')) {
+      navigate('/');
+    } else {
+      handleGoogleSetup();
     }
   }, []);
 

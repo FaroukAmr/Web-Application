@@ -53,24 +53,26 @@ function Login() {
     borderRadius: '6px',
   };
   const textfieldStyle = { width: '20em' };
-
+  const handleGoogleSetup = () => {
+    try {
+      /*global google*/
+      google.accounts.id.initialize({
+        client_id:
+          '825032223170-1tks61ufn0kqnicb345f0i9tdi3cve5m.apps.googleusercontent.com',
+        callback: handleCallbackResponse,
+      });
+      google.accounts.id.renderButton(document.getElementById('signInDiv'), {
+        width: '20em',
+      });
+      google.accounts.id.prompt();
+    } catch (error) {}
+  };
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
       navigate('/');
+      return;
     }
-    /*global google*/
-    google.accounts.id.initialize({
-      client_id:
-        '825032223170-1tks61ufn0kqnicb345f0i9tdi3cve5m.apps.googleusercontent.com',
-      cookiepolicy: 'single_host_origin',
-      SameSite: 'Lax',
-      callback: handleCallbackResponse,
-    });
-    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
-      theme: 'dark',
-      width: '20em',
-    });
-    google.accounts.id.prompt();
+    handleGoogleSetup();
   }, []);
   const loginHandler = async (e) => {
     e.preventDefault();
