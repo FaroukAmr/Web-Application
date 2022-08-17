@@ -24,6 +24,7 @@ import Divider from '@mui/material/Divider';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import AddIcon from '@mui/icons-material/Add';
 const languages = [
   {
     code: 'en',
@@ -262,12 +263,35 @@ const ResponsiveAppBar = () => {
                         ))}
                       </Menu>
                     </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        navigate('/cards/new');
+                      }}
+                    >
+                      <ListItemIcon>
+                        <AddIcon fontSize="small" />
+                      </ListItemIcon>
+                      {t('issue_card')}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        navigate('/locks/new');
+                      }}
+                    >
+                      <ListItemIcon>
+                        <AddIcon fontSize="small" />
+                      </ListItemIcon>
+                      {t('add_lock')}
+                    </MenuItem>
                     <MenuItem>
                       <ListItemIcon>
                         <PersonAdd fontSize="small" />
                       </ListItemIcon>
                       {t('lorem4')}
                     </MenuItem>
+
                     <MenuItem
                       onClick={() => {
                         handleClose();

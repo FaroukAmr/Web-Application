@@ -72,6 +72,7 @@ function SignUp() {
       setError('Lock added successfully');
       setSeverity('success');
       setOpen(true);
+      navigate('/locks');
     } catch (error) {
       if (error.response.data.error === 'Not authorized to access this route') {
         localStorage.removeItem('authToken');
