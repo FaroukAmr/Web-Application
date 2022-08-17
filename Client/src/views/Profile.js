@@ -18,14 +18,18 @@ import Divider from '@mui/material/Divider';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContent';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { useTranslation } from 'react-i18next';
 import DialogTitle from '@mui/material/DialogTitle';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 export default function Profile() {
   const [openDialog, setOpenDialog] = React.useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -144,6 +148,7 @@ export default function Profile() {
           style={{ minWidth: '100%' }}
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
         <TextField
           variant="standard"
@@ -151,6 +156,7 @@ export default function Profile() {
           style={{ minWidth: '100%' }}
           value={email}
           disabled
+          required
         />
 
         <FormControl>
@@ -194,6 +200,23 @@ export default function Profile() {
             label="Password"
             type="password"
             fullWidth
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            required
             variant="standard"
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -206,6 +229,8 @@ export default function Profile() {
             fullWidth
             variant="standard"
             onChange={(e) => setConfirmPassword(e.target.value)}
+            type={showPassword ? 'text' : 'password'}
+            required
           />
         </DialogContent>
         <DialogActions>

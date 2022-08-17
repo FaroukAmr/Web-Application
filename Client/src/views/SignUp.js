@@ -74,7 +74,7 @@ function SignUp() {
       });
       google.accounts.id.prompt();
     }
-  }, [navigate]);
+  }, []);
 
   const registerHandler = async (e) => {
     e.preventDefault();

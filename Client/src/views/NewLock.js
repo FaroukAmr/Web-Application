@@ -55,7 +55,7 @@ function SignUp() {
     if (!localStorage.getItem('authToken')) {
       navigate('/login');
     }
-  }, [navigate]);
+  }, []);
 
   const registerHandler = async (e) => {
     e.preventDefault();

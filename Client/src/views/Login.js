@@ -71,7 +71,7 @@ function Login() {
       width: '20em',
     });
     google.accounts.id.prompt();
-  }, [navigate]);
+  }, []);
   const loginHandler = async (e) => {
     e.preventDefault();
     const config = {

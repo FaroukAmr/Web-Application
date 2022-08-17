@@ -26,8 +26,8 @@ i18n
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const loadingMarkup = (
-  <div className="py-4 text-center">
-    <h3>Loading..</h3>
+  <div style={{ display: 'flex', justifyContent: 'center', margin: '4em 0' }}>
+    <h3>Loading content..</h3>
   </div>
 );
 root.render(

@@ -40,6 +40,7 @@ function App() {
         <ResponsiveAppBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/index.html" element={<Home />} />
           <Route exact path="/cards" element={<Cards />} />
           <Route exact path="/cards/new" element={<NewCard />} />
           <Route exact path="/locks" element={<Locks />} />
