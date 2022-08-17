@@ -16,6 +16,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
 import jwt_decode from 'jwt-decode';
+import Divider from '@mui/material/Divider';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -204,17 +206,8 @@ function SignUp() {
         <Link className="signup-link" style={linkStyle} to="/login">
           {t('already_have_account')}
         </Link>
-        <div class="title-or">
-          <div class="title-row">
-            <div class="bar-container">
-              <div class="bar"></div>
-            </div>
-            <div class="text-or">OR</div>
-            <div class="bar-container">
-              <div class="bar"></div>
-            </div>
-          </div>
-        </div>
+        <Divider style={{ width: '100%' }}>OR</Divider>
+
         <div id="signInDiv" style={{ margin: '0em 0em 2em 0em' }}></div>
         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
           <Alert
