@@ -70,8 +70,8 @@ export default function Profile() {
     await axios
       .get('/api/user', config)
       .then((res) => {
-        setImage(res.data.data.image);
-        setName(res.data.data.username);
+        res.data.data.image;
+        setNamesetImage(res.data.data.username);
         setEmail(res.data.data.email);
         if (res.data.data.gender) {
           setGender(res.data.data.gender);
@@ -114,7 +114,7 @@ export default function Profile() {
   };
   const handleUpdateUser = async () => {
     await axios
-      .post('/api/user', { username: name, gender, image }, config)
+      .post('/api/user', { username: name, gender }, config)
       .then((res) => {
         setError('User updated');
         setSeverity('success');

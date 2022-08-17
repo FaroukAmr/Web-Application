@@ -1,8 +1,6 @@
 import User from '../models/User.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import sendEmail from '../utils/sendEmail.js';
-import crypto from 'crypto';
-import Token from '../models/Token.js';
+import multer from 'multer';
 import bcrypt from 'bcryptjs';
 
 export async function getUser(req, res, next) {
@@ -47,20 +45,58 @@ export async function updatePassword(req, res, next) {
 
 export async function updateUser(req, res, next) {
   const { email } = req.user;
-  const { username, gender, image } = req.body;
+  const { username, gender } = req.body;
   if (username === '' || gender === '') {
     return next(new ErrorResponse('Invalid input', 400));
   }
   try {
     User.findOneAndUpdate(
       { email },
-      { username, gender, image },
+      { username, gender },
       { upsert: false },
       function (err, doc) {
         if (err) return res.send(500, { error: err });
         return res.status(200).json({ success: true, data: 'User updated' });
       }
     );
+  } catch (error) {
+    return next(new ErrorResponse(error, 404));
+  }
+}
+
+export async function uploadImage(req, res, next) {
+  const Storage = multer.diskStorage({
+    destination: 'uploads',
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + file.originalname);
+    },
+  });
+  const upload = multer({
+    storage: Storage,
+  }).single('testImage');
+  try {
+    upload(req, res, (err) => {
+      if (err) {
+        return next(new ErrorResponse('Error uploading image', 400));
+      } else {
+        User.findOneAndUpdate(
+          { email: 'faroukamr508@gmail.com' },
+          {
+            uImage: {
+              data: req.file.filename,
+              contentType: 'image/png',
+            },
+          },
+          { upsert: false },
+          function (err, doc) {
+            if (err) return res.send(500, { error: err });
+            return res
+              .status(200)
+              .json({ success: true, data: 'User updated' });
+          }
+        );
+      }
+    });
   } catch (error) {
     return next(new ErrorResponse(error, 404));
   }
