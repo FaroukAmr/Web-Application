@@ -70,8 +70,8 @@ export default function Profile() {
     await axios
       .get('/api/user', config)
       .then((res) => {
-        res.data.data.image;
-        setNamesetImage(res.data.data.username);
+        setImage(res.data.data.image);
+        setName(res.data.data.username);
         setEmail(res.data.data.email);
         if (res.data.data.gender) {
           setGender(res.data.data.gender);

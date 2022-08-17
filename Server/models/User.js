@@ -25,10 +25,6 @@ const UserSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    uImage: {
-      data: Buffer,
-      contentType: String,
-    },
     password: {
       type: String,
       required: [true, 'Please add a password'],
