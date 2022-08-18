@@ -1,8 +1,7 @@
 import User from '../models/User.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import multer from 'multer';
 import bcrypt from 'bcryptjs';
-
+import sendSMS from '../utils/sendSMS.js';
 export async function getUser(req, res, next) {
   const { email } = req.user;
   try {
@@ -40,6 +39,28 @@ export async function updatePassword(req, res, next) {
     );
   } catch (error) {
     return next(new ErrorResponse(error, 404));
+  }
+}
+
+export async function testSMS(req, res, next) {
+  const { email } = req.user;
+  const { number } = req.body;
+
+  const forgotPasswordurl =
+    'https://asg-smartlock.herokuapp.com/forgotpassword/';
+  const message = `You have recieved an eKey access from ${email}`;
+  const from = 'ASG';
+
+  try {
+    sendSMS({
+      to: number,
+      from: from,
+      message: message,
+    });
+
+    res.status(200).json({ success: true, data: 'SMS Sent' });
+  } catch (err) {
+    return next(new ErrorResponse('SMS could not be sent', 500));
   }
 }
 
