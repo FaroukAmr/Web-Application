@@ -21,9 +21,11 @@ import DialogContent from '@mui/material/DialogContent';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 import DialogTitle from '@mui/material/DialogTitle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Typography } from '@mui/material';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -42,6 +44,7 @@ export default function Profile() {
   const [image, setImage] = useState('');
   const [gender, setGender] = useState('');
   const [error, setError] = useState('');
+  const [date, setDate] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [severity, setSeverity] = useState('error');
@@ -73,6 +76,7 @@ export default function Profile() {
         setImage(res.data.data.image);
         setName(res.data.data.username);
         setEmail(res.data.data.email);
+        setDate(res.data.data.createdAt);
         if (res.data.data.gender) {
           setGender(res.data.data.gender);
         } else {
@@ -128,6 +132,14 @@ export default function Profile() {
       });
   };
 
+  const handleDate = (date) => {
+    return moment(date).calendar({
+      sameDay: '[today] [at] h:mm a',
+      lastDay: '[yesterday] [at] h:mm a',
+      lastWeek: '[last] dddd [at] h:mm a',
+      sameElse: 'DD/MM/YYYY [at] h:mm a',
+    });
+  };
   useEffect(() => {
     handleGetUserInfo();
   }, []);
@@ -142,6 +154,10 @@ export default function Profile() {
         >
           {name.charAt(0)}
         </Avatar>
+        <Typography style={{ alignSelf: 'center' }} variant="caption">
+          {date ? `Updated ` + handleDate(date) : 'Loading...'}
+        </Typography>
+
         <TextField
           variant="standard"
           label="Name"
@@ -158,7 +174,6 @@ export default function Profile() {
           disabled
           required
         />
-
         <FormControl>
           <FormLabel id="radio-buttons-group-label">Gender</FormLabel>
           <RadioGroup
@@ -198,7 +213,6 @@ export default function Profile() {
             margin="dense"
             id="name"
             label="Password"
-            type="password"
             fullWidth
             type={showPassword ? 'text' : 'password'}
             InputProps={{
@@ -225,7 +239,6 @@ export default function Profile() {
             margin="dense"
             id="name"
             label="Confirm Password"
-            type="password"
             fullWidth
             variant="standard"
             onChange={(e) => setConfirmPassword(e.target.value)}
