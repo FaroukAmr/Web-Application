@@ -76,7 +76,7 @@ export default function Profile() {
         setImage(res.data.data.image);
         setName(res.data.data.username);
         setEmail(res.data.data.email);
-        setDate(res.data.data.createdAt);
+        setDate(res.data.data.updatedAt);
         if (res.data.data.gender) {
           setGender(res.data.data.gender);
         } else {
