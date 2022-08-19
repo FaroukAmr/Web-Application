@@ -247,7 +247,7 @@ const ResponsiveAppBar = () => {
                             }}
                             disabled={code === currentLanguageCode}
                           >
-                            <Typography textAlign="center">
+                            <Typography component={'div'} textAlign="center">
                               <ListItemIcon>
                                 <span
                                   className={`fi fi-${country_code}`}
