@@ -11,13 +11,14 @@ import MuiAlert from '@mui/material/Alert';
 import * as React from 'react';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import { useTranslation } from 'react-i18next';
-
+import Spinner from './Spinner';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function NewCard() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState('');
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ export default function NewCard() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     await axios
       .post('/api/card/create', { cardNumber, remark, cardName }, config)
       .then(() => {
@@ -69,11 +70,13 @@ export default function NewCard() {
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
           localStorage.removeItem('authToken');
+
           navigate('/login');
         }
         setError(err.response.data.error);
         setSeverity('error');
         setOpen(true);
+        setLoading(false);
       });
   };
 
@@ -115,7 +118,10 @@ export default function NewCard() {
       }, 500);
     }
   };
-  if (!validNumber) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (!validNumber && !loading) {
     return (
       <div className="new-card-container">
         <img className="new-card-img" alt="" src={RFID} />
@@ -132,7 +138,8 @@ export default function NewCard() {
         </Snackbar>
       </div>
     );
-  } else {
+  }
+  if (validNumber && !loading) {
     return (
       <Paper style={paperStyle} elevation={6}>
         <form onSubmitCapture={handleCreate} className="new-card-container">

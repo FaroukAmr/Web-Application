@@ -29,6 +29,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { useTranslation } from 'react-i18next';
 
 import '../css/logs.css';
+import Spinner from './Spinner';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -44,6 +45,7 @@ export default function Logs() {
   const [lockName, setLockName] = useState('');
   const { lockId } = useParams();
   const [hasAccess, setHasAccess] = useState(true);
+  const [loading, setLoading] = useState(true);
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -98,6 +100,7 @@ export default function Logs() {
   };
 
   const handleExport = async () => {
+    setLoading(true);
     await axios
       .post('/api/logs/export', { lockId }, configPDF)
       .then((res) => {
@@ -110,9 +113,11 @@ export default function Logs() {
         setSeverity('error');
         setOpen(true);
       });
+    setLoading(false);
   };
 
   const allData = async () => {
+    setLoading(true);
     await axios
       .post('/api/logs', { lockId }, config)
       .then((res) => {
@@ -123,6 +128,8 @@ export default function Logs() {
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
           localStorage.removeItem('authToken');
+          setLoading(false);
+
           navigate('/login');
         } else {
           setHasAccess(false);
@@ -131,6 +138,7 @@ export default function Logs() {
           setOpen(true);
         }
       });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -139,7 +147,10 @@ export default function Logs() {
     }
     allData();
   }, []);
-  if (hasAccess) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (hasAccess && !loading) {
     return (
       <>
         <TableContainer component={Paper} className="logs-container">
@@ -244,7 +255,8 @@ export default function Logs() {
         </Snackbar>
       </>
     );
-  } else {
+  }
+  if (!loading && !hasAccess) {
     return (
       <div className="not-found">
         <ErrorIcon style={iconStyle} />

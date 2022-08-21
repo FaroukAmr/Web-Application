@@ -23,6 +23,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CreditCardOffIcon from '@mui/icons-material/CreditCardOff';
+import Spinner from './Spinner';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -31,6 +32,7 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const LockGroups = () => {
+  const [loading, setLoading] = useState(true);
   const [severity, setSeverity] = useState('error');
   const [defaultLocks, setdefaultLocks] = useState([]);
   const [editLocks, setEditLocks] = useState('');
@@ -109,15 +111,21 @@ const LockGroups = () => {
     },
   };
   const allData = async () => {
+    setLoading(true);
     const res = await axios.get('/api/lockgroup/', config);
     setlockGroups(res.data.data);
+    setLoading(false);
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
+
     if (name === '') {
       setError('Name cannot be empty');
       setSeverity('error');
       setOpenSnack(true);
+      setLoading(false);
+
       return;
     }
     await axios
@@ -140,10 +148,13 @@ const LockGroups = () => {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
   const allLocks = async () => {
+    setLoading(true);
+
     await axios
       .get('/api/lock/all', config)
       .then((res) => {
@@ -158,6 +169,7 @@ const LockGroups = () => {
         setSeverity('error');
         setOpenSnack(true);
       });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -169,6 +181,7 @@ const LockGroups = () => {
   }, []);
 
   const handleDelete = async () => {
+    setLoading(true);
     await axios
       .post('/api/lockgroup/delete', { _id: deleteId }, config)
       .then(() => {
@@ -181,10 +194,12 @@ const LockGroups = () => {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
   const handleUpdate = async () => {
+    setLoading(true);
     if (name === '') {
       setError('Lock group name cannot be empty');
       setSeverity('error');
@@ -206,6 +221,7 @@ const LockGroups = () => {
       .catch((err) => {
         setError(err.response.data.error);
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
@@ -223,8 +239,10 @@ const LockGroups = () => {
     id = id.slice(id.length - 6);
     return id;
   };
-
-  if (lockGroups.length > 0) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (lockGroups?.length > 0 && !loading) {
     return (
       <>
         <div className="home-locks-container">
@@ -240,7 +258,7 @@ const LockGroups = () => {
         </div>
         <div className="locks-container">
           {lockGroups
-            .filter((val) => {
+            ?.filter((val) => {
               if (search === '') {
                 return val;
               } else if (
@@ -491,7 +509,8 @@ const LockGroups = () => {
         </Dialog>
       </>
     );
-  } else {
+  }
+  if (lockGroups?.length === 0 && !loading) {
     return (
       <div className="not-found">
         <CreditCardOffIcon style={iconStyle} />

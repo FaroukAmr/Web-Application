@@ -11,12 +11,14 @@ import MuiAlert from '@mui/material/Alert';
 import * as React from 'react';
 import MailLockOutlinedIcon from '@mui/icons-material/MailLockOutlined';
 import { useTranslation } from 'react-i18next';
-
+import Spinner from './Spinner';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const ForgotPassword = () => {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -53,7 +55,7 @@ const ForgotPassword = () => {
 
   const forgotPasswordHandler = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const config = {
       header: {
         'Content-Type': 'application/json',
@@ -73,8 +75,12 @@ const ForgotPassword = () => {
       setOpen(true);
       setEmail('');
     }
+    setLoading(false);
   };
-  if (!emailSent) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (!emailSent && !loading) {
     return (
       <Paper elevation={6} style={paperStyle}>
         <form onSubmit={forgotPasswordHandler} className="container">
@@ -112,7 +118,8 @@ const ForgotPassword = () => {
         </form>
       </Paper>
     );
-  } else {
+  }
+  if (emailSent && !loading) {
     return (
       <div className="forgot-password-container">
         <MailLockOutlinedIcon style={iconStyle} />

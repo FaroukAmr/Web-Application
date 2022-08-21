@@ -285,11 +285,16 @@ const ResponsiveAppBar = () => {
                       </ListItemIcon>
                       {t('add_lock')}
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        navigate('/lockgroups');
+                      }}
+                    >
                       <ListItemIcon>
-                        <PersonAdd fontSize="small" />
+                        <AddIcon fontSize="small" />
                       </ListItemIcon>
-                      {t('lorem4')}
+                      {t('create_lock_group')}
                     </MenuItem>
 
                     <MenuItem

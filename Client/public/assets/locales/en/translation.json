@@ -32,7 +32,7 @@
   "delete": "delete",
   "manage": "manage",
   "no_locks": "No Locks Here",
-  "add_lock": "Add new lock",
+  "add_lock": "Add New Lock",
   "delete_lock_warning": "Deleting a lock will also permanently remove all of its logs, are you sure you want to delete this lock?",
   "delete_lock_warning_2": "Deleting a lock is irreversible, are you sure you want to continue?",
   "go_back": "Go back",
@@ -95,5 +95,6 @@
   "profile": "Profile",
   "settings": "Settings",
   "lorem4": "Lorem Ipsum is simply",
-  "account_settings": "Account Settings"
+  "account_settings": "Account Settings",
+  "create_lock_group": "Create Lock Group"
 }

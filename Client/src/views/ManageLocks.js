@@ -40,7 +40,7 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useTranslation } from 'react-i18next';
-
+import Spinner from './Spinner';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -125,6 +125,7 @@ TablePaginationActions.propTypes = {
 
 export default function ManageLocks() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
   const iconStyle = {
     margin: '8rem 0 0 0',
     fontSize: '12em',
@@ -215,35 +216,44 @@ export default function ManageLocks() {
     },
   };
   const getLock = async () => {
+    setLoading(true);
     await axios
       .post('/api/lock/getLock', { lockId }, config)
       .then((res) => {
         setLock(res.data.data);
         setHasAccess(true);
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
           localStorage.removeItem('authToken');
+          setLoading(false);
           navigate('/login');
         }
         setHasAccess(false);
         setError('Cannot access this lock');
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
   const getEkeys = async () => {
+    setLoading(true);
     await axios.post('/api/ekey/lock', { lockId }, config).then((res) => {
       seteKeys(res.data.data);
     });
+    setLoading(false);
   };
 
   const handleUpdateEkey = async () => {
+    setLoading(true);
+
     if (edit === '') {
       setError('eKey name cannot be empty!');
       setSeverity('error');
       setOpenSnack(true);
+      setLoading(false);
     }
     const _id = editId;
     await axios
@@ -262,6 +272,7 @@ export default function ManageLocks() {
         setError(e.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
@@ -283,6 +294,7 @@ export default function ManageLocks() {
   };
 
   const handleDelete = async () => {
+    setLoading(true);
     await axios
       .post('/api/lock/delete', { lockId }, config)
       .then(() => {
@@ -293,15 +305,18 @@ export default function ManageLocks() {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
   const handleEkeyDelete = async () => {
+    setLoading(true);
     await axios
       .post('/api/ekey/delete', { _id: eKeyToDelete, lockId }, config)
       .then((res) => {
         if (res.data.data === 'Same user') {
           navigate('/');
+          setLoading(false);
         } else {
           setSeverity('success');
           setError('eKey deleted');
@@ -313,14 +328,17 @@ export default function ManageLocks() {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
   const handleEkeysCreate = async () => {
+    setLoading(true);
     if (eKeyName === '' || email === '') {
       setError('eKey name and recipient email cannot be empty');
       setSeverity('error');
       setOpenSnack(true);
+      setLoading(false);
       return;
     }
 
@@ -346,10 +364,12 @@ export default function ManageLocks() {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
   const handleEkeysDelete = async () => {
+    setLoading(true);
     await axios
       .post('/api/ekey/deletemany', { lockId }, config)
       .catch((err) => {
@@ -357,8 +377,12 @@ export default function ManageLocks() {
         setSeverity('error');
         setOpenSnack(true);
       });
+    setLoading(false);
   };
-  if (hasAccess) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (hasAccess && !loading) {
     return (
       <Card className="mlocks-main-container">
         <CardContent>
@@ -705,7 +729,8 @@ export default function ManageLocks() {
         </Snackbar>
       </Card>
     );
-  } else {
+  }
+  if (!hasAccess && !loading) {
     return (
       <div className="not-found">
         <SmartToyIcon style={iconStyle} />

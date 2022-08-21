@@ -21,7 +21,8 @@ import MuiAlert from '@mui/material/Alert';
 import ErrorIcon from '@mui/icons-material/Error';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
-
+import Spinner from './Spinner';
+import { formLabelClasses } from '@mui/material';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -39,6 +40,7 @@ const Locks = () => {
   const [open, setOpen] = React.useState(false);
   const [deleteId, setDeleteId] = useState('');
   const txtStyle = { width: '20em' };
+  const [loading, setLoading] = useState(true);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -70,15 +72,18 @@ const Locks = () => {
     },
   };
   const allData = async () => {
+    setLoading(true);
     await axios
       .get('/api/lock/all', config)
       .then((res) => {
         setLocks(res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
           localStorage.removeItem('authToken');
           navigate('/login');
+          setLoading(false);
         }
       });
   };
@@ -91,15 +96,19 @@ const Locks = () => {
   }, []);
 
   const handleDelete = async (lockId) => {
+    setLoading(true);
     await axios
       .post('/api/lock/delete', { lockId }, config)
       .then(() => {
         handleEkeysDelete(lockId);
         allData();
+
+        setLoading(false);
       })
       .catch((err) => {
         setError(err.response.data.error);
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
@@ -130,16 +139,19 @@ const Locks = () => {
   };
 
   const handleExport = async () => {
+    setLoading(true);
     await axios
       .get('/api/lock/export', configPDF)
       .then((res) => {
         const { data } = res;
         const blob = new Blob([data], { type: 'application/pdf' });
         saveAs(blob, `locks.pdf`);
+        setLoading(false);
       })
       .catch((err) => {
         setError('Could not export locks');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
@@ -148,7 +160,7 @@ const Locks = () => {
     id = id.slice(id.length - 6);
     return id;
   };
-  if (locks?.length > 0) {
+  if (locks?.length > 0 && !loading) {
     return (
       <>
         <div className="home-locks-container">
@@ -270,7 +282,11 @@ const Locks = () => {
         </Dialog>
       </>
     );
-  } else {
+  }
+  if (loading) {
+    return <Spinner />;
+  }
+  if (!loading && locks?.length === 0) {
     return (
       <div className="not-found">
         <ErrorIcon style={iconStyle} />

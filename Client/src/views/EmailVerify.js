@@ -8,6 +8,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import * as React from 'react';
+import Spinner from './Spinner';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -18,6 +19,7 @@ export default function EmailVerify() {
   const [open, setOpen] = useState(false);
   const [valid, setValid] = useState(true);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
   const { id, token } = useParams();
   const iconStyle = {
     margin: '3rem 0 0 0',
@@ -40,6 +42,7 @@ export default function EmailVerify() {
     emailVerifyHandler();
   }, []);
   const emailVerifyHandler = async () => {
+    setLoading(true);
     const config = {
       header: {
         'Content-Type': 'application/json',
@@ -62,9 +65,13 @@ export default function EmailVerify() {
         setSeverity('error');
         setOpen(true);
         setValid(false);
+        setLoading(false);
       });
   };
-  if (valid) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (valid && !loading) {
     return (
       <div className="not-found">
         <VerifiedIcon style={iconStyle} />
@@ -89,7 +96,8 @@ export default function EmailVerify() {
         </Snackbar>
       </div>
     );
-  } else {
+  }
+  if (!valid && !loading) {
     return (
       <div className="not-found">
         <SmartToyIcon style={iconStyle} />

@@ -1,0 +1,15 @@
+.sweet-loading {
+  display: flex;
+  align-items: center;
+  margin: 4em 0 2em 0;
+  flex-direction: column;
+}
+.sweet-loading-txt {
+  color: #202124;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 1em;
+  letter-spacing: 1px;
+  font-size: 25px;
+  font: weight 400px;
+  line-height: 1.5;
+}

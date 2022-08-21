@@ -24,6 +24,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CreditCardOffIcon from '@mui/icons-material/CreditCardOff';
 import { useTranslation } from 'react-i18next';
+import Spinner from './Spinner';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -44,6 +45,7 @@ const Cards = () => {
   const [cardRemark, setCardRemark] = useState('');
   const [editId, setEditId] = useState('');
   const [locks, setLocks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const handleShareOpen = (cardName, remark, cardNumber) => {
     setCardName(cardName);
     setCardRemark(remark);
@@ -114,11 +116,20 @@ const Cards = () => {
     },
   };
   const allData = async () => {
-    const res = await axios.get('/api/card/', config);
-    setCards(res.data.data);
+    setLoading(true);
+    await axios
+      .get('/api/card/', config)
+      .then((res) => {
+        setCards(res.data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
   };
 
   const allLocks = async () => {
+    setLoading(true);
     await axios
       .get('/api/lock/all', config)
       .then((res) => {
@@ -133,6 +144,7 @@ const Cards = () => {
         setSeverity('error');
         setOpenSnack(true);
       });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -144,6 +156,7 @@ const Cards = () => {
   }, []);
 
   const handleDelete = async () => {
+    setLoading(true);
     await axios
       .post('/api/card/delete', { _id: deleteId }, config)
       .then(() => {
@@ -156,14 +169,17 @@ const Cards = () => {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
   const handleShare = async () => {
+    setLoading(true);
     if (shareEmail.length < 3) {
       setError('Invalid email');
       setSeverity('error');
       setOpenSnack(true);
+      setLoading(false);
       return;
     }
     await axios
@@ -176,14 +192,17 @@ const Cards = () => {
         setError(`Card shared with ${shareEmail}`);
         setSeverity('success');
         setOpenSnack(true);
+        setLoading(false);
       })
       .catch((err) => {
         setError(err.response.data.error);
         setOpenSnack(true);
+        setLoading(false);
       });
     setShareEmail('');
   };
   const handleUpdate = async () => {
+    setLoading(true);
     if (cardName === '') {
       setError('Card name cannot be empty');
       setSeverity('error');
@@ -205,6 +224,7 @@ const Cards = () => {
       .catch((err) => {
         setError(err.response.data.error);
         setOpenSnack(true);
+        setLoading(false);
       });
   };
 
@@ -222,8 +242,10 @@ const Cards = () => {
     id = id.slice(id.length - 6);
     return id;
   };
-
-  if (cards?.length > 0) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (cards?.length > 0 && !loading) {
     return (
       <>
         <div className="home-locks-container">
@@ -466,7 +488,8 @@ const Cards = () => {
         </Dialog>
       </>
     );
-  } else {
+  }
+  if (!loading && cards?.length === 0) {
     return (
       <div className="not-found">
         <CreditCardOffIcon style={iconStyle} />

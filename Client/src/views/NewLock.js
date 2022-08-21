@@ -9,11 +9,13 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import * as React from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Spinner from './Spinner';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 function SignUp() {
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState('');
   const navigate = useNavigate();
@@ -59,11 +61,13 @@ function SignUp() {
 
   const registerHandler = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (lockName.length < 3) {
       setlockName('');
       setOpen(true);
       setSeverity('error');
+      setLoading(false);
+
       return setError('Lock name must be atleast 3 characters long');
     }
 
@@ -72,54 +76,61 @@ function SignUp() {
       setError('Lock added successfully');
       setSeverity('success');
       setOpen(true);
+
       navigate('/locks');
     } catch (error) {
       if (error.response.data.error === 'Not authorized to access this route') {
         localStorage.removeItem('authToken');
+
         navigate('/login');
       }
       setError(error.response.data.error);
       setSeverity('error');
       setOpen(true);
+      setLoading(false);
     }
   };
-
-  return (
-    <Paper style={paperStyle} elevation={6}>
-      <form onSubmitCapture={registerHandler} className="sign-up-container">
-        <LockOutlinedIcon style={iconStyle} />
-        <div className="title-signup">Add Lock</div>
-        <div className="title-signup-bottom">To your ASG App account</div>
-        <TextField
-          style={textfieldStyle}
-          type="input"
-          label="Lock Name"
-          required
-          onChange={(e) => setlockName(e.target.value)}
-          value={lockName}
-        ></TextField>
-        <TextField
-          style={textfieldStyle}
-          type="number"
-          label="Mac Address"
-          required
-          onChange={(e) => setlockMac(e.target.value)}
-          value={lockMac}
-        ></TextField>
-        <Button type="submit" style={btn} variant="contained">
-          Add Lock
-        </Button>
-        <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity={severity}
-            sx={{ width: '100%' }}
-          >
-            {error}
-          </Alert>
-        </Snackbar>
-      </form>
-    </Paper>
-  );
+  if (loading) {
+    return <Spinner />;
+  }
+  if (!loading) {
+    return (
+      <Paper style={paperStyle} elevation={6}>
+        <form onSubmitCapture={registerHandler} className="sign-up-container">
+          <LockOutlinedIcon style={iconStyle} />
+          <div className="title-signup">Add Lock</div>
+          <div className="title-signup-bottom">To your ASG App account</div>
+          <TextField
+            style={textfieldStyle}
+            type="input"
+            label="Lock Name"
+            required
+            onChange={(e) => setlockName(e.target.value)}
+            value={lockName}
+          ></TextField>
+          <TextField
+            style={textfieldStyle}
+            type="number"
+            label="Mac Address"
+            required
+            onChange={(e) => setlockMac(e.target.value)}
+            value={lockMac}
+          ></TextField>
+          <Button type="submit" style={btn} variant="contained">
+            Add Lock
+          </Button>
+          <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity={severity}
+              sx={{ width: '100%' }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
+        </form>
+      </Paper>
+    );
+  }
 }
 export default SignUp;

@@ -40,7 +40,6 @@ function App() {
         <ResponsiveAppBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/index.html" element={<Home />} />
           <Route exact path="/cards" element={<Cards />} />
           <Route exact path="/cards/new" element={<NewCard />} />
           <Route exact path="/locks" element={<Locks />} />
@@ -52,7 +51,6 @@ function App() {
           <Route exact path="/lockgroups" element={<LockGroups />} />
           <Route exact path="/logs/:lockId" element={<Logs />} />
           <Route exact path="/profile" element={<Profile />} />
-
           <Route
             exact
             path="/passwordreset/:resetToken"
