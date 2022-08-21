@@ -121,10 +121,13 @@ const Cards = () => {
       .get('/api/card/', config)
       .then((res) => {
         setCards(res.data.data);
+        allLocks();
         setLoading(false);
       })
-      .catch((error) => {
-        setLoading(false);
+      .catch((err) => {
+        setError(err.response.data.error);
+        setSeverity('error');
+        setOpenSnack(true);
       });
   };
 
@@ -153,7 +156,6 @@ const Cards = () => {
       navigate('/login');
     }
     allData();
-    allLocks();
   }, []);
 
   const handleDelete = async () => {
