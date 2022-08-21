@@ -124,6 +124,7 @@ export default function Logs() {
         setLogs(res.data.data);
         setLockName(res.data.lockName);
         setHasAccess(true);
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
@@ -136,9 +137,9 @@ export default function Logs() {
           setError(err.response.data.error);
           setSeverity('error');
           setOpen(true);
+          setLoading(false);
         }
       });
-    setLoading(false);
   };
 
   useEffect(() => {

@@ -85,12 +85,13 @@ const ResetPassword = () => {
       setTimeout(() => {
         navigate('/login');
       }, 2000);
+      setLoading(false);
     } catch (error) {
       setError(error.response.data.error);
       setSeverity('error');
       setOpen(true);
+      setLoading(false);
     }
-    setLoading(false);
   };
   if (loading) {
     return <Spinner />;

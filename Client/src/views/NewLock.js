@@ -81,7 +81,6 @@ function SignUp() {
     } catch (error) {
       if (error.response.data.error === 'Not authorized to access this route') {
         localStorage.removeItem('authToken');
-
         navigate('/login');
       }
       setError(error.response.data.error);

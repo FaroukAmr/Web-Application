@@ -112,9 +112,18 @@ const LockGroups = () => {
   };
   const allData = async () => {
     setLoading(true);
-    const res = await axios.get('/api/lockgroup/', config);
-    setlockGroups(res.data.data);
-    setLoading(false);
+    await axios
+      .get('/api/lockgroup/', config)
+      .then((res) => {
+        setlockGroups(res.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.response.data.error);
+        setSeverity('error');
+        setOpenSnack(true);
+        setLoading(false);
+      });
   };
 
   const handleSubmit = async () => {
@@ -159,6 +168,7 @@ const LockGroups = () => {
       .get('/api/lock/all', config)
       .then((res) => {
         setLocks(res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
@@ -168,8 +178,8 @@ const LockGroups = () => {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -204,6 +214,7 @@ const LockGroups = () => {
       setError('Lock group name cannot be empty');
       setSeverity('error');
       setOpenSnack(true);
+      setLoading(true);
       return;
     }
     await axios

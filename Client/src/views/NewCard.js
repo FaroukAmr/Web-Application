@@ -70,7 +70,6 @@ export default function NewCard() {
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
           localStorage.removeItem('authToken');
-
           navigate('/login');
         }
         setError(err.response.data.error);

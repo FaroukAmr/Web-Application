@@ -134,6 +134,7 @@ const Cards = () => {
       .get('/api/lock/all', config)
       .then((res) => {
         setLocks(res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.data.error === 'Not authorized to access this route') {
@@ -143,8 +144,8 @@ const Cards = () => {
         setError(err.response.data.error);
         setSeverity('error');
         setOpenSnack(true);
+        setLoading(false);
       });
-    setLoading(false);
   };
 
   useEffect(() => {

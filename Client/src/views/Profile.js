@@ -85,13 +85,14 @@ export default function Profile() {
         } else {
           setGender('male');
         }
+        setLoading(false);
       })
       .catch((error) => {
         setError(error.response.data.error);
         setSeverity('error');
         setOpen(true);
+        setLoading(false);
       });
-    setLoading(false);
   };
   const handleChangePassword = async () => {
     setLoading(true);
@@ -116,13 +117,14 @@ export default function Profile() {
         setError('Password updated');
         setSeverity('success');
         setOpen(true);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error.response.data.error);
         setSeverity('error');
         setOpen(true);
+        setLoading(false);
       });
-    setLoading(false);
   };
   const handleUpdateUser = async () => {
     setLoading(true);
