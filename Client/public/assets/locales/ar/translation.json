@@ -96,5 +96,6 @@
   "profile": " الملف الشخصي",
   "settings": "الإعدادات",
   "lorem4": "لوريم إيبسوم(Lorem Ipsum)",
-  "account_settings": "إعدادت الحساب"
+  "account_settings": "إعدادت الحساب",
+  "create_lock_group": "إنشاء مجموعة أقفال"
 }

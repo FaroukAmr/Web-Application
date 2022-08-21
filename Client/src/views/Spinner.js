@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 
 function Spinner() {
