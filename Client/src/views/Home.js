@@ -11,15 +11,35 @@ import cardImg from '../imgs/cardImg.jpg';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import '../css/home.css';
 export default function Home() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('authToken');
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const handleGetUserInfo = async () => {
+    await axios.get('/api/user', config).catch((err) => {
+      if (err.response.data.error === 'Not authorized to access this route') {
+        localStorage.removeItem('authToken');
+        navigate('/login');
+      }
+    });
+  };
+
   useEffect(() => {
     if (!localStorage.getItem('authToken')) {
       navigate('/login');
+      return;
     }
+    handleGetUserInfo();
   }, []);
   return (
     <div className="home-container">
