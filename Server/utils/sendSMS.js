@@ -3,8 +3,8 @@ import Vonage from '@vonage/server-sdk';
 const sendSMS = (options) => {
   const vonage = new Vonage(
     {
-      apiKey: '6f3c5147',
-      apiSecret: 'HJCNh4IrLiIu2zZO',
+      apiKey: process.env.VONAGE_API,
+      apiSecret: process.env.VONAGE_SECRET,
     },
     { debug: false }
   );
