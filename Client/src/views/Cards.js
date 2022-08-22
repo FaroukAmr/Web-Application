@@ -268,7 +268,7 @@ const Cards = () => {
           </Button>
         </div>
         <div className="locks-container">
-          {encodeURI(cards)
+          {cards
             ?.filter((val) => {
               if (search === '') {
                 return val;

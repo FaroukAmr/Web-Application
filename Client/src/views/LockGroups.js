@@ -271,11 +271,11 @@ const LockGroups = () => {
           {lockGroups
             ?.filter((val) => {
               if (search === '') {
-                return encodeURI(val);
+                return val;
               } else if (
                 val.name.toLowerCase().includes(search.toLowerCase())
               ) {
-                return encodeURI(val);
+                return val;
               }
             })
             .map(function (d, idx) {
