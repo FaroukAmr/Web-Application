@@ -481,6 +481,7 @@ export default function ManageLocks() {
                     </TableCell>
                     <TableCell style={{ Minwidth: '10em' }} align="right">
                       <Button
+                        color="error"
                         onClick={() => {
                           setEKeyToDelete(eKeys._id);
                           handleClickOpenEkey();
@@ -554,6 +555,7 @@ export default function ManageLocks() {
             {t('logs')}
           </Button>
           <Button
+            color="error"
             size="small"
             onClick={() => {
               handleClickOpen();
@@ -660,7 +662,6 @@ export default function ManageLocks() {
           <DialogActions>
             <Button onClick={handleCloseDialoge}>{t('go_back')}</Button>
             <Button
-              color="error"
               onClick={() => {
                 handleCloseDialoge();
                 handleEkeysCreate();
@@ -703,7 +704,6 @@ export default function ManageLocks() {
           <DialogActions>
             <Button onClick={handleCloseEdit}>{t('go_back')}</Button>
             <Button
-              color="error"
               onClick={() => {
                 handleCloseEdit();
                 handleUpdateEkey();

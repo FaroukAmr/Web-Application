@@ -37,13 +37,24 @@ app.use('/api/ekey', ekeyRoutes);
 app.use('/api/logs', logsRoutes);
 app.use('/api/lockgroup', lockGroupRoutes);
 app.use('/api/user', userRoutes);
-app.use(
-  csp({
-    directives: {
-      defaultSrc: ["'self'"],
-    },
-  })
-);
+// app.use(
+//   csp({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: [
+//         "'self'",
+//         "'unsafe-inline'",
+//         'https://ajax.googleapis.com',
+//         'https://stackpath.bootstrapcdn.com',
+//         'https://accounts.google.com/gsi/client',
+//       ],
+//       styleSrc: ["'self'"],
+//       imgSrc: ['*', 'data:'],
+//       connectSrc: ["'self'"],
+//       frameSrc: ["'self'"],
+//     },
+//   })
+// );
 //PRODUCTION BUILD
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('public'));

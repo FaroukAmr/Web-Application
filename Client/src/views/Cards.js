@@ -334,6 +334,7 @@ const Cards = () => {
                         {t('edit')}
                       </Button>
                       <Button
+                        color="error"
                         size="small"
                         onClick={() => {
                           handleClickOpen();

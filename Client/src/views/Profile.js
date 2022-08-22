@@ -255,7 +255,6 @@ export default function Profile() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label="Confirm Password"
