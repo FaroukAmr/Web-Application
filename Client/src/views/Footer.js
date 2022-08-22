@@ -9,11 +9,13 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import '../css/footer.css';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 export default function Footer() {
   const containerStyle = {};
   const socialStyle = { fontSize: '2em', marginRight: '0.3em' };
   const linkStyle = { textDecoration: 'none' };
   const { t } = useTranslation();
+  const Navigate = useNavigate();
   return (
     <footer className="footer">
       <Box
@@ -32,7 +34,14 @@ export default function Footer() {
                 </Link>
               </Box>
               <Box>
-                <Link style={linkStyle} href="/" color="inherit">
+                <Link
+                  onClick={() => {
+                    Navigate('/privacy');
+                  }}
+                  className="link"
+                  style={linkStyle}
+                  color="inherit"
+                >
                   {t('privacy')}
                 </Link>
               </Box>

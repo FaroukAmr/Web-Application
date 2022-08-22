@@ -13,3 +13,7 @@
   font: weight 400px;
   line-height: 1.5;
 }
+
+.link:hover {
+  cursor: pointer;
+}
