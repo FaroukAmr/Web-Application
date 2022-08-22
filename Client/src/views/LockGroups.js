@@ -271,64 +271,62 @@ const LockGroups = () => {
           {lockGroups
             ?.filter((val) => {
               if (search === '') {
-                return val;
+                return encodeURI(val);
               } else if (
                 val.name.toLowerCase().includes(search.toLowerCase())
               ) {
-                return val;
+                return encodeURI(val);
               }
             })
             .map(function (d, idx) {
               return (
-                <>
-                  <Card className="locks-item">
-                    <CardMedia
-                      component="img"
-                      height="8"
-                      style={{
-                        backgroundColor: `#${randomNumber(d._id)}`,
-                        borderRadius: '0px',
-                        width: '100%',
-                        margin: '0 auto',
-                      }}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {d.name}
-                      </Typography>
+                <Card className="locks-item" key={d._id}>
+                  <CardMedia
+                    component="img"
+                    height="8"
+                    style={{
+                      backgroundColor: `#${randomNumber(d._id)}`,
+                      borderRadius: '0px',
+                      width: '100%',
+                      margin: '0 auto',
+                    }}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {d.name}
+                    </Typography>
 
-                      <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        component="div"
-                      >
-                        Remark: {d.remark}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Updated {handleDate(d.updatedAt)}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        size="small"
-                        onClick={() => {
-                          handleClickOpenForm(d.name, d.remark, d.locks);
-                          set_id(d._id);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        size="small"
-                        onClick={() => {
-                          handleClickOpen();
-                          setDeleteId(d._id);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </CardActions>
-                  </Card>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      component="div"
+                    >
+                      Remark: {d.remark}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Updated {handleDate(d.updatedAt)}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        handleClickOpenForm(d.name, d.remark, d.locks);
+                        set_id(d._id);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        handleClickOpen();
+                        setDeleteId(d._id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </CardActions>
 
                   <Dialog open={openForm} onClose={handleCloseForm}>
                     <DialogTitle>Edit</DialogTitle>
@@ -401,7 +399,7 @@ const LockGroups = () => {
                       </Button>
                     </DialogActions>
                   </Dialog>
-                </>
+                </Card>
               );
             })}
         </div>

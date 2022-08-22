@@ -271,11 +271,11 @@ const Cards = () => {
           {cards
             ?.filter((val) => {
               if (search === '') {
-                return val;
+                return encodeURI(val);
               } else if (
                 val.cardName.toLowerCase().includes(search.toLowerCase())
               ) {
-                return val;
+                return encodeURI(val);
               }
             })
             .map(function (d, idx) {
