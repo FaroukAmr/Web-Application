@@ -2,6 +2,9 @@ import User from '../models/User.js';
 import ErrorResponse from '../utils/errorResponse.js';
 import bcrypt from 'bcryptjs';
 import sendSMS from '../utils/sendSMS.js';
+import checkPassword from '../regex/checkPassword.js';
+import checkUsername from '../regex/checkUsername.js';
+
 export async function getUser(req, res, next) {
   const { email } = req.user;
   try {
@@ -18,10 +21,9 @@ export async function getUser(req, res, next) {
 export async function updatePassword(req, res, next) {
   const { email } = req.user;
   const { password } = req.body;
-  if (password.length < 8) {
-    return next(
-      new ErrorResponse('Password length must be grather than 8 charaters', 400)
-    );
+  const checkPasswordResponse = checkPassword(password);
+  if (checkPasswordResponse !== 'Valid password') {
+    return next(new ErrorResponse(checkPasswordResponse, 400));
   }
   try {
     const salt = await bcrypt.genSalt(10);
@@ -67,8 +69,12 @@ export async function testSMS(req, res, next) {
 export async function updateUser(req, res, next) {
   const { email } = req.user;
   const { username, gender } = req.body;
-  if (username === '' || gender === '') {
+  if (gender === '') {
     return next(new ErrorResponse('Invalid input', 400));
+  }
+  const checkUsernameResponse = checkUsername(username);
+  if (checkUsernameResponse !== 'Valid username') {
+    return next(new ErrorResponse(checkUsernameResponse, 400));
   }
   try {
     User.findOneAndUpdate(
