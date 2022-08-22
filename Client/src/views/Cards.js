@@ -268,14 +268,14 @@ const Cards = () => {
           </Button>
         </div>
         <div className="locks-container">
-          {cards
+          {encodeURI(cards)
             ?.filter((val) => {
               if (search === '') {
-                return encodeURI(val);
+                return val;
               } else if (
                 val.cardName.toLowerCase().includes(search.toLowerCase())
               ) {
-                return encodeURI(val);
+                return val;
               }
             })
             .map(function (d, idx) {
