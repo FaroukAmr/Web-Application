@@ -1,7 +1,9 @@
-# ProjectDocumentation
+# ASG Smart Lock web application
 
-Web application for ASG new smart cylinder lock
+This project was done as part of my internsip at Ahram Secuirty Group(https://www.ahramsg.com/) for their new smart cylinder lock.
 
-# Deployment
+## Deployment
 
-https://asg-smartlock.herokuapp.com/
+A beta version of this application is deployed on heroku: https://asg-smartlock.herokuapp.com/
+
+
