@@ -16,6 +16,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 import compress from 'compression';
+import csp from 'helmet-csp';
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -36,7 +37,13 @@ app.use('/api/ekey', ekeyRoutes);
 app.use('/api/logs', logsRoutes);
 app.use('/api/lockgroup', lockGroupRoutes);
 app.use('/api/user', userRoutes);
-
+app.use(
+  csp({
+    directives: {
+      defaultSrc: ["'self'"],
+    },
+  })
+);
 //PRODUCTION BUILD
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('public'));
