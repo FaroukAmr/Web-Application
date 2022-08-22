@@ -638,7 +638,6 @@ export default function ManageLocks() {
               onChange={(e) => setEKeyName(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label={t('recipient_email')}

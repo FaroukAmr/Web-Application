@@ -226,6 +226,7 @@ const Locks = () => {
                       {t('manage')}
                     </Button>
                     <Button
+                      color="error"
                       size="small"
                       onClick={() => {
                         handleClickOpen();

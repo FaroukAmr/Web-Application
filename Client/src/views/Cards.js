@@ -363,7 +363,6 @@ const Cards = () => {
                         onChange={(e) => setCardName(e.target.value)}
                       />
                       <TextField
-                        autoFocus
                         margin="dense"
                         label="Remark"
                         fullWidth
@@ -456,7 +455,6 @@ const Cards = () => {
                 handleClose();
                 handleDelete(deleteId);
               }}
-              autoFocus
             >
               {t('delete')}
             </Button>
@@ -484,7 +482,6 @@ const Cards = () => {
                 handleCloseShare();
                 handleShare();
               }}
-              autoFocus
             >
               {t('share')}
             </Button>
