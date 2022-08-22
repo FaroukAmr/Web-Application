@@ -1,8 +1,7 @@
 import Card from '../models/Card.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import Lock from '../models/Lock.js';
 import User from '../models/User.js';
-
+import { checkCardNumber, checkCardName } from '../regex/checkCard.js';
 export async function getCards(req, res, next) {
   const userId = req.user.email;
 
@@ -84,8 +83,14 @@ export async function deleteCard(req, res, next) {
 export async function createCard(req, res, next) {
   const { cardNumber, remark, cardName } = req.body;
   const userId = req.user.email;
-  if (cardNumber.length < 9) {
-    return next(new ErrorResponse('Invalid card number', 400));
+  const checkCardNumberResponse = checkCardNumber(cardNumber);
+  if (checkCardNumberResponse !== 'Valid card') {
+    return next(new ErrorResponse(checkCardNumberResponse, 400));
+  }
+
+  const checkCardNameResponse = checkCardName(cardName);
+  if (checkCardNameResponse !== 'Valid card') {
+    return next(new ErrorResponse(checkCardNameResponse, 400));
   }
   try {
     const existingCard = await Card.findOne({ userId, cardNumber });

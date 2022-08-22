@@ -1,11 +1,17 @@
 import LockGroup from '../models/LockGroup.js';
 import ErrorResponse from '../utils/errorResponse.js';
-
+import { checkGroupName, checkGroupRemark } from '../regex/checkLogGroups.js';
 export async function createGroup(req, res, next) {
   const { name, remark, locks } = req.body;
   const userId = req.user.email;
-  if (name === '') {
-    return next(new ErrorResponse('Name cannot be empty', 400));
+
+  const checkGroupNameResponse = checkGroupName(name);
+  if (checkGroupNameResponse !== 'Valid group') {
+    return next(new ErrorResponse(checkGroupNameResponse, 400));
+  }
+  const checkGroupRemarkResponse = checkGroupRemark(remark);
+  if (checkGroupRemarkResponse !== 'Valid remark') {
+    return next(new ErrorResponse(checkGroupRemarkResponse, 400));
   }
   const existingGroup = await LockGroup.findOne({ userId, name });
 

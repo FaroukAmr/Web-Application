@@ -3,10 +3,20 @@ import ErrorResponse from '../utils/errorResponse.js';
 import LockGroup from '../models/LockGroup.js';
 import Log from '../models/Logs.js';
 import { buildLockPDF } from '../utils/generatePdf.js';
+import { checkLockName, checkLockMAC } from '../regex/checkLock.js';
 
 export async function createLock(req, res, next) {
   const { lockName, lockMac } = req.body;
   const userId = req.user.email;
+
+  const checkLockNameResponse = checkLockName(lockName);
+  if (checkLockNameResponse !== 'Valid lock') {
+    return next(new ErrorResponse(checkLockNameResponse, 400));
+  }
+  const checkLockMACResponse = checkLockMAC(lockMac);
+  if (checkLockMACResponse !== 'Valid lock') {
+    return next(new ErrorResponse(checkLockMACResponse, 400));
+  }
 
   const existingLock = await Lock.findOne({ userId, lockMac });
 

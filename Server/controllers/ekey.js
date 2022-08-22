@@ -5,6 +5,7 @@ import sendEmail from '../utils/sendEmail.js';
 import Lock from '../models/Lock.js';
 import Log from '../models/Logs.js';
 import crypto from 'crypto';
+import { checkEKeyName } from '../regex/checkEKey.js';
 export async function getEkeys(req, res, next) {
   const recipient = req.user.email;
   try {
@@ -90,6 +91,11 @@ export async function createEkey(req, res, next) {
   if (lockId == '' || recipient == '' || name == '') {
     return next(new ErrorResponse('Invalid input', 500));
   }
+  const checkEkeyNameResponse = checkEKeyName(name);
+  if (checkEkeyNameResponse !== 'Valid ekey') {
+    return next(new ErrorResponse(checkEkeyNameResponse, 400));
+  }
+
   if (userId === recipient) {
     return next(new ErrorResponse("Can't send eKey to yourself", 500));
   }
@@ -206,10 +212,11 @@ export async function createEkey(req, res, next) {
 export async function updateEkey(req, res, next) {
   const { _id, name, authorizedAdmin, lockId } = req.body;
   const userId = req.user.email;
-  if (name == '') {
-    return next(new ErrorResponse('Name cannot be empty', 500));
-  }
 
+  const checkEkeyNameResponse = checkEKeyName(name);
+  if (checkEkeyNameResponse !== 'Valid ekey') {
+    return next(new ErrorResponse(checkEkeyNameResponse, 400));
+  }
   try {
     const owner = await Lock.findOne({ _id: lockId, userId });
     if (!owner) {

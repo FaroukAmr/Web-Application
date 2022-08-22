@@ -3,6 +3,8 @@ import ErrorResponse from '../utils/errorResponse.js';
 import sendEmail from '../utils/sendEmail.js';
 import crypto from 'crypto';
 import Token from '../models/Token.js';
+import checkPassword from '../regex/checkPassword.js';
+import checkUsername from '../regex/checkUsername.js';
 
 export async function handleExternalAuth(req, res, next) {
   const { username, email, image } = req.body;
@@ -35,17 +37,14 @@ export async function register(req, res, next) {
     if (existingEmail) {
       return next(new ErrorResponse('Email already exists', 400));
     }
-
-    if (password.length < 8) {
-      return next(
-        new ErrorResponse('Password must be atleast 8 characters long', 400)
-      );
+    const checkPasswordResponse = checkPassword(password);
+    if (checkPasswordResponse !== 'Valid password') {
+      return next(new ErrorResponse(checkPasswordResponse, 400));
     }
 
-    if (username.length < 3) {
-      return next(
-        new ErrorResponse('Username must be atleast 3 characters long', 400)
-      );
+    const checkUsernameResponse = checkUsername(username);
+    if (checkUsernameResponse !== 'Valid username') {
+      return next(new ErrorResponse(checkUsernameResponse, 400));
     }
 
     const user = await User.create({
@@ -241,10 +240,9 @@ export async function resetpassword(req, res, next) {
       return next(new ErrorResponse('Invalid Token', 400));
     }
 
-    if (req.body.password.length < 8) {
-      return next(
-        new ErrorResponse('Passowrd must be atleast 8 characters long', 400)
-      );
+    const checkPasswordResponse = checkPassword(password);
+    if (checkPasswordResponse !== 'Valid password') {
+      return next(new ErrorResponse(checkPasswordResponse, 400));
     }
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
