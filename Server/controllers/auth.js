@@ -78,10 +78,10 @@ export async function register(req, res, next) {
     } catch (err) {
       await User.deleteOne({ _id: user._id });
 
-      return next(new ErrorResponse('Email could not be sent', 500));
+      return next(new ErrorResponse('Email could not be sent', 400));
     }
   } catch (error) {
-    return next(new ErrorResponse(error, 400));
+    return next(new ErrorResponse(error, 500));
   }
 }
 
@@ -130,7 +130,7 @@ export async function login(req, res, next) {
         } catch (err) {
           await User.deleteOne({ _id: user._id });
 
-          return next(new ErrorResponse('Email could not be sent', 500));
+          return next(new ErrorResponse('Email could not be sent', 400));
         }
       }
       return next(
@@ -149,7 +149,7 @@ export async function login(req, res, next) {
 
     sendToken(user, 200, res);
   } catch (error) {
-    return next(new ErrorResponse(error, 401));
+    return next(new ErrorResponse(error, 500));
   }
 }
 
@@ -160,7 +160,7 @@ export async function forgotpassword(req, res, next) {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return next(new ErrorResponse('Email could not be sent', 404));
+      return next(new ErrorResponse('Email could not be sent', 400));
     }
 
     // Reset Token Gen and add to database hashed version of token
@@ -195,7 +195,7 @@ export async function forgotpassword(req, res, next) {
 
       await user.save();
 
-      return next(new ErrorResponse('Email could not be sent', 500));
+      return next(new ErrorResponse('Email could not be sent', 400));
     }
   } catch (err) {
     return next(new ErrorResponse('Email could not be sent', 500));

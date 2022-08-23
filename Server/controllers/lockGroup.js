@@ -28,11 +28,11 @@ export async function createGroup(req, res, next) {
     });
 
     if (!group) {
-      return next(new ErrorResponse('Could not create lock', 500));
+      return next(new ErrorResponse('Could not create lock', 400));
     }
     res.status(200).json({ success: true, data: 'Group created' });
   } catch (error) {
-    return next(new ErrorResponse(error, 400));
+    return next(new ErrorResponse(error, 500));
   }
 }
 

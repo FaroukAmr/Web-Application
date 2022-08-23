@@ -19,7 +19,7 @@ export async function exportLogs(req, res, next) {
   const owner = await Lock.findOne({ userId: email, _id: lockId });
 
   if (!owner && !admin) {
-    return next(new ErrorResponse('Only authorized admins can view logs', 404));
+    return next(new ErrorResponse('Only authorized admins can view logs', 401));
   }
 
   let log = await Log.find({ lockId });
@@ -53,12 +53,12 @@ export async function getLogs(req, res, next) {
 
     if (!owner && !admin) {
       return next(
-        new ErrorResponse('Only authorized admins can view logs', 404)
+        new ErrorResponse('Only authorized admins can view logs', 401)
       );
     }
     const logs = await Log.find({ lockId });
     if (!logs) {
-      return next(new ErrorResponse('Could not get logs', 404));
+      return next(new ErrorResponse('Could not get logs', 400));
     }
 
     res

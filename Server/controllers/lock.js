@@ -33,7 +33,7 @@ export async function createLock(req, res, next) {
     });
 
     if (!lock) {
-      return next(new ErrorResponse('Could not create lock', 500));
+      return next(new ErrorResponse('Could not create lock', 400));
     }
     const log = await Log.create({
       lockId: lock._id,
@@ -43,7 +43,7 @@ export async function createLock(req, res, next) {
     });
     res.status(200).json({ success: true, data: 'Lock created' });
   } catch (error) {
-    return next(new ErrorResponse(error, 400));
+    return next(new ErrorResponse(error, 500));
   }
 }
 
@@ -53,10 +53,10 @@ export async function getLock(req, res, next) {
 
   try {
     const lock = await Lock.findOne({ access: email, _id }).catch(() => {
-      return next(new ErrorResponse('Could not get lock', 404));
+      return next(new ErrorResponse('Could not get lock', 400));
     });
     if (!lock) {
-      return next(new ErrorResponse('Could not get lock', 404));
+      return next(new ErrorResponse('Could not get lock', 400));
     }
     res.status(200).json({ success: true, data: lock });
   } catch (error) {
@@ -69,7 +69,7 @@ export async function getLocks(req, res, next) {
   try {
     let locks = await Lock.find({ access: email });
     if (!locks) {
-      return next(new ErrorResponse('Could not get locks', 404));
+      return next(new ErrorResponse('Could not get locks', 400));
     }
     res.status(200).json({ success: true, data: locks });
   } catch (err) {
@@ -96,7 +96,7 @@ export async function deleteLock(req, res, next) {
       return next(
         new ErrorResponse(
           'Only lock owner can delete this lock, you can remove your eKey instead',
-          500
+          400
         )
       );
     }
@@ -111,7 +111,7 @@ export async function exportLocks(req, res, next) {
   } catch (error) {}
   const locks = await Lock.find({ access: email });
   if (!locks) {
-    new ErrorResponse('No locks to export', 404);
+    new ErrorResponse('No locks to export', 400);
   }
 
   const stream = res.writeHead(200, {

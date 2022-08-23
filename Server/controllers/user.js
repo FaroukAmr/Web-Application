@@ -14,7 +14,7 @@ export async function getUser(req, res, next) {
     }
     res.status(200).json({ success: true, data: user });
   } catch (error) {
-    return next(new ErrorResponse(error, 404));
+    return next(new ErrorResponse(error, 500));
   }
 }
 
@@ -40,7 +40,7 @@ export async function updatePassword(req, res, next) {
       }
     );
   } catch (error) {
-    return next(new ErrorResponse(error, 404));
+    return next(new ErrorResponse(error, 500));
   }
 }
 
@@ -87,6 +87,6 @@ export async function updateUser(req, res, next) {
       }
     );
   } catch (error) {
-    return next(new ErrorResponse(error, 404));
+    return next(new ErrorResponse(error, 500));
   }
 }

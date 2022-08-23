@@ -89,7 +89,7 @@ export async function createEkey(req, res, next) {
   const { lockId, recipient, name, authorizedAdmin } = req.body;
   const userId = req.user.email;
   if (lockId == '' || recipient == '' || name == '') {
-    return next(new ErrorResponse('Invalid input', 500));
+    return next(new ErrorResponse('Invalid input', 400));
   }
   const checkEkeyNameResponse = checkEKeyName(name);
   if (checkEkeyNameResponse !== 'Valid ekey') {
@@ -97,7 +97,7 @@ export async function createEkey(req, res, next) {
   }
 
   if (userId === recipient) {
-    return next(new ErrorResponse("Can't send eKey to yourself", 500));
+    return next(new ErrorResponse("Can't send eKey to yourself", 400));
   }
   try {
     const owner = await Lock.findOne({ _id: lockId, userId: userId });
@@ -123,7 +123,7 @@ export async function createEkey(req, res, next) {
         access: recipient,
       });
       if (existingEkey) {
-        return next(new ErrorResponse('User already has access', 500));
+        return next(new ErrorResponse('User already has access', 400));
       }
       const eKey = await Ekey.create({
         lockId,
@@ -205,7 +205,7 @@ export async function createEkey(req, res, next) {
       }
     }
   } catch (error) {
-    return next(new ErrorResponse("Can't send eKey", 400));
+    return next(new ErrorResponse("Can't send eKey", 500));
   }
 }
 
