@@ -6,8 +6,6 @@ This project was done as part of my internsip at Ahram Secuirty Group(https://ww
 
 A beta version of this application is deployed on heroku: https://asg-smartlock.herokuapp.com/
 
-
-<<<<<<< HEAD
 https://asg-smartlock.herokuapp.com/
 
 # Getting Started with Create React App
@@ -80,5 +78,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
->>>>>>> c3e99cfbf87cbda8e345fe45679342d30a9705ad
