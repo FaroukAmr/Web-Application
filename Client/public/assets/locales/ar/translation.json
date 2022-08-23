@@ -97,5 +97,5 @@
   "settings": "الإعدادات",
   "lorem4": "لوريم إيبسوم(Lorem Ipsum)",
   "account_settings": "إعدادت الحساب",
-  "create_lock_group": "إنشاء مجموعة أقفال"
+  "lock_groups": "عرض مجموعات الاقفال"
 }

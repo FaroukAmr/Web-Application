@@ -25,6 +25,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 const languages = [
   {
     code: 'en',
@@ -292,9 +293,9 @@ const ResponsiveAppBar = () => {
                       }}
                     >
                       <ListItemIcon>
-                        <AddIcon fontSize="small" />
+                        <FormatListBulletedIcon fontSize="small" />
                       </ListItemIcon>
-                      {t('create_lock_group')}
+                      {t('lock_groups')}
                     </MenuItem>
 
                     <MenuItem
