@@ -47,16 +47,15 @@ app.use(
       secure: false, // if you are using HTTPS I suggest true here
       signed: false, // I don't know if csurf supports signed cookies, so I used false
       sameSite: 'strict',
-      maxAge: 12 * 60 * 60 * 1000, // 24 hours
+      maxAge: 12 * 60 * 60 * 1000, // 12 hours
     },
   })
 );
 
 app.get('/api/csurf', (req, res, next) => {
-  console.log('here');
   const csrfTokenToSendToFrontEnd = req.csrfToken();
-  console.log('csrfTokenToSendToFrontEnd: ', csrfTokenToSendToFrontEnd);
   res.cookie('XSRF-TOKEN', csrfTokenToSendToFrontEnd);
+  next();
 });
 
 app.use('/api/auth', authRoutes);
