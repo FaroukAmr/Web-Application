@@ -16,7 +16,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 import compress from 'compression';
-import csp from 'helmet-csp';
+import csrf from 'csurf';
+import bodyParser from 'body-parser';
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,9 +28,37 @@ const PORT = process.env.PORT;
 const app = express();
 app.use(compress());
 app.use(cors());
-app.use(cookieParser());
 app.use(express.json());
 app.use(sslRedirect());
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
+app.use(cookieParser());
+app.use(
+  csrf({
+    cookie: {
+      // here you can configure your cookie. Default values are ok, but I decided to be more explicit
+      // http://expressjs.com/en/4x/api.html#req.cookies
+      key: '_csrf',
+      path: '/',
+      httpOnly: true, // if you want you can use true here
+      secure: false, // if you are using HTTPS I suggest true here
+      signed: false, // I don't know if csurf supports signed cookies, so I used false
+      sameSite: 'strict',
+      maxAge: 12 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
+
+app.get('/api/csurf', (req, res, next) => {
+  console.log('here');
+  const csrfTokenToSendToFrontEnd = req.csrfToken();
+  console.log('csrfTokenToSendToFrontEnd: ', csrfTokenToSendToFrontEnd);
+  res.cookie('XSRF-TOKEN', csrfTokenToSendToFrontEnd);
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/lock', lockRoutes);
 app.use('/api/card', cardRoutes);
@@ -37,24 +66,6 @@ app.use('/api/ekey', ekeyRoutes);
 app.use('/api/logs', logsRoutes);
 app.use('/api/lockgroup', lockGroupRoutes);
 app.use('/api/user', userRoutes);
-// app.use(
-//   csp({
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       scriptSrc: [
-//         "'self'",
-//         "'unsafe-inline'",
-//         'https://ajax.googleapis.com',
-//         'https://stackpath.bootstrapcdn.com',
-//         'https://accounts.google.com/gsi/client',
-//       ],
-//       styleSrc: ["'self'"],
-//       imgSrc: ['*', 'data:'],
-//       connectSrc: ["'self'"],
-//       frameSrc: ["'self'"],
-//     },
-//   })
-// );
 //PRODUCTION BUILD
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('public'));
@@ -64,6 +75,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 //Keep errorhandler last middleware
 app.use(errorHandler);
+
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>

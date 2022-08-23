@@ -34,6 +34,7 @@ function Login() {
   const [error, setError] = useState('');
   const [severity, setSeverity] = useState('error');
   const [showPassword, setShowPassword] = useState(false);
+  const [csrfTokenState, setCsrfTokenState] = useState('');
   const navigate = useNavigate();
   const paperStyle = {
     minWidth: 'fit-content',
@@ -67,27 +68,43 @@ function Login() {
       google.accounts.id.prompt();
     } catch (error) {}
   };
+
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
       navigate('/');
       return;
     }
+
     handleGoogleSetup();
   }, []);
+
+  const config = {
+    header: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+    },
+    credentials: 'include',
+    mode: 'cors',
+  };
+  const configCSURF = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      'xsrf-token': csrfTokenState,
+    },
+    withCredentials: 'true',
+  };
   const loginHandler = async (e) => {
     e.preventDefault();
-    const config = {
-      header: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      },
-    };
+    console.log(configCSURF.headers['xsrf-token']);
+
     try {
       const { data } = await axios.post(
         '/api/auth/login',
         { email, password },
-        config
+        configCSURF
       );
       if (data.token) {
         localStorage.setItem('authToken', data.token);
@@ -105,12 +122,17 @@ function Login() {
   };
   async function handleCallbackResponse(response) {
     var userObject = jwt_decode(response.credential);
+    console.log(configCSURF.headers['xsrf-token']);
     try {
-      const { data } = await axios.post('/api/auth/login/external', {
-        email: userObject.email,
-        username: userObject.name,
-        image: userObject.picture,
-      });
+      const { data } = await axios.post(
+        '/api/auth/login/external',
+        {
+          email: userObject.email,
+          username: userObject.name,
+          image: userObject.picture,
+        },
+        configCSURF
+      );
       if (data.token) {
         localStorage.setItem('authToken', data.token);
         navigate('/');

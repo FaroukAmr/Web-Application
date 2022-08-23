@@ -59,6 +59,7 @@ const ResponsiveAppBar = () => {
   useEffect(() => {
     document.body.dir = currentLanguage.dir || 'ltr';
     document.title = t('app_title');
+    handleCsurf();
     if (!rendersignupButton()) {
       handleGetUserInfo();
       setsignupButton(false);
@@ -71,7 +72,11 @@ const ResponsiveAppBar = () => {
     localStorage.removeItem('authToken');
     navigate('/login');
   };
-
+  const handleCsurf = async () => {
+    await axios.get('/api/csurf').catch((err) => {
+      console.log(err);
+    });
+  };
   const token = localStorage.getItem('authToken');
 
   const config = {

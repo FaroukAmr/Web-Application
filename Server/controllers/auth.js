@@ -240,7 +240,7 @@ export async function resetpassword(req, res, next) {
       return next(new ErrorResponse('Invalid Token', 400));
     }
 
-    const checkPasswordResponse = checkPassword(password);
+    const checkPasswordResponse = checkPassword(req.body.password);
     if (checkPasswordResponse !== 'Valid password') {
       return next(new ErrorResponse(checkPasswordResponse, 400));
     }
@@ -256,7 +256,7 @@ export async function resetpassword(req, res, next) {
       token: user.getSignedJwtToken(),
     });
   } catch (err) {
-    return next(new ErrorResponse('Invalid password', 500));
+    return next(new ErrorResponse('Internal server error', 500));
   }
 }
 const sendToken = (user, statusCode, res) => {
