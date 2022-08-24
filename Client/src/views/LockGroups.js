@@ -274,11 +274,11 @@ const LockGroups = () => {
           {lockGroups
             ?.filter((val) => {
               if (search === '') {
-                return decodeURI(val);
+                return val;
               } else if (
                 val.name.toLowerCase().includes(search.toLowerCase())
               ) {
-                return decodeURI(val);
+                return val;
               }
             })
             .map(function (d, idx) {
@@ -372,7 +372,7 @@ const LockGroups = () => {
                         }
                         defaultValue={defaultLocks}
                         renderOption={(props, option, { selected }) => (
-                          <li {...props}>
+                          <li {...decodeURI(props)}>
                             <Checkbox
                               icon={icon}
                               checkedIcon={checkedIcon}
