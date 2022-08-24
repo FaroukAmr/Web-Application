@@ -33,8 +33,8 @@ const PORT = process.env.PORT;
 //express rate limiter
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000, // 60 seconds
-  max: 10, // Limit each IP to 5 requests per `window` (here, per 1 minute)
-  message: 'Too many requests received from this IP',
+  max: 10, // Limit each IP to 10 requests per `window` (here, per 1 minute)
+  message: 'Too many requests, try again later',
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
@@ -64,7 +64,7 @@ app.use('/api/ekey', apiLimiter, csrfProtection, ekeyRoutes);
 app.use('/api/logs', apiLimiter, csrfProtection, logsRoutes);
 app.use('/api/lockgroup', apiLimiter, csrfProtection, lockGroupRoutes);
 app.use('/api/user', apiLimiter, csrfProtection, userRoutes);
-app.use('/api/auth', apiLimiter, authRoutes);
+app.use('/api/auth', authRoutes);
 
 //PRODUCTION BUILD
 if (process.env.NODE_ENV === 'production') {
