@@ -107,12 +107,14 @@ const Cards = () => {
   const [search, setSearch] = useState('');
   const [cards, setCards] = useState([]);
   const txtStyle = { width: '20em' };
-
   const token = localStorage.getItem('authToken');
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
     },
   };
   const allData = async () => {
@@ -155,6 +157,7 @@ const Cards = () => {
     if (!localStorage.getItem('authToken')) {
       navigate('/login');
     }
+    //  handleCsrf();
     allData();
   }, []);
 
@@ -199,6 +202,7 @@ const Cards = () => {
       })
       .catch((err) => {
         setError(err.response.data.error);
+        setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
       });
@@ -226,6 +230,7 @@ const Cards = () => {
       })
       .catch((err) => {
         setError(err.response.data.error);
+        setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
       });

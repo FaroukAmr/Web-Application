@@ -104,10 +104,13 @@ const LockGroups = () => {
   };
 
   const token = localStorage.getItem('authToken');
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
     },
   };
   const allData = async () => {

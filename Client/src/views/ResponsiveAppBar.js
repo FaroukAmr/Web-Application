@@ -55,36 +55,38 @@ const ResponsiveAppBar = () => {
   const rendersignupButton = useCallback(() => {
     return !localStorage.getItem('authToken');
   });
+  const [csrfTokenState, setCsrfTokenState] = useState('');
+  const token = localStorage.getItem('authToken');
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
+    },
+  };
 
+  async function handleCsrf() {
+    await axios.get('/api/csrf', config).then((res) => {
+      setCsrfTokenState(res.data.csrfToken);
+      localStorage.setItem('csrfToken', res.data.csrfToken);
+    });
+  }
   useEffect(() => {
+    handleCsrf();
     document.body.dir = currentLanguage.dir || 'ltr';
     document.title = t('app_title');
-    handleCsurf();
     if (!rendersignupButton()) {
       handleGetUserInfo();
       setsignupButton(false);
     } else {
       setsignupButton(true);
     }
-  }, [rendersignupButton, currentLanguage]);
-
+  }, [currentLanguage, token]);
   const logoutHandler = () => {
     localStorage.removeItem('authToken');
     navigate('/login');
   };
-  const handleCsurf = async () => {
-    await axios.get('/api/csurf').catch((err) => {
-      console.log(err);
-    });
-  };
-  const token = localStorage.getItem('authToken');
 
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
   const handleGetUserInfo = async () => {
     await axios
       .get('/api/user', config)
@@ -93,7 +95,7 @@ const ResponsiveAppBar = () => {
         setName(res.data.data.username);
       })
       .catch((err) => {
-        //console.log(err);
+        setName('');
       });
   };
 

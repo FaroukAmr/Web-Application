@@ -34,7 +34,6 @@ function Login() {
   const [error, setError] = useState('');
   const [severity, setSeverity] = useState('error');
   const [showPassword, setShowPassword] = useState(false);
-  const [csrfTokenState, setCsrfTokenState] = useState('');
   const navigate = useNavigate();
   const paperStyle = {
     minWidth: 'fit-content',
@@ -74,37 +73,25 @@ function Login() {
       navigate('/');
       return;
     }
-
     handleGoogleSetup();
   }, []);
 
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
   const config = {
-    header: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-    },
-    credentials: 'include',
-    mode: 'cors',
-  };
-  const configCSURF = {
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       'xsrf-token': csrfTokenState,
     },
-    withCredentials: 'true',
   };
   const loginHandler = async (e) => {
     e.preventDefault();
-    console.log(configCSURF.headers['xsrf-token']);
 
     try {
       const { data } = await axios.post(
         '/api/auth/login',
         { email, password },
-        configCSURF
+        config
       );
       if (data.token) {
         localStorage.setItem('authToken', data.token);
@@ -122,7 +109,6 @@ function Login() {
   };
   async function handleCallbackResponse(response) {
     var userObject = jwt_decode(response.credential);
-    console.log(configCSURF.headers['xsrf-token']);
     try {
       const { data } = await axios.post(
         '/api/auth/login/external',
@@ -131,7 +117,7 @@ function Login() {
           username: userObject.name,
           image: userObject.picture,
         },
-        configCSURF
+        config
       );
       if (data.token) {
         localStorage.setItem('authToken', data.token);

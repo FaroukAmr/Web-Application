@@ -1,6 +1,6 @@
 import axios from 'axios';
 import '../css/forgotPassword.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -31,6 +31,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const [error, setError] = useState('');
+
   const buttonStyle = {
     width: '20em',
     backgroundColor: '#2da44e',
@@ -52,15 +53,17 @@ const ForgotPassword = () => {
     borderRadius: '6px',
   };
   const textfieldStyle = { width: '20em', marginBottom: '1em' };
+  const csrfTokenState = localStorage.getItem('csrfToken');
 
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'xsrf-token': csrfTokenState,
+    },
+  };
   const forgotPasswordHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const config = {
-      header: {
-        'Content-Type': 'application/json',
-      },
-    };
 
     try {
       await axios.post('/api/auth/forgotpassword', { email }, config);

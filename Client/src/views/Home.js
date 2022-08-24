@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -18,11 +18,13 @@ export default function Home() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('authToken');
+  const csrfTokenState = localStorage.getItem('csrfToken');
 
   const config = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
     },
   };
   const handleGetUserInfo = async () => {

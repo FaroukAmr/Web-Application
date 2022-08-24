@@ -84,10 +84,13 @@ export default function Logs() {
   };
 
   const token = localStorage.getItem('authToken');
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
     },
   };
 
@@ -95,6 +98,7 @@ export default function Logs() {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
     },
     responseType: 'arraybuffer',
   };

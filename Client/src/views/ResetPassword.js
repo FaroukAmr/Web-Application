@@ -1,6 +1,6 @@
 import axios from 'axios';
 import '../css/resetPassword.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
@@ -48,18 +48,17 @@ const ResetPassword = () => {
     borderRadius: '6px',
   };
   const textfieldStyle = { width: '20em' };
+  const csrfTokenState = localStorage.getItem('csrfToken');
 
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'xsrf-token': csrfTokenState,
+    },
+  };
   const resetPasswordHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const config = {
-      header: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      },
-    };
 
     if (password !== confirmPassword) {
       setPassword('');

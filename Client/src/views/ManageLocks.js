@@ -209,12 +209,16 @@ export default function ManageLocks() {
   const [edit, setEdit] = useState('');
   const [editId, setEditId] = useState('');
   const token = localStorage.getItem('authToken');
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
     },
   };
+
   const getLock = async () => {
     setLoading(true);
     await axios
@@ -280,6 +284,7 @@ export default function ManageLocks() {
     if (!localStorage.getItem('authToken')) {
       navigate('/login');
     }
+    // handleCsrf();
     getLock();
     getEkeys();
   }, []);

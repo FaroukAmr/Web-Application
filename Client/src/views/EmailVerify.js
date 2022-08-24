@@ -26,6 +26,15 @@ export default function EmailVerify() {
     fontSize: '10em',
     color: '#000F14',
   };
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
+    },
+  };
   const btnStyle = {
     marginBottom: '6rem',
     marginTop: '1rem',
@@ -43,13 +52,6 @@ export default function EmailVerify() {
   }, []);
   const emailVerifyHandler = async () => {
     setLoading(true);
-    const config = {
-      header: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      },
-    };
 
     await axios
       .get(`/api/auth/verify/${id}/${token}`, config)

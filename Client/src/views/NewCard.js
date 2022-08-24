@@ -52,10 +52,13 @@ export default function NewCard() {
     setOpen(false);
   };
 
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      'xsrf-token': csrfTokenState,
     },
   };
 

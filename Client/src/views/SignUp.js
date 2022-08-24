@@ -70,6 +70,14 @@ function SignUp() {
       google.accounts.id.prompt();
     } catch (error) {}
   };
+  const csrfTokenState = localStorage.getItem('csrfToken');
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'xsrf-token': csrfTokenState,
+    },
+  };
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
       navigate('/');
@@ -80,12 +88,6 @@ function SignUp() {
 
   const registerHandler = async (e) => {
     e.preventDefault();
-
-    const config = {
-      header: {
-        'Content-Type': 'application/json',
-      },
-    };
 
     if (password !== confirmPassword) {
       setPassword('');
