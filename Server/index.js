@@ -30,7 +30,7 @@ const CONNECTION_URL = dbUrl;
 const PORT = process.env.PORT;
 
 const app = express();
-
+app.disable('x-powered-by');
 app.use(compress());
 app.use(cors());
 app.use(express.json());
