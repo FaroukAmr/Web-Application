@@ -29,9 +29,11 @@ dotenv.config();
 const dbUrl = process.env.DBURL;
 const CONNECTION_URL = dbUrl;
 const PORT = process.env.PORT;
+
+//express rate limiter
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000, // 60 seconds
-  max: 5, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  max: 10, // Limit each IP to 5 requests per `window` (here, per 1 minute)
   message: 'Too many requests received from this IP',
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers

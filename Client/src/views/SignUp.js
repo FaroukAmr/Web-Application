@@ -123,35 +123,39 @@ function SignUp() {
       setSeverity('success');
       setOpen(true);
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.error || error.response.data);
       setSeverity('error');
       setOpen(true);
     }
   };
   async function handleCallbackResponse(response) {
     var userObject = jwt_decode(response.credential);
-    try {
-      const { data } = await axios.post(
+
+    const { data } = await axios
+      .post(
         '/api/auth/login/external',
         {
           email: userObject.email,
           username: userObject.name,
         },
         config
-      );
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-        navigate('/');
-      } else {
-        setError('Error signing in with Google');
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.token) {
+          localStorage.setItem('authToken', res.data.token);
+          navigate('/');
+        } else {
+          setError('Error signing in with Google');
+          setSeverity('error');
+          setOpen(true);
+        }
+      })
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpen(true);
-      }
-    } catch (error) {
-      setError(error.response.data.error);
-      setSeverity('error');
-      setOpen(true);
-    }
+      });
   }
   return (
     <Paper style={paperStyle} elevation={6}>
