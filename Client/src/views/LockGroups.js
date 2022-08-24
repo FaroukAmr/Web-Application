@@ -93,7 +93,7 @@ const LockGroups = () => {
   };
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
-  const [lockGroups, setlockGroups] = useState([]);
+  const [lockGroups, setlockGroups] = useState('');
   const txtStyle = { width: '20em' };
   const handleClickOpenCreate = () => {
     setopenCreate(true);
