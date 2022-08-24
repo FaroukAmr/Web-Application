@@ -73,7 +73,7 @@ const ForgotPassword = () => {
       setError('Email sent');
       setOpen(true);
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.error || error.response.data);
       setSeverity('error');
       setOpen(true);
       setEmail('');

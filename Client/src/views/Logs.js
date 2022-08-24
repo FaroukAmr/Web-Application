@@ -138,7 +138,7 @@ export default function Logs() {
           navigate('/login');
         } else {
           setHasAccess(false);
-          setError(err.response.data.error);
+          setError(err.response.data.error || err.response.data);
           setSeverity('error');
           setOpen(true);
           setLoading(false);

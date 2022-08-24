@@ -108,8 +108,8 @@ const Locks = () => {
 
         setLoading(false);
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setOpenSnack(true);
         setLoading(false);
       });
@@ -118,8 +118,8 @@ const Locks = () => {
   const handleEkeysDelete = async (lockId) => {
     await axios
       .post('/api/ekey/deletemany', { lockId }, config)
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setOpenSnack(true);
       });
   };
@@ -151,8 +151,8 @@ const Locks = () => {
         saveAs(blob, `locks.pdf`);
         setLoading(false);
       })
-      .catch((err) => {
-        setError('Could not export locks');
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setOpenSnack(true);
         setLoading(false);
       });

@@ -86,7 +86,7 @@ function SignUp() {
         localStorage.removeItem('authToken');
         navigate('/login');
       }
-      setError(error.response.data.error);
+      setError(error.response.data.error || error.response.data);
       setSeverity('error');
       setOpen(true);
       setLoading(false);

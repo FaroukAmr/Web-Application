@@ -75,7 +75,7 @@ export default function NewCard() {
           localStorage.removeItem('authToken');
           navigate('/login');
         }
-        setError(err.response.data.error);
+        setError(err.response.data.error || err.response.data);
         setSeverity('error');
         setOpen(true);
         setLoading(false);

@@ -126,8 +126,8 @@ const Cards = () => {
         allLocks();
         setLoading(false);
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
       });
@@ -141,12 +141,14 @@ const Cards = () => {
         setLocks(res.data.data);
         setLoading(false);
       })
-      .catch((err) => {
-        if (err.response.data.error === 'Not authorized to access this route') {
+      .catch((error) => {
+        if (
+          error.response.data.error === 'Not authorized to access this route'
+        ) {
           localStorage.removeItem('authToken');
           navigate('/login');
         }
-        setError(err.response.data.error);
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -171,8 +173,8 @@ const Cards = () => {
         setOpenSnack(true);
         allData();
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -200,8 +202,8 @@ const Cards = () => {
         setOpenSnack(true);
         setLoading(false);
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -228,8 +230,8 @@ const Cards = () => {
         setOpenSnack(true);
         allData();
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);

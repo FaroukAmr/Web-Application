@@ -63,7 +63,7 @@ export default function EmailVerify() {
         navigate('/login');
       })
       .catch((error) => {
-        setError(error.response.data.error);
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpen(true);
         setValid(false);

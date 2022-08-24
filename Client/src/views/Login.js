@@ -101,7 +101,8 @@ function Login() {
         setOpen(true);
       }
     } catch (error) {
-      setError(error.response.data.error);
+      console.log(error);
+      setError(error.response.data.error || error.response.data);
       setSeverity('error');
       setOpen(true);
     }
@@ -127,7 +128,7 @@ function Login() {
         setOpen(true);
       }
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.error || error.response.data);
       setSeverity('error');
       setOpen(true);
     }

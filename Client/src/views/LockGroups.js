@@ -121,8 +121,8 @@ const LockGroups = () => {
         setlockGroups(res.data.data);
         setLoading(false);
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -156,8 +156,8 @@ const LockGroups = () => {
         setSeverity('success');
         setOpenSnack(true);
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -173,12 +173,14 @@ const LockGroups = () => {
         setLocks(res.data.data);
         setLoading(false);
       })
-      .catch((err) => {
-        if (err.response.data.error === 'Not authorized to access this route') {
+      .catch((error) => {
+        if (
+          error.response.data.error === 'Not authorized to access this route'
+        ) {
           localStorage.removeItem('authToken');
           navigate('/login');
         }
-        setError(err.response.data.error);
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -203,8 +205,8 @@ const LockGroups = () => {
         setOpenSnack(true);
         allData();
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -232,8 +234,8 @@ const LockGroups = () => {
         setOpenSnack(true);
         allData();
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setOpenSnack(true);
         setLoading(false);
       });
@@ -372,7 +374,7 @@ const LockGroups = () => {
                         }
                         defaultValue={defaultLocks}
                         renderOption={(props, option, { selected }) => (
-                          <li {...decodeURI(props)}>
+                          <li {...props}>
                             <Checkbox
                               icon={icon}
                               checkedIcon={checkedIcon}

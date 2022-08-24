@@ -18,6 +18,7 @@ import path from 'path';
 import compress from 'compression';
 import csrf from 'csurf';
 import bodyParser from 'body-parser';
+import rateLimit from 'express-rate-limit';
 
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,13 @@ dotenv.config();
 const dbUrl = process.env.DBURL;
 const CONNECTION_URL = dbUrl;
 const PORT = process.env.PORT;
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000, // 60 seconds
+  max: 5, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: 'Too many requests received from this IP',
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 const app = express();
 app.disable('x-powered-by');
@@ -48,13 +56,13 @@ app.get('/api/csrf', csrfProtection, function (req, res) {
 });
 
 //Routes
-app.use('/api/lock', csrfProtection, lockRoutes);
-app.use('/api/card', csrfProtection, cardRoutes);
-app.use('/api/ekey', csrfProtection, ekeyRoutes);
-app.use('/api/logs', csrfProtection, logsRoutes);
-app.use('/api/lockgroup', csrfProtection, lockGroupRoutes);
-app.use('/api/user', csrfProtection, userRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/lock', apiLimiter, csrfProtection, lockRoutes);
+app.use('/api/card', apiLimiter, csrfProtection, cardRoutes);
+app.use('/api/ekey', apiLimiter, csrfProtection, ekeyRoutes);
+app.use('/api/logs', apiLimiter, csrfProtection, logsRoutes);
+app.use('/api/lockgroup', apiLimiter, csrfProtection, lockGroupRoutes);
+app.use('/api/user', apiLimiter, csrfProtection, userRoutes);
+app.use('/api/auth', apiLimiter, authRoutes);
 
 //PRODUCTION BUILD
 if (process.env.NODE_ENV === 'production') {

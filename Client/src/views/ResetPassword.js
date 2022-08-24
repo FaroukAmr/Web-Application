@@ -86,7 +86,7 @@ const ResetPassword = () => {
       }, 2000);
       setLoading(false);
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.error || error.response.data);
       setSeverity('error');
       setOpen(true);
       setLoading(false);

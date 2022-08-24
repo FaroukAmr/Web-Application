@@ -91,7 +91,7 @@ export default function Profile() {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error.response.data.error);
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpen(true);
         setLoading(false);
@@ -123,7 +123,7 @@ export default function Profile() {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error.response.data.error);
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpen(true);
         setLoading(false);
@@ -140,7 +140,7 @@ export default function Profile() {
         handleGetUserInfo();
       })
       .catch((error) => {
-        setError(error.response.data.error);
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpen(true);
         setLoading(false);

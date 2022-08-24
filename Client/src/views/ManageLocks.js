@@ -272,8 +272,8 @@ export default function ManageLocks() {
         setOpenSnack(true);
         getEkeys();
       })
-      .catch((e) => {
-        setError(e.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -306,8 +306,8 @@ export default function ManageLocks() {
         handleEkeysDelete();
         navigate('/');
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -329,8 +329,8 @@ export default function ManageLocks() {
           getEkeys();
         }
       })
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -365,8 +365,8 @@ export default function ManageLocks() {
         getEkeys();
       })
 
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
         setLoading(false);
@@ -377,8 +377,8 @@ export default function ManageLocks() {
     setLoading(true);
     await axios
       .post('/api/ekey/deletemany', { lockId }, config)
-      .catch((err) => {
-        setError(err.response.data.error);
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpenSnack(true);
       });
