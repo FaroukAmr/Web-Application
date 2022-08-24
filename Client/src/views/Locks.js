@@ -87,6 +87,10 @@ const Locks = () => {
           localStorage.removeItem('authToken');
           navigate('/login');
           setLoading(false);
+        } else {
+          setError(err.response.data.error || err.response.data);
+          setOpen(true);
+          setLoading(false);
         }
       });
   };
@@ -152,7 +156,8 @@ const Locks = () => {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error.response.data.error || error.response.data);
+        console.log(error);
+        setError(error.response.statusText || 'Could not export PDF');
         setOpenSnack(true);
         setLoading(false);
       });

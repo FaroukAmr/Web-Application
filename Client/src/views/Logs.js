@@ -113,7 +113,7 @@ export default function Logs() {
         saveAs(blob, `${lockName}_logs.pdf`);
       })
       .catch((err) => {
-        setError('Could not export logs');
+        setError(error.response.statusText || 'Could not export PDF');
         setSeverity('error');
         setOpen(true);
       });
