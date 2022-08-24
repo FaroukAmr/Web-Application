@@ -35,25 +35,26 @@ app.use(compress());
 app.use(cors());
 app.use(express.json());
 app.use(sslRedirect());
+app.use(cookieParser());
 app.use(
   bodyParser.urlencoded({
     extended: false,
   })
 );
-app.use(cookieParser());
 
 //Cross-Site Request Forgery (CSRF) protection
 app.get('/api/csrf', csrfProtection, function (req, res) {
   res.send({ csrfToken: req.csrfToken() });
 });
 
-app.use('/api/auth', authRoutes);
+//Routes
 app.use('/api/lock', csrfProtection, lockRoutes);
 app.use('/api/card', csrfProtection, cardRoutes);
 app.use('/api/ekey', csrfProtection, ekeyRoutes);
 app.use('/api/logs', csrfProtection, logsRoutes);
 app.use('/api/lockgroup', csrfProtection, lockGroupRoutes);
 app.use('/api/user', csrfProtection, userRoutes);
+app.use('/api/auth', authRoutes);
 
 //PRODUCTION BUILD
 if (process.env.NODE_ENV === 'production') {

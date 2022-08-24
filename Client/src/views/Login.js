@@ -35,6 +35,7 @@ function Login() {
   const [severity, setSeverity] = useState('error');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
   const paperStyle = {
     minWidth: 'fit-content',
     maxWidth: '25rem',
@@ -67,16 +68,15 @@ function Login() {
       google.accounts.id.prompt();
     } catch (error) {}
   };
-
+  var csrfTokenState = localStorage.getItem('csrfToken');
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
       navigate('/');
       return;
     }
+    csrfTokenState = localStorage.getItem('csrfToken');
     handleGoogleSetup();
   }, []);
-
-  const csrfTokenState = localStorage.getItem('csrfToken');
 
   const config = {
     headers: {
@@ -86,7 +86,6 @@ function Login() {
   };
   const loginHandler = async (e) => {
     e.preventDefault();
-
     try {
       const { data } = await axios.post(
         '/api/auth/login',

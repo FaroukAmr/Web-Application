@@ -70,22 +70,22 @@ function SignUp() {
       google.accounts.id.prompt();
     } catch (error) {}
   };
-  const csrfTokenState = localStorage.getItem('csrfToken');
+  var csrfTokenState = localStorage.getItem('csrfToken');
 
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      'xsrf-token': csrfTokenState,
-    },
-  };
   useEffect(() => {
+    csrfTokenState = localStorage.getItem('csrfToken');
     if (localStorage.getItem('authToken')) {
       navigate('/');
     } else {
       handleGoogleSetup();
     }
   }, []);
-
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'xsrf-token': csrfTokenState,
+    },
+  };
   const registerHandler = async (e) => {
     e.preventDefault();
 
@@ -131,10 +131,14 @@ function SignUp() {
   async function handleCallbackResponse(response) {
     var userObject = jwt_decode(response.credential);
     try {
-      const { data } = await axios.post('/api/auth/login/external', {
-        email: userObject.email,
-        username: userObject.name,
-      });
+      const { data } = await axios.post(
+        '/api/auth/login/external',
+        {
+          email: userObject.email,
+          username: userObject.name,
+        },
+        config
+      );
       if (data.token) {
         localStorage.setItem('authToken', data.token);
         navigate('/');
