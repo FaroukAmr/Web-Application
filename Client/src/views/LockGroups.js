@@ -334,29 +334,32 @@ const LockGroups = () => {
                     </Button>
                   </CardActions>
 
-                  <Dialog open={openForm} onClose={handleCloseForm}>
-                    <DialogTitle>Edit</DialogTitle>
+                  <Dialog open={openCreate} onClose={handleCloseCreate}>
+                    <DialogTitle>Lock Group</DialogTitle>
                     <DialogContent>
                       <DialogContentText>
-                        Edit lock group name, remark, and locks
+                        Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry.
                       </DialogContentText>
                       <TextField
                         autoFocus
-                        required
                         margin="dense"
+                        id="name"
                         label="Name"
+                        type="input"
+                        required
                         fullWidth
                         variant="standard"
-                        value={name}
                         onChange={(e) => setName(e.target.value)}
                       />
                       <TextField
                         autoFocus
                         margin="dense"
+                        id="name"
                         label="Remark"
+                        type="input"
                         fullWidth
                         variant="standard"
-                        value={remark}
                         onChange={(e) => setRemark(e.target.value)}
                       />
                     </DialogContent>
@@ -391,14 +394,14 @@ const LockGroups = () => {
                       />
                     </DialogContent>
                     <DialogActions>
-                      <Button onClick={handleCloseForm}>Cancel</Button>
+                      <Button onClick={handleCloseCreate}>Cancel</Button>
                       <Button
                         onClick={() => {
-                          handleCloseForm();
-                          handleUpdate(d._id);
+                          handleCloseCreate();
+                          handleSubmit();
                         }}
                       >
-                        Confirm
+                        Create
                       </Button>
                     </DialogActions>
                   </Dialog>
