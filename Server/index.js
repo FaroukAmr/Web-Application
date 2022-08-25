@@ -29,10 +29,6 @@ dotenv.config();
 const dbUrl = process.env.DBURL;
 const CONNECTION_URL = dbUrl;
 const PORT = process.env.PORT;
-const corsOptions = {
-  origin: 'https://asg-smartlock.herokuapp.com/',
-  credentials: true,
-};
 
 //express rate limiter
 const apiLimiter = rateLimit({
@@ -46,9 +42,45 @@ const apiLimiter = rateLimit({
 const app = express();
 
 app.disable('x-powered-by');
-app.use(helmet());
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: false,
+//     crossOriginEmbedderPolicy: false,
+//   })
+// );
+
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+//         'img-src': [
+//           "'self'",
+//           "'unsafe-inline'",
+//           "'unsafe-eval'",
+//           'lh3.googleusercontent.com',
+//         ],
+//         'script-src': [
+//           "'self'",
+//           "'unsafe-inline'",
+//           "'unsafe-eval'",
+//           'accounts.google.com',
+//         ],
+//         'style-src': [
+//           "'self'",
+//           "'unsafe-inline'",
+//           "'unsafe-eval'",
+//           'fonts.googleapis.com',
+//           'accounts.google.com',
+//         ],
+//       },
+//     },
+//     crossOriginEmbedderPolicy: false,
+//   })
+// );
+
 app.use(compress());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(sslRedirect());
 app.use(cookieParser());
