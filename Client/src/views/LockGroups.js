@@ -362,33 +362,30 @@ const LockGroups = () => {
                     </DialogContent>
                     <DialogContent>
                       <Autocomplete
+                        required
                         multiple
-                        limitTags={3}
-                        id="locks-tags"
+                        id="checkboxes"
+                        onChange={(event, value) => setEditLocks(value)}
                         options={locks}
                         disableCloseOnSelect
-                        onChange={(event, value) => setEditLocks(value)}
                         getOptionLabel={(option) => option.lockName}
-                        isOptionEqualToValue={(option, value) =>
-                          option._id === value._id
-                        }
-                        // defaultValue={defaultLocks}
                         renderOption={(props, option, { selected }) => (
                           <li {...props}>
                             <Checkbox
                               icon={icon}
                               checkedIcon={checkedIcon}
-                              style={{ marginRight: 8 }}
+                              //   style={{ marginRight: 8 }}
                               checked={selected}
                             />
                             {option.lockName}
                           </li>
                         )}
+                        // style={{ width: 500 }}
                         renderInput={(params) => (
                           <TextField
                             {...params}
                             label="Locks"
-                            placeholder="Choose locks to issue"
+                            placeholder="Choose Locks"
                           />
                         )}
                       />
