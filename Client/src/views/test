@@ -1,0 +1,7 @@
+//fault limitTags={3} isOptionEqualToValue={(option, value) => option._id ===
+value._id } defaultValue={defaultLocks} --maybe renderOption={(props, option, {
+selected }) => ( style={{ marginRight: 8 }} )} />
+---------------------------------//good
+------------------------------------------ required --not there
+renderOption={(props, option, { selected }) => ( // style={{ marginRight: 8 }}
+/> {option.lockName} )} // style={{ width: 500 } />

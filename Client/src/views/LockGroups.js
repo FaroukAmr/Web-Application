@@ -361,7 +361,7 @@ const LockGroups = () => {
                       />
                     </DialogContent>
                     <DialogContent>
-                      {/* <Autocomplete
+                      <Autocomplete
                         multiple
                         limitTags={3}
                         id="locks-tags"
@@ -372,7 +372,7 @@ const LockGroups = () => {
                         isOptionEqualToValue={(option, value) =>
                           option._id === value._id
                         }
-                        defaultValue={defaultLocks}
+                        // defaultValue={defaultLocks}
                         renderOption={(props, option, { selected }) => (
                           <li {...props}>
                             <Checkbox
@@ -391,7 +391,7 @@ const LockGroups = () => {
                             placeholder="Choose locks to issue"
                           />
                         )}
-                      /> */}
+                      />
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleCloseForm}>Cancel</Button>
