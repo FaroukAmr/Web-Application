@@ -361,7 +361,7 @@ const LockGroups = () => {
                       />
                     </DialogContent>
                     <DialogContent>
-                      <Autocomplete
+                      {/* <Autocomplete
                         multiple
                         limitTags={3}
                         id="locks-tags"
@@ -391,7 +391,7 @@ const LockGroups = () => {
                             placeholder="Choose locks to issue"
                           />
                         )}
-                      />
+                      /> */}
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleCloseForm}>Cancel</Button>
