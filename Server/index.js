@@ -19,7 +19,7 @@ import compress from 'compression';
 import csrf from 'csurf';
 import bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
-
+import helmet from 'helmet';
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -29,6 +29,10 @@ dotenv.config();
 const dbUrl = process.env.DBURL;
 const CONNECTION_URL = dbUrl;
 const PORT = process.env.PORT;
+const corsOptions = {
+  origin: 'https://asg-smartlock.herokuapp.com/',
+  credentials: true,
+};
 
 //express rate limiter
 const apiLimiter = rateLimit({
@@ -40,9 +44,11 @@ const apiLimiter = rateLimit({
 });
 
 const app = express();
+
 app.disable('x-powered-by');
+app.use(helmet());
 app.use(compress());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(sslRedirect());
 app.use(cookieParser());
