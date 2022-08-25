@@ -285,127 +285,128 @@ const LockGroups = () => {
             })
             .map(function (d, idx) {
               return (
-                <Card className="locks-item" key={d._id}>
-                  <CardMedia
-                    component="img"
-                    height="8"
-                    style={{
-                      backgroundColor: `#${randomNumber(d._id)}`,
-                      borderRadius: '0px',
-                      width: '100%',
-                      margin: '0 auto',
-                    }}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {d.name}
-                    </Typography>
-
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      component="div"
-                    >
-                      Remark: {d.remark}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Updated {handleDate(d.updatedAt)}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        handleClickOpenForm(d.name, d.remark, d.locks);
-                        set_id(d._id);
+                <>
+                  <Card className="locks-item" key={d._id}>
+                    <CardMedia
+                      component="img"
+                      height="8"
+                      style={{
+                        backgroundColor: `#${randomNumber(d._id)}`,
+                        borderRadius: '0px',
+                        width: '100%',
+                        margin: '0 auto',
                       }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      color="error"
-                      size="small"
-                      onClick={() => {
-                        handleClickOpen();
-                        setDeleteId(d._id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </CardActions>
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {d.name}
+                      </Typography>
 
-                  <Dialog open={openCreate} onClose={handleCloseCreate}>
-                    <DialogTitle>Lock Group</DialogTitle>
+                      <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        component="div"
+                      >
+                        Remark: {d.remark}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Updated {handleDate(d.updatedAt)}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          handleClickOpenForm(d.name, d.remark, d.locks);
+                          set_id(d._id);
+                        }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        color="error"
+                        size="small"
+                        onClick={() => {
+                          handleClickOpen();
+                          setDeleteId(d._id);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </CardActions>
+                  </Card>
+                  <Dialog open={openForm} onClose={handleCloseForm}>
+                    <DialogTitle>Edit</DialogTitle>
                     <DialogContent>
                       <DialogContentText>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
+                        Edit lock group name, remark, and locks
                       </DialogContentText>
                       <TextField
                         autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Name"
-                        type="input"
                         required
+                        margin="dense"
+                        label="Name"
                         fullWidth
                         variant="standard"
+                        value={name}
                         onChange={(e) => setName(e.target.value)}
                       />
                       <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
                         label="Remark"
-                        type="input"
                         fullWidth
                         variant="standard"
+                        value={remark}
                         onChange={(e) => setRemark(e.target.value)}
                       />
                     </DialogContent>
                     <DialogContent>
                       <Autocomplete
-                        required
                         multiple
-                        id="checkboxes"
-                        onChange={(event, value) => setEditLocks(value)}
+                        limitTags={3}
+                        id="locks-tags"
                         options={locks}
                         disableCloseOnSelect
+                        onChange={(event, value) => setEditLocks(value)}
                         getOptionLabel={(option) => option.lockName}
+                        isOptionEqualToValue={(option, value) =>
+                          option._id === value._id
+                        }
+                        defaultValue={defaultLocks}
                         renderOption={(props, option, { selected }) => (
                           <li {...props}>
                             <Checkbox
                               icon={icon}
                               checkedIcon={checkedIcon}
-                              //   style={{ marginRight: 8 }}
+                              style={{ marginRight: 8 }}
                               checked={selected}
                             />
                             {option.lockName}
                           </li>
                         )}
-                        // style={{ width: 500 }}
                         renderInput={(params) => (
                           <TextField
                             {...params}
                             label="Locks"
-                            placeholder="Choose Locks"
+                            placeholder="Choose locks to issue"
                           />
                         )}
                       />
                     </DialogContent>
                     <DialogActions>
-                      <Button onClick={handleCloseCreate}>Cancel</Button>
+                      <Button onClick={handleCloseForm}>Cancel</Button>
                       <Button
                         onClick={() => {
-                          handleCloseCreate();
-                          handleSubmit();
+                          handleCloseForm();
+                          handleUpdate(d._id);
                         }}
                       >
-                        Create
+                        Confirm
                       </Button>
                     </DialogActions>
                   </Dialog>
-                </Card>
+                </>
               );
             })}
         </div>
