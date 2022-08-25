@@ -84,7 +84,7 @@ const Cards = () => {
   const [error, setError] = useState('');
   const [open, setOpen] = React.useState(false);
   const [deleteId, setDeleteId] = useState('');
-
+  const [editCard, setEditCard] = useState('');
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -345,6 +345,7 @@ const Cards = () => {
                         size="small"
                         onClick={() => {
                           handleClickOpen();
+                          setEditCard(d);
                           setDeleteId(d._id);
                         }}
                       >
@@ -352,81 +353,76 @@ const Cards = () => {
                       </Button>
                     </CardActions>
                   </Card>
-
-                  <Dialog open={openForm} onClose={handleCloseForm}>
-                    <DialogTitle>{t('edit')}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        {t('card_edit_title')}
-                      </DialogContentText>
-                      <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        label="Card Name"
-                        fullWidth
-                        variant="standard"
-                        value={cardName}
-                        onChange={(e) => setCardName(e.target.value)}
-                      />
-                      <TextField
-                        margin="dense"
-                        label="Remark"
-                        fullWidth
-                        variant="standard"
-                        value={cardRemark}
-                        onChange={(e) => setCardRemark(e.target.value)}
-                      />
-                    </DialogContent>
-                    <DialogContent>
-                      <Autocomplete
-                        multiple
-                        limitTags={3}
-                        id="locks-tags"
-                        options={locks}
-                        disableCloseOnSelect
-                        onChange={(event, value) => setEditLocks(value)}
-                        getOptionLabel={(option) => option.lockName}
-                        isOptionEqualToValue={(option, value) =>
-                          option._id === value._id
-                        }
-                        defaultValue={chosenLocks}
-                        renderOption={(props, option, { selected }) => (
-                          <li {...props}>
-                            <Checkbox
-                              icon={icon}
-                              checkedIcon={checkedIcon}
-                              style={{ marginRight: 8 }}
-                              checked={selected}
-                            />
-                            {option.lockName}
-                          </li>
-                        )}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label={t('locks')}
-                            placeholder={t('choose_locks')}
-                          />
-                        )}
-                      />
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleCloseForm}>{t('go_back')}</Button>
-                      <Button
-                        onClick={() => {
-                          handleCloseForm();
-                          handleUpdate(d._id);
-                        }}
-                      >
-                        {t('confirm')}
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
                 </div>
               );
             })}
         </div>
+        <Dialog open={openForm} onClose={handleCloseForm} key={editCard._id}>
+          <DialogTitle>{t('edit')}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{t('card_edit_title')}</DialogContentText>
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              label="Card Name"
+              fullWidth
+              variant="standard"
+              value={cardName}
+              onChange={(e) => setCardName(e.target.value)}
+            />
+            <TextField
+              margin="dense"
+              label="Remark"
+              fullWidth
+              variant="standard"
+              value={cardRemark}
+              onChange={(e) => setCardRemark(e.target.value)}
+            />
+          </DialogContent>
+          <DialogContent>
+            <Autocomplete
+              multiple
+              limitTags={3}
+              id="locks-tags"
+              options={locks}
+              disableCloseOnSelect
+              onChange={(event, value) => setEditLocks(value)}
+              getOptionLabel={(option) => option.lockName}
+              isOptionEqualToValue={(option, value) => option._id === value._id}
+              defaultValue={chosenLocks}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.lockName}
+                </li>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={t('locks')}
+                  placeholder={t('choose_locks')}
+                />
+              )}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseForm}>{t('go_back')}</Button>
+            <Button
+              onClick={() => {
+                handleCloseForm();
+                handleUpdate(editCard._id);
+              }}
+            >
+              {t('confirm')}
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Snackbar
           open={openSnack}
           autoHideDuration={4000}
