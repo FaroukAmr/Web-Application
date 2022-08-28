@@ -42,42 +42,43 @@ const apiLimiter = rateLimit({
 const app = express();
 
 app.disable('x-powered-by');
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: false,
-//     crossOriginEmbedderPolicy: false,
-//   })
-// );
 
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: {
-//       directives: {
-//         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-//         'img-src': [
-//           "'self'",
-//           "'unsafe-inline'",
-//           "'unsafe-eval'",
-//           'lh3.googleusercontent.com',
-//         ],
-//         'script-src': [
-//           "'self'",
-//           "'unsafe-inline'",
-//           "'unsafe-eval'",
-//           'accounts.google.com',
-//         ],
-//         'style-src': [
-//           "'self'",
-//           "'unsafe-inline'",
-//           "'unsafe-eval'",
-//           'fonts.googleapis.com',
-//           'accounts.google.com',
-//         ],
-//       },
-//     },
-//     crossOriginEmbedderPolicy: false,
-//   })
-// );
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        'img-src': [
+          "'self'",
+          '*.googleusercontent.com',
+          'googleusercontent.com',
+        ],
+        'script-src': [
+          "'self'",
+          "'unsafe-eval'",
+          'accounts.google.com',
+          '*.google.com',
+          'https://accounts.google.com/gsi/client',
+        ],
+        'style-src': [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          'fonts.googleapis.com',
+          'accounts.google.com',
+          '*.googleapis.com',
+          '*.google.com',
+        ],
+        'connect-src': ["'self'", 'accounts.google.com/gsi', '*.google.com'],
+        'frame-src': ["'self'", 'accounts.google.com/', '*.google.com'],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+    referrerPolicy: {
+      policy: 'strict-origin-when-cross-origin',
+    },
+  })
+);
 
 app.use(compress());
 app.use(cors());

@@ -129,6 +129,7 @@ function SignUp() {
     }
   };
   async function handleCallbackResponse(response) {
+    console.log(response);
     var userObject = jwt_decode(response.credential);
 
     const { data } = await axios
