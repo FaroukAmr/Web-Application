@@ -220,8 +220,10 @@ function SignUp() {
           {t('already_have_account')}
         </Link>
         <Divider style={{ width: '100%' }}>OR</Divider>
+        <div>
+          <div id="signInDiv" style={{ margin: '0em 0em 2em 0em' }}></div>
+        </div>
 
-        <div id="signInDiv" style={{ margin: '0em 0em 2em 0em' }}></div>
         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
           <Alert
             onClose={handleClose}

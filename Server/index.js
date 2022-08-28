@@ -48,32 +48,31 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        'img-src': [
-          "'self'",
-          '*.googleusercontent.com',
-          'googleusercontent.com',
-        ],
+        'img-src': ["'self'", '*.googleusercontent.com'],
         'script-src': [
           "'self'",
           "'unsafe-eval'",
           'accounts.google.com',
-          '*.google.com',
           'https://accounts.google.com/gsi/client',
         ],
         'style-src': [
           "'self'",
           "'unsafe-inline'",
           "'unsafe-eval'",
-          'fonts.googleapis.com',
-          'accounts.google.com',
           '*.googleapis.com',
           '*.google.com',
         ],
         'connect-src': ["'self'", 'accounts.google.com/gsi', '*.google.com'],
-        'frame-src': ["'self'", 'accounts.google.com/', '*.google.com'],
+        'frame-src': [
+          "'self'",
+          'accounts.google.com/',
+          '*.google.com',
+          'https://*.google.com/gsi/',
+        ],
       },
     },
     crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
     referrerPolicy: {
       policy: 'strict-origin-when-cross-origin',
     },
@@ -81,7 +80,7 @@ app.use(
 );
 
 app.use(compress());
-app.use(cors());
+app.use(cors({ origin: 'https://asg-smartlock.herokuapp.com/' }));
 app.use(express.json());
 app.use(sslRedirect());
 app.use(cookieParser());
