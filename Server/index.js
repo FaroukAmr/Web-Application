@@ -42,23 +42,24 @@ const apiLimiter = rateLimit({
 const app = express();
 
 app.disable('x-powered-by');
-
+app.use((req, res, next) => {
+  res.setHeader('Permissions-Policy', 'geolocation=(self), microphone=()');
+  next();
+});
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        'img-src': ["'self'", '*.googleusercontent.com'],
+        'img-src': ["'self'", 'data:', '*.googleusercontent.com'],
         'script-src': [
           "'self'",
-          "'unsafe-eval'",
           'accounts.google.com',
           'https://accounts.google.com/gsi/client',
         ],
         'style-src': [
           "'self'",
           "'unsafe-inline'",
-          "'unsafe-eval'",
           '*.googleapis.com',
           '*.google.com',
         ],
