@@ -156,7 +156,6 @@ const Locks = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.statusText || 'Could not export PDF');
         setOpenSnack(true);
         setLoading(false);

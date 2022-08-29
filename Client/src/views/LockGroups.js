@@ -356,7 +356,6 @@ const LockGroups = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               label="Remark"
               fullWidth
@@ -470,7 +469,6 @@ const LockGroups = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label="Remark"
@@ -569,7 +567,6 @@ const LockGroups = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label="Remark"

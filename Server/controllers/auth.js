@@ -5,9 +5,14 @@ import crypto from 'crypto';
 import Token from '../models/Token.js';
 import checkPassword from '../regex/checkPassword.js';
 import checkUsername from '../regex/checkUsername.js';
+import jwt_decode from 'jwt-decode';
 
 export async function handleExternalAuth(req, res, next) {
-  const { username, email, image } = req.body;
+  const { response } = req.body;
+  const userObject = jwt_decode(response.credential);
+  const { email } = userObject;
+  const username = userObject.name;
+  const image = userObject.picture;
   try {
     const user = await User.findOne({ email });
     if (user) {

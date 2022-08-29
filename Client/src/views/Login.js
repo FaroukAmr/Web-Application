@@ -14,7 +14,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
-import jwt_decode from 'jwt-decode';
 import * as React from 'react';
 import Divider from '@mui/material/Divider';
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -101,37 +100,35 @@ function Login() {
         setOpen(true);
       }
     } catch (error) {
-      console.log(error);
       setError(error.response.data.error || error.response.data);
       setSeverity('error');
       setOpen(true);
     }
   };
   async function handleCallbackResponse(response) {
-    var userObject = jwt_decode(response.credential);
-    try {
-      const { data } = await axios.post(
+    await axios
+      .post(
         '/api/auth/login/external',
         {
-          email: userObject.email,
-          username: userObject.name,
-          image: userObject.picture,
+          response,
         },
         config
-      );
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-        navigate('/');
-      } else {
-        setError('Error signing in with Google');
+      )
+      .then((res) => {
+        if (res.data.token) {
+          localStorage.setItem('authToken', res.data.token);
+          navigate('/');
+        } else {
+          setError('Error signing in with Google');
+          setSeverity('error');
+          setOpen(true);
+        }
+      })
+      .catch((error) => {
+        setError(error.response.data.error || error.response.data);
         setSeverity('error');
         setOpen(true);
-      }
-    } catch (error) {
-      setError(error.response.data.error || error.response.data);
-      setSeverity('error');
-      setOpen(true);
-    }
+      });
   }
 
   return (

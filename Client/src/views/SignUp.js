@@ -15,7 +15,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
-import jwt_decode from 'jwt-decode';
 import Divider from '@mui/material/Divider';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -129,20 +128,15 @@ function SignUp() {
     }
   };
   async function handleCallbackResponse(response) {
-    console.log(response);
-    var userObject = jwt_decode(response.credential);
-
-    const { data } = await axios
+    await axios
       .post(
         '/api/auth/login/external',
         {
-          email: userObject.email,
-          username: userObject.name,
+          response,
         },
         config
       )
       .then((res) => {
-        console.log(res);
         if (res.data.token) {
           localStorage.setItem('authToken', res.data.token);
           navigate('/');
