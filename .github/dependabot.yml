@@ -5,8 +5,8 @@ updates:
   - package-ecosystem: "npm" 
     directory: "/Client"
     schedule:
-      interval: "weekly"
+      interval: "daily"
   - package-ecosystem: "npm"
     directory: "/Server" 
     schedule:
-      interval: "weekly"
+      interval: "daily"
