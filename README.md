@@ -6,7 +6,6 @@ This project was done as part of my internsip at Ahram Secuirty Group(https://ww
 
 A beta version of this application is deployed on heroku: https://asg-smartlock.herokuapp.com/
 
-https://asg-smartlock.herokuapp.com/
 
 # Getting Started with Create React App
 
