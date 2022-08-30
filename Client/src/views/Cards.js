@@ -247,10 +247,14 @@ const Cards = () => {
     });
   };
 
-  const randomNumber = (id) => {
-    id = id.replace(/\D/g, '');
-    id = id.slice(id.length - 6);
-    return id;
+  const randomNumber = (locks) => {
+    if (locks.length > 1) {
+      return '#006400';
+    }
+    if (locks.length === 0) {
+      return '#640000';
+    }
+    return '#00008b';
   };
   if (loading) {
     return <Spinner />;
@@ -285,6 +289,9 @@ const Cards = () => {
                 return val;
               }
             })
+            .sort(function (a, b) {
+              return b.locks.length - a.locks.length;
+            })
             .map(function (d, idx) {
               return (
                 <div key={d._id} className="locks-item">
@@ -293,7 +300,7 @@ const Cards = () => {
                       component="img"
                       height="8"
                       style={{
-                        backgroundColor: `#${randomNumber(d._id)}`,
+                        backgroundColor: `${randomNumber(d.locks)}`,
                         borderRadius: '0px',
                         width: '100%',
                         margin: '0 auto',

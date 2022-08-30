@@ -1,6 +1,7 @@
 import Card from '../models/Card.js';
 import ErrorResponse from '../utils/errorResponse.js';
 import User from '../models/User.js';
+import Lock from '../models/Lock.js';
 import { checkCardNumber, checkCardName } from '../regex/checkCard.js';
 export async function getCards(req, res, next) {
   const userId = req.user.email;
@@ -46,6 +47,7 @@ export async function shareCard(req, res, next) {
 
 export async function updateCard(req, res, next) {
   const { cardId, cardName, cardRemark, locks } = req.body;
+  console.log(locks);
   try {
     Card.findOneAndUpdate(
       { _id: cardId },
@@ -81,23 +83,39 @@ export async function deleteCard(req, res, next) {
 }
 
 export async function createCard(req, res, next) {
-  const { cardNumber, remark, cardName } = req.body;
-  const userId = req.user.email;
-  const checkCardNumberResponse = checkCardNumber(cardNumber);
-  if (checkCardNumberResponse !== 'Valid card') {
-    return next(new ErrorResponse(checkCardNumberResponse, 400));
-  }
-
-  const checkCardNameResponse = checkCardName(cardName);
-  if (checkCardNameResponse !== 'Valid card') {
-    return next(new ErrorResponse(checkCardNameResponse, 400));
-  }
   try {
+    const { cardNumber, remark, cardName, checked } = req.body;
+    const userId = req.user.email;
+    const checkCardNumberResponse = checkCardNumber(cardNumber);
+    if (checkCardNumberResponse !== 'Valid card') {
+      return next(new ErrorResponse(checkCardNumberResponse, 400));
+    }
+
+    const checkCardNameResponse = checkCardName(cardName);
+    if (checkCardNameResponse !== 'Valid card') {
+      return next(new ErrorResponse(checkCardNameResponse, 400));
+    }
+
     const existingCard = await Card.findOne({ userId, cardNumber });
     if (existingCard) {
       return next(new ErrorResponse('Card number already exists', 400));
     }
-
+    if (checked) {
+      let locks = await Lock.find({ access: userId });
+      locks = JSON.stringify(locks);
+      locks = JSON.parse(locks);
+      const card = await Card.create({
+        userId,
+        cardNumber,
+        remark,
+        cardName,
+        locks,
+      });
+      if (card) {
+        return res.status(200).json({ success: true, data: 'Card created' });
+      }
+      return next(new ErrorResponse('Could not create card', 400));
+    }
     const card = await Card.create({ userId, cardNumber, remark, cardName });
 
     if (!card) {

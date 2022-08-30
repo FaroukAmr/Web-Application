@@ -12,6 +12,8 @@ import * as React from 'react';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import { useTranslation } from 'react-i18next';
 import Spinner from './Spinner';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -21,6 +23,7 @@ export default function NewCard() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState('');
+  const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
   const iconStyle = { fontSize: '4em', marginTop: '1rem', color: '#152a2f' };
   const paperStyle = {
@@ -32,7 +35,7 @@ export default function NewCard() {
   };
   const btn = {
     width: '20em',
-    marginTop: '1em',
+    margin: '0.5em 0em 2.5em 0em',
     borderRadius: '6px',
     backgroundColor: '#2da44e',
   };
@@ -65,8 +68,16 @@ export default function NewCard() {
   const handleCreate = async (e) => {
     e.preventDefault();
     setLoading(true);
+    let masterRemark = remark;
+    if (masterRemark === '' && checked) {
+      masterRemark = 'MASTER KEY';
+    }
     await axios
-      .post('/api/card/create', { cardNumber, remark, cardName }, config)
+      .post(
+        '/api/card/create',
+        { cardNumber, remark: masterRemark, cardName, checked },
+        config
+      )
       .then(() => {
         navigate('/cards');
       })
@@ -94,8 +105,9 @@ export default function NewCard() {
   }, [validNumber]);
 
   const detectKeyDown = (e) => {
+    const isOnlyNumbers = /^\d+$/;
     if (e.key === 'Enter') {
-      if (number.length < 9) {
+      if (number.length < 9 || !isOnlyNumbers.test(number)) {
         number = '';
         setValidNumber(false);
         setCardNumber('not valid');
@@ -168,6 +180,12 @@ export default function NewCard() {
             label={t('remark')}
             onChange={(e) => setRemark(e.target.value)}
           ></TextField>
+          <FormControlLabel
+            control={<Checkbox />}
+            onChange={(e) => setChecked(e.target.checked)}
+            label="Master Key"
+          />
+
           <Button type="submit" style={btn} variant="contained">
             {t('add_card')}
           </Button>

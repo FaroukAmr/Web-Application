@@ -4,6 +4,11 @@ export function checkCardNumber(value) {
     return 'Invalid card number';
   }
 
+  const isOnlyNumbers = /^\d+$/;
+  if (!isOnlyNumbers.test(value)) {
+    return 'Invalid card number';
+  }
+
   return 'Valid card';
 }
 
