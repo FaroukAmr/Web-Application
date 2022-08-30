@@ -139,7 +139,7 @@ export async function exportLocksXcel(req, res, next) {
     }
     const stream = res.writeHead(200, {
       'Content-Type':
-        'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': `attachment;filename=${email}_locks.xlsx`,
     });
     let dataArray = [];

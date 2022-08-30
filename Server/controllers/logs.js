@@ -29,7 +29,7 @@ export async function exportLogsXcel(req, res, next) {
     let log = await Log.find({ lockId });
     const stream = res.writeHead(200, {
       'Content-Type':
-        'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': `attachment;filename=${email}_${lockId}_logs.xlsx`,
     });
     let dataArray = [];
