@@ -211,7 +211,7 @@ const Locks = () => {
               handleExportExcel();
             }}
           >
-            export excel
+            {t('export_excel')}
           </Button>
         </div>
         <div className="locks-container">

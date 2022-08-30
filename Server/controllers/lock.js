@@ -5,6 +5,7 @@ import Log from '../models/Logs.js';
 import { buildLockPDF } from '../utils/generatePdf.js';
 import { checkLockName, checkLockMAC } from '../regex/checkLock.js';
 import XLSX from 'xlsx';
+import moment from 'moment';
 
 export async function createLock(req, res, next) {
   try {
@@ -142,12 +143,26 @@ export async function exportLocksXcel(req, res, next) {
         'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': `attachment;filename=${email}_locks_${randomNumber}.xlsx`,
     });
+    let dataArray = [];
     let temp = JSON.stringify(locks);
     temp = JSON.parse(temp);
     for (let i = 0; i < temp.length; i++) {
-      temp[i].access = JSON.stringify(temp[i].access);
+      let tempArray = {
+        'Lock ID': temp[i]._id,
+        Owner: temp[i].userId,
+        'Lock Name': temp[i].lockName,
+        MAC: temp[i].lockMac,
+        Access: JSON.stringify(temp[i].access),
+        Created: moment(temp[i].createdAt).format(
+          'dddd, MMMM Do YYYY, h:mm:ss a'
+        ),
+        Updated: moment(temp[i].updatedAt).format(
+          'dddd, MMMM Do YYYY, h:mm:ss a'
+        ),
+      };
+      dataArray.push(tempArray);
     }
-    const workSheet = XLSX.utils.json_to_sheet(temp);
+    const workSheet = XLSX.utils.json_to_sheet(dataArray);
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook, workSheet, 'Locks');
 
