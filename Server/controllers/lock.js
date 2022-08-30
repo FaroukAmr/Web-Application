@@ -117,7 +117,7 @@ export async function exportLocks(req, res, next) {
     const randomNumber = Math.floor(Math.random() * (9999 - 1000) + 1000);
     const stream = res.writeHead(200, {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment;filename=${email}_locks_${randomNumber}.pdf`,
+      'Content-Disposition': `attachment;filename=${email}_locks.pdf`,
     });
 
     buildLockPDF(
@@ -137,11 +137,10 @@ export async function exportLocksXcel(req, res, next) {
     if (!locks) {
       new ErrorResponse('No locks to export', 400);
     }
-    const randomNumber = Math.floor(Math.random() * (9999 - 1000) + 1000);
     const stream = res.writeHead(200, {
       'Content-Type':
         'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'Content-Disposition': `attachment;filename=${email}_locks_${randomNumber}.xlsx`,
+      'Content-Disposition': `attachment;filename=${email}_locks.xlsx`,
     });
     let dataArray = [];
     let temp = JSON.stringify(locks);

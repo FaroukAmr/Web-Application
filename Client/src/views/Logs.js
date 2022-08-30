@@ -102,6 +102,25 @@ export default function Logs() {
     },
     responseType: 'arraybuffer',
   };
+  const handleExportExcel = async () => {
+    setLoading(true);
+    await axios
+      .post('/api/logs/exportExcel', { lockId }, configPDF)
+      .then((res) => {
+        const { data } = res;
+        const name = res.headers['content-disposition'].substring(20);
+        const blob = new Blob([data], {
+          type: 'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        saveAs(blob, name);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.response.statusText || 'Could not export Excel');
+        setOpen(true);
+        setLoading(false);
+      });
+  };
 
   const handleExport = async () => {
     setLoading(true);
@@ -109,8 +128,9 @@ export default function Logs() {
       .post('/api/logs/export', { lockId }, configPDF)
       .then((res) => {
         const { data } = res;
+        const name = res.headers['content-disposition'].substring(20);
         const blob = new Blob([data], { type: 'application/pdf' });
-        saveAs(blob, `${lockName}_logs.pdf`);
+        saveAs(blob, name);
       })
       .catch((err) => {
         setError(error.response.statusText || 'Could not export PDF');
@@ -220,12 +240,19 @@ export default function Logs() {
                 <td>
                   <Button
                     variant="contained"
-                    style={{ margin: '0.5em 0em 0em 0.5em' }}
                     onClick={() => {
                       handleExport();
                     }}
                   >
-                    EXPORT AS PDF
+                    EXPORT PDF
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      handleExportExcel();
+                    }}
+                  >
+                    EXPORT EXCEL
                   </Button>
                 </td>
                 <TablePagination
