@@ -4,27 +4,28 @@ import LockGroup from '../models/LockGroup.js';
 import Log from '../models/Logs.js';
 import { buildLockPDF } from '../utils/generatePdf.js';
 import { checkLockName, checkLockMAC } from '../regex/checkLock.js';
+import XLSX from 'xlsx';
 
 export async function createLock(req, res, next) {
-  const { lockName, lockMac } = req.body;
-  const userId = req.user.email;
-
-  const checkLockNameResponse = checkLockName(lockName);
-  if (checkLockNameResponse !== 'Valid lock') {
-    return next(new ErrorResponse(checkLockNameResponse, 400));
-  }
-  const checkLockMACResponse = checkLockMAC(lockMac);
-  if (checkLockMACResponse !== 'Valid lock') {
-    return next(new ErrorResponse(checkLockMACResponse, 400));
-  }
-
-  const existingLock = await Lock.findOne({ userId, lockMac });
-
-  if (existingLock) {
-    return next(new ErrorResponse('Lock with this MAC already added', 400));
-  }
-
   try {
+    const { lockName, lockMac } = req.body;
+    const userId = req.user.email;
+
+    const checkLockNameResponse = checkLockName(lockName);
+    if (checkLockNameResponse !== 'Valid lock') {
+      return next(new ErrorResponse(checkLockNameResponse, 400));
+    }
+    const checkLockMACResponse = checkLockMAC(lockMac);
+    if (checkLockMACResponse !== 'Valid lock') {
+      return next(new ErrorResponse(checkLockMACResponse, 400));
+    }
+
+    const existingLock = await Lock.findOne({ userId, lockMac });
+
+    if (existingLock) {
+      return next(new ErrorResponse('Lock with this MAC already added', 400));
+    }
+
     const lock = await Lock.create({
       userId,
       lockName,
@@ -48,10 +49,9 @@ export async function createLock(req, res, next) {
 }
 
 export async function getLock(req, res, next) {
-  const { email } = req.user;
-  const _id = req.body.lockId;
-
   try {
+    const { email } = req.user;
+    const _id = req.body.lockId;
     const lock = await Lock.findOne({ access: email, _id }).catch(() => {
       return next(new ErrorResponse('Could not get lock', 400));
     });
@@ -78,9 +78,9 @@ export async function getLocks(req, res, next) {
 }
 
 export async function deleteLock(req, res, next) {
-  const { email } = req.user;
-  const _id = req.body.lockId;
   try {
+    const { email } = req.user;
+    const _id = req.body.lockId;
     const lock = await Lock.deleteOne({ userId: email, _id });
     if (lock.acknowledged == true && lock.deletedCount == 1) {
       LockGroup.updateMany(
@@ -106,22 +106,55 @@ export async function deleteLock(req, res, next) {
 }
 
 export async function exportLocks(req, res, next) {
-  const { email } = req.user;
   try {
-  } catch (error) {}
-  const locks = await Lock.find({ access: email });
-  if (!locks) {
-    new ErrorResponse('No locks to export', 400);
+    const { email } = req.user;
+    const locks = await Lock.find({ access: email });
+    if (!locks) {
+      new ErrorResponse('No locks to export', 400);
+    }
+
+    const randomNumber = Math.floor(Math.random() * (9999 - 1000) + 1000);
+    const stream = res.writeHead(200, {
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment;filename=${email}_locks_${randomNumber}.pdf`,
+    });
+
+    buildLockPDF(
+      locks,
+      (chunk) => stream.write(chunk),
+      () => stream.end()
+    );
+  } catch (err) {
+    return next(new ErrorResponse(err, 500));
   }
+}
 
-  const stream = res.writeHead(200, {
-    'Content-Type': 'application/pdf',
-    'Content-Disposition': 'attachment;filename=logs.pdf',
-  });
+export async function exportLocksXcel(req, res, next) {
+  try {
+    const { email } = req.user;
+    const locks = await Lock.find({ access: email });
+    if (!locks) {
+      new ErrorResponse('No locks to export', 400);
+    }
+    const randomNumber = Math.floor(Math.random() * (9999 - 1000) + 1000);
+    const stream = res.writeHead(200, {
+      'Content-Type':
+        'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': `attachment;filename=${email}_locks_${randomNumber}.xlsx`,
+    });
+    let temp = JSON.stringify(locks);
+    temp = JSON.parse(temp);
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].access = JSON.stringify(temp[i].access);
+    }
+    const workSheet = XLSX.utils.json_to_sheet(temp);
+    const workBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'Locks');
 
-  buildLockPDF(
-    locks,
-    (chunk) => stream.write(chunk),
-    () => stream.end()
-  );
+    stream.write(XLSX.write(workBook, { bookType: 'xlsx', type: 'buffer' }));
+
+    stream.end();
+  } catch (err) {
+    return next(new ErrorResponse(err, 500));
+  }
 }

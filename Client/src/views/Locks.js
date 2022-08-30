@@ -151,8 +151,9 @@ const Locks = () => {
       .get('/api/lock/export', configPDF)
       .then((res) => {
         const { data } = res;
+        const name = res.headers['content-disposition'].substring(20);
         const blob = new Blob([data], { type: 'application/pdf' });
-        saveAs(blob, `locks.pdf`);
+        saveAs(blob, name);
         setLoading(false);
       })
       .catch((error) => {
@@ -162,6 +163,25 @@ const Locks = () => {
       });
   };
 
+  const handleExportExcel = async () => {
+    setLoading(true);
+    await axios
+      .get('/api/lock/exportXsl', configPDF)
+      .then((res) => {
+        const { data } = res;
+        const name = res.headers['content-disposition'].substring(20);
+        const blob = new Blob([data], {
+          type: 'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        saveAs(blob, name);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.response.statusText || 'Could not export Excel');
+        setOpenSnack(true);
+        setLoading(false);
+      });
+  };
   const randomNumber = (id) => {
     id = id.replace(/\D/g, '');
     id = id.slice(id.length - 6);
@@ -184,6 +204,14 @@ const Locks = () => {
             }}
           >
             {t('export_pdf')}
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              handleExportExcel();
+            }}
+          >
+            export excel
           </Button>
         </div>
         <div className="locks-container">
