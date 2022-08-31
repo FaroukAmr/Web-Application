@@ -167,7 +167,11 @@ const ResponsiveAppBar = () => {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                       >
-                        <Avatar sx={{ width: 42, height: 42 }} src={image}>
+                        <Avatar
+                          sx={{ width: 42, height: 42 }}
+                          src={image}
+                          alt="profile image"
+                        >
                           {name.charAt(0)}
                         </Avatar>
                       </IconButton>
@@ -214,7 +218,11 @@ const ResponsiveAppBar = () => {
                         navigate('/profile');
                       }}
                     >
-                      <Avatar sx={{ width: 32, height: 32 }} src={image}>
+                      <Avatar
+                        sx={{ width: 32, height: 32 }}
+                        src={image}
+                        alt="profile image"
+                      >
                         {name.charAt(0)}
                       </Avatar>
                       <span style={{ marginRight: '1em' }}>{name}</span>
