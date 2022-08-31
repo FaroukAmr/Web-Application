@@ -69,42 +69,30 @@ export default function Footer() {
 
               <Link
                 className="link"
-                onClick={() => {
-                  window.open(
-                    'https://www.linkedin.com/company/ahram-security-group/',
-                    '_blank'
-                  );
-                }}
+                href="https://www.linkedin.com/company/ahram-security-group/"
+                target="_blank"
                 color="#0072b1"
-                aria-label="LinkedIn"
+                alt="LinkedIn"
               >
                 <LinkedInIcon style={socialStyle} />
               </Link>
 
               <Link
                 className="link"
-                onClick={() => {
-                  window.open(
-                    'https://www.facebook.com/AhramSecurity/',
-                    '_blank'
-                  );
-                }}
+                href="https://www.facebook.com/AhramSecurity/"
+                target="_blank"
                 color="#4267b2 "
-                aria-label="Facebook"
+                alt="Facebook"
               >
                 <FacebookIcon style={socialStyle} />
               </Link>
 
               <Link
                 className="link"
-                onClick={() => {
-                  window.open(
-                    'https://www.youtube.com/user/AhramAd2007/',
-                    '_blank'
-                  );
-                }}
+                href="https://www.youtube.com/user/AhramAd2007/"
+                target="_blank"
                 color="#FF0000 "
-                aria-label="Youtube"
+                alt="Youtube"
               >
                 <YouTubeIcon style={socialStyle} />
               </Link>

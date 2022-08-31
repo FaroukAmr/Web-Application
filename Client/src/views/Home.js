@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import productsImg from '../imgs/products.png';
+import productsImg from '../imgs/products.webp';
 import phoneImg from '../imgs/phoneImg.jpg';
 import cardImg from '../imgs/cardImg.jpg';
 import { useNavigate } from 'react-router-dom';

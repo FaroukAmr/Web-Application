@@ -49,6 +49,7 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Origin',
     'https://asg-smartlock.herokuapp.com/'
   );
+  res.setHeader('Cache-Control', `public, max-age=${cacheTime}`);
   next();
 });
 app.use(
