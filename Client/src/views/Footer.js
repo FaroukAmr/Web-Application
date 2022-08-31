@@ -67,19 +67,43 @@ export default function Footer() {
             <Grid item xs={12} sm={4}>
               <Box borderBottom={1}>{t('socials')}</Box>
 
-              <Link href="/" color="#0072b1" aria-label="LinkedIn">
+              <Link
+                onClick={() => {
+                  window.open(
+                    'https://www.linkedin.com/company/ahram-security-group/',
+                    '_blank'
+                  );
+                }}
+                color="#0072b1"
+                aria-label="LinkedIn"
+              >
                 <LinkedInIcon style={socialStyle} />
               </Link>
 
-              <Link href="/" color="#00acee" aria-label="Twitter">
-                <TwitterIcon style={socialStyle} />
-              </Link>
-
-              <Link href="/" color="#4267b2 " aria-label="Facebook">
+              <Link
+                onClick={() => {
+                  window.open(
+                    'https://www.facebook.com/AhramSecurity/',
+                    '_blank'
+                  );
+                }}
+                color="#4267b2 "
+                aria-label="Facebook"
+              >
                 <FacebookIcon style={socialStyle} />
               </Link>
 
-              <Link href="/" color="#FF0000 " aria-label="Youtube">
+              <Link
+                className="link"
+                onClick={() => {
+                  window.open(
+                    'https://www.youtube.com/user/AhramAd2007/',
+                    '_blank'
+                  );
+                }}
+                color="#FF0000 "
+                aria-label="Youtube"
+              >
                 <YouTubeIcon style={socialStyle} />
               </Link>
             </Grid>
