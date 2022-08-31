@@ -62,6 +62,7 @@ const Cards = () => {
       tempArray.some(({ _id }) => o._id === _id)
     );
     setChosenLocks(result);
+    setEditLocks(result);
     setOpenForm(true);
   };
 

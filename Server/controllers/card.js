@@ -47,7 +47,6 @@ export async function shareCard(req, res, next) {
 
 export async function updateCard(req, res, next) {
   const { cardId, cardName, cardRemark, locks } = req.body;
-  console.log(locks);
   try {
     Card.findOneAndUpdate(
       { _id: cardId },
