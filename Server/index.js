@@ -20,11 +20,11 @@ import csrf from 'csurf';
 import bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-const cacheTime = 86400000 * 10; //1 day
+const cacheTime = 86400000 * 10; //10 days
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-var csrfProtection = cRsrf({ cookie: true });
+var csrfProtection = csrf({ cookie: true });
 
 dotenv.config();
 const dbUrl = process.env.DBURL;
