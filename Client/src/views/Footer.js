@@ -68,6 +68,7 @@ export default function Footer() {
               <Box borderBottom={1}>{t('socials')}</Box>
 
               <Link
+                className="link"
                 onClick={() => {
                   window.open(
                     'https://www.linkedin.com/company/ahram-security-group/',
@@ -81,6 +82,7 @@ export default function Footer() {
               </Link>
 
               <Link
+                className="link"
                 onClick={() => {
                   window.open(
                     'https://www.facebook.com/AhramSecurity/',
