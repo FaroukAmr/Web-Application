@@ -1,4 +1,4 @@
-import RFID from '../imgs/RFID.png';
+import RFID from '../imgs/RFID.webp';
 import '../css/newCard.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';

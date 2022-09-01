@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
-import logo from '../imgs/logo.png';
+import logo from '../imgs/logo.webp';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import * as React from 'react';

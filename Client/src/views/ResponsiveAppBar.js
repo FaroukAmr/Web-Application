@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
-import logo from '../imgs/logo.png';
+import logo from '../imgs/logo.webp';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import cookies from 'js-cookie';
