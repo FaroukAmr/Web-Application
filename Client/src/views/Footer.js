@@ -73,6 +73,7 @@ export default function Footer() {
                 target="_blank"
                 color="#0072b1"
                 alt="LinkedIn"
+                aria-label="LinkedIn"
               >
                 <LinkedInIcon style={socialStyle} />
               </Link>
@@ -83,6 +84,7 @@ export default function Footer() {
                 target="_blank"
                 color="#4267b2 "
                 alt="Facebook"
+                aria-label="Facebook"
               >
                 <FacebookIcon style={socialStyle} />
               </Link>
@@ -93,6 +95,7 @@ export default function Footer() {
                 target="_blank"
                 color="#FF0000 "
                 alt="Youtube"
+                aria-label="Youtube"
               >
                 <YouTubeIcon style={socialStyle} />
               </Link>
