@@ -124,6 +124,7 @@ const ResponsiveAppBar = () => {
           <Toolbar disableGutters>
             <div className="nv-2">
               <img
+                style={{ width: '8em', height: '3.1em' }}
                 src={logo}
                 alt="ASG logo"
                 className="logo-lg"
