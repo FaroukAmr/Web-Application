@@ -88,7 +88,8 @@ export default function Home() {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {t('products')} <OpenInNewIcon />
+              {t('products')}{' '}
+              <OpenInNewIcon style={{ transform: 'translateY(0.11em)' }} />
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {t('c1_txt')}

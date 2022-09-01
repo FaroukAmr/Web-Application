@@ -35,9 +35,7 @@ export default function Footer() {
               </Box>
               <Box>
                 <Link
-                  onClick={() => {
-                    Navigate('/privacy');
-                  }}
+                  href="/"
                   className="link"
                   style={linkStyle}
                   color="inherit"
