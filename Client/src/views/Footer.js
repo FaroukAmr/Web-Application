@@ -4,18 +4,15 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import '../css/footer.css';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 export default function Footer() {
   const containerStyle = {};
   const socialStyle = { fontSize: '2em', marginRight: '0.3em' };
   const linkStyle = { textDecoration: 'none' };
   const { t } = useTranslation();
-  const Navigate = useNavigate();
   return (
     <footer className="footer">
       <Box

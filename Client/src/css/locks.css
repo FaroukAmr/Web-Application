@@ -25,11 +25,7 @@
 }
 
 .locks-item {
-  /* border: aqua solid; */
-
   min-width: 20em;
-
-  /* box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.4) ; */
 }
 
 @media screen and (max-width: 500px) {

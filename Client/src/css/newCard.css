@@ -6,7 +6,6 @@
 }
 
 .new-card-img {
-  user-drag: none;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
@@ -23,7 +22,6 @@
   color: #202124;
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
-  /* font: weight 400px;letter-spacing: 0.1px; */
 }
 
 .new-card-container {

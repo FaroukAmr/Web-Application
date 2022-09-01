@@ -21,7 +21,6 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import '../css/Navbar.css';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
