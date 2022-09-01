@@ -76,9 +76,8 @@ export default function Home() {
 
       <Card sx={{ maxWidth: 345, marginBottom: '1em' }}>
         <CardActionArea
-          onClick={() => {
-            window.open('https://www.ahramsg.com/security-products', '_blank');
-          }}
+          href="https://www.ahramsg.com/security-products"
+          target="_blank"
         >
           <CardMedia
             component="img"
