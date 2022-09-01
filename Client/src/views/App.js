@@ -20,7 +20,6 @@ import Logs from './Logs';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import ScrollToTop from './ScrollToTop';
 import Profile from './Profile';
-import Privacy from './policy/Privacy';
 import 'flag-icons/css/flag-icons.min.css';
 const theme = createTheme({
   palette: {
@@ -52,7 +51,6 @@ function App() {
           <Route exact path="/lockgroups" element={<LockGroups />} />
           <Route exact path="/logs/:lockId" element={<Logs />} />
           <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/privacy" element={<Privacy />} />
           <Route
             exact
             path="/passwordreset/:resetToken"

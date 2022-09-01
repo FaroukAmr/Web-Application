@@ -230,6 +230,7 @@ const Locks = () => {
                 <Card className="locks-item" key={d._id}>
                   <CardMedia
                     component="img"
+                    alt=""
                     height="8"
                     style={{
                       backgroundColor: `#${randomNumber(d._id)}`,

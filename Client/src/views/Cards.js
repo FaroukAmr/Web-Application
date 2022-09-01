@@ -300,6 +300,7 @@ const Cards = () => {
                     <CardMedia
                       component="img"
                       height="8"
+                      alt=""
                       style={{
                         backgroundColor: `${randomNumber(d.locks)}`,
                         borderRadius: '0px',
