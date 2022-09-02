@@ -20,7 +20,7 @@ import csrf from 'csurf';
 import bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-const cacheTime = 86400000 * 10; //10 days
+const cacheTime = 0; //10 days
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -101,12 +101,7 @@ app.use(
 app.get('/api/csrf', csrfProtection, function (req, res) {
   res.send({ csrfToken: req.csrfToken() });
 });
-//static
-app.use(
-  express.static('public', {
-    maxAge: cacheTime,
-  })
-);
+
 //Routes
 app.use('/api/lock', apiLimiter, csrfProtection, lockRoutes);
 app.use('/api/card', apiLimiter, csrfProtection, cardRoutes);
@@ -117,6 +112,12 @@ app.use('/api/user', apiLimiter, csrfProtection, userRoutes);
 app.use('/api/auth', authRoutes);
 
 //PRODUCTION BUILD
+//static
+app.use(
+  express.static('public', {
+    maxAge: cacheTime,
+  })
+);
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
