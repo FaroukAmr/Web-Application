@@ -391,19 +391,9 @@ export default function ManageLocks() {
     return (
       <Card className="mlocks-main-container">
         <CardContent>
-          {/* <Typography gutterBottom variant="h5" component="div">
-            {lock.lockName}{' '}
-            <Battery80RoundedIcon
-              style={{
-                color: '#00ff00',
-                transform: 'rotate(90deg)',
-                fontSize: '2rem',
-              }}
-            />{' '}
-            <span style={{ color: '#00ff00', fontSize: '1.5rem' }}>
-              {t('80')}
-            </span>
-          </Typography> */}
+          <Typography gutterBottom variant="h5" component="div">
+            {lock.lockName}
+          </Typography>
           <Typography gutterBottom variant="body1" component="div">
             {t('owner')} <span style={{ color: '#666' }}>{lock.userId}</span>
           </Typography>
