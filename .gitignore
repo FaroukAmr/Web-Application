@@ -1,1 +1,14 @@
+#deployment directory
 /Server/public
+
+#server node modules
+/Server/node_modules
+
+#.env secrets
+/Server/.env
+
+#build directory
+/Client/build
+
+#client node modules
+/Client/node_modules
