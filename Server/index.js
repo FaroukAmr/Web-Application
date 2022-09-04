@@ -20,21 +20,20 @@ import csrf from 'csurf';
 import bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-const cacheTime = 0; //10 days
+
+const cacheTime = 86400000 * 10; //10 days
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 var csrfProtection = csrf({ cookie: true });
-
 dotenv.config();
-const dbUrl = process.env.DBURL;
-const CONNECTION_URL = dbUrl;
+const CONNECTION_URL = process.env.DBURL;
 const PORT = process.env.PORT;
 
 //express rate limiter
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000, // 60 seconds
-  max: 30, // Limit each IP to max requests per `window` (here, per 1 minute)
+  max: 30, // Limit each IP to max requests per `window` (here, 30 per 1 minute)
   message: 'Too many requests, try again later',
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
@@ -49,7 +48,7 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Origin',
     'https://asg-smartlock.herokuapp.com/'
   );
-  res.setHeader('Cache-Control', `public, max-age=${cacheTime}`);
+  // res.setHeader('Cache-Control', `public, max-age=${cacheTime}`);
   next();
 });
 app.use(
@@ -102,6 +101,13 @@ app.get('/api/csrf', csrfProtection, function (req, res) {
   res.send({ csrfToken: req.csrfToken() });
 });
 
+//static
+app.use(
+  express.static('public', {
+    maxAge: cacheTime,
+  })
+);
+
 //Routes
 app.use('/api/lock', apiLimiter, csrfProtection, lockRoutes);
 app.use('/api/card', apiLimiter, csrfProtection, cardRoutes);
@@ -112,12 +118,7 @@ app.use('/api/user', apiLimiter, csrfProtection, userRoutes);
 app.use('/api/auth', authRoutes);
 
 //PRODUCTION BUILD
-//static
-app.use(
-  express.static('public', {
-    maxAge: cacheTime,
-  })
-);
+
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
