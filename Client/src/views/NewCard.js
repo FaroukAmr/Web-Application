@@ -110,13 +110,11 @@ export default function NewCard() {
       if (number.length < 9 || !isOnlyNumbers.test(number)) {
         number = '';
         setValidNumber(false);
-        setCardNumber('not valid');
         setError('Card number not valid');
         setSeverity('error');
         setOpen(true);
       } else {
         //success
-        setOpen('false');
         setError('Card number added');
         setSeverity('success');
         setOpen(true);
