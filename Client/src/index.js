@@ -7,8 +7,6 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 import Spinner from './views/Spinner';
-document.cookie = 'SameSite=None';
-document.cookie = 'Secure';
 i18n
   .use(initReactI18next)
   .use(LanguageDetector)
