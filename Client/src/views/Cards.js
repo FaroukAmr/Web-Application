@@ -249,10 +249,7 @@ const Cards = () => {
   };
 
   const randomNumber = (locks) => {
-    if (locks.length === 1 && cards.length === 1) {
-      return '#006400';
-    }
-    if (locks.length > 1) {
+    if (locks.length > 1 || (locks.length === 1 && cards.length === 1)) {
       return '#006400';
     }
     if (locks.length === 0) {
