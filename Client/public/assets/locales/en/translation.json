@@ -97,5 +97,6 @@
   "settings": "Settings",
   "lorem4": "Lorem Ipsum is simply",
   "account_settings": "Account Settings",
-  "lock_groups": "View Lock Groups"
+  "lock_groups": "View Lock Groups",
+  "loading": "Loading..."
 }

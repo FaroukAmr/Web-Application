@@ -98,5 +98,6 @@
   "settings": "الإعدادات",
   "lorem4": "لوريم إيبسوم(Lorem Ipsum)",
   "account_settings": "إعدادت الحساب",
-  "lock_groups": "عرض مجموعات الاقفال"
+  "lock_groups": "عرض مجموعات الاقفال",
+  "loading": "جار التحميل..."
 }
