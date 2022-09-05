@@ -89,7 +89,7 @@ const ResponsiveAppBar = () => {
         setName(res.data.data.username);
       })
       .catch((err) => {
-        setName('');
+        setName('?');
       });
   };
 
