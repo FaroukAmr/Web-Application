@@ -196,7 +196,7 @@ export default function Profile() {
             required
           />
           <FormControl>
-            <FormLabel id="radio-buttons-group-label">Gender</FormLabel>
+            <FormLabel id="radio-buttons-group-label">{t('gender')}</FormLabel>
             <RadioGroup
               aria-labelledby="radio-buttons-group-label"
               value={gender.length > 0 ? gender : 'male'}
