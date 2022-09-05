@@ -27,10 +27,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Spinner from './Spinner';
 import { Typography } from '@mui/material';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 export default function Profile() {
+  const { t } = useTranslation();
   const [openDialog, setOpenDialog] = React.useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickOpenDialog = () => {
@@ -179,7 +181,7 @@ export default function Profile() {
 
           <TextField
             variant="standard"
-            label="Name"
+            label={t('name')}
             style={{ minWidth: '100%' }}
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -187,7 +189,7 @@ export default function Profile() {
           />
           <TextField
             variant="standard"
-            label="Email"
+            label={t('email')}
             style={{ minWidth: '100%' }}
             value={email}
             disabled
@@ -201,18 +203,24 @@ export default function Profile() {
               name="radio-buttons-group"
               onChange={(e) => setGender(e.target.value)}
             >
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="male"
+                control={<Radio />}
+                label={t('male')}
+              />
               <FormControlLabel
                 value="female"
                 control={<Radio />}
-                label="Female"
+                label={t('female')}
               />
             </RadioGroup>
           </FormControl>
           <Divider style={{ width: '100%' }}></Divider>
-          <Button onClick={handleClickOpenDialog}>Change Password</Button>
+          <Button onClick={handleClickOpenDialog}>
+            {t('change_password')}
+          </Button>
           <Button onClick={handleUpdateUser} variant="contained" style={btn}>
-            Confirm
+            {t('confirm')}
           </Button>
           <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
             <Alert
@@ -225,13 +233,13 @@ export default function Profile() {
           </Snackbar>
         </Paper>
         <Dialog open={openDialog} onClose={handleCloseDialog}>
-          <DialogTitle>Change Password</DialogTitle>
+          <DialogTitle>{t('change_password')}</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Password"
+              label={t('password')}
               fullWidth
               type={showPassword ? 'text' : 'password'}
               InputProps={{
@@ -260,7 +268,7 @@ export default function Profile() {
             <TextField
               margin="dense"
               id="name"
-              label="Confirm Password"
+              label={t('confirm_password')}
               fullWidth
               variant="standard"
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -269,14 +277,15 @@ export default function Profile() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDialog}>Cancel</Button>
+            <Button onClick={handleCloseDialog}>{t('go_back')}</Button>
             <Button
               onClick={() => {
                 handleCloseDialog();
                 handleChangePassword();
               }}
+              color="error"
             >
-              Confirm
+              {t('confirm')}
             </Button>
           </DialogActions>
         </Dialog>

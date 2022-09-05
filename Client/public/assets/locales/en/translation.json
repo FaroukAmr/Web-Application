@@ -98,5 +98,9 @@
   "lorem4": "Lorem Ipsum is simply",
   "account_settings": "Account Settings",
   "lock_groups": "View Lock Groups",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "male": "Male",
+  "female": "Female",
+  "change_password": "Change Password",
+  "gender": "Gender"
 }

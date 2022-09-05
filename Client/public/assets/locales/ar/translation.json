@@ -99,5 +99,9 @@
   "lorem4": "لوريم إيبسوم(Lorem Ipsum)",
   "account_settings": "إعدادت الحساب",
   "lock_groups": "عرض مجموعات الاقفال",
-  "loading": "جار التحميل..."
+  "loading": "جار التحميل...",
+  "male": "ذكر",
+  "female": "أنثى",
+  "change_password": "تغير كلمة السر",
+  "gender": "نوع"
 }

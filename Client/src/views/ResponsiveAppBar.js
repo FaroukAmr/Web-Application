@@ -37,11 +37,6 @@ const languages = [
     country_code: 'eg',
     dir: 'rtl',
   },
-  {
-    code: 'fr',
-    name: 'Français',
-    country_code: 'fr',
-  },
 ];
 const ResponsiveAppBar = () => {
   const currentLanguageCode = cookies.get('i18next') || 'en';
