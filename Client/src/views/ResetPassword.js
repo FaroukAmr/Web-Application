@@ -14,6 +14,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Spinner from './Spinner';
+import { useTranslation } from 'react-i18next';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -26,6 +27,7 @@ const ResetPassword = () => {
     }
     setOpen(false);
   };
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [severity, setSeverity] = useState('');
   const [open, setOpen] = useState(false);
@@ -100,9 +102,9 @@ const ResetPassword = () => {
       <Paper elevation={6} style={paperStyle}>
         <form onSubmit={resetPasswordHandler} className="container">
           <img src={logo} className="logo-md" alt="ASG Logo" />
-          <div className="reset-password-title">Change Password</div>
+          <div className="reset-password-title">{t('change_password')}</div>
           <div className="reset-password-title-bottom">
-            Make sure it's atleast 8 characters long
+            {t('make_sure_8_chars')}
           </div>
           <TextField
             style={textfieldStyle}
@@ -123,7 +125,7 @@ const ResetPassword = () => {
                 </InputAdornment>
               ),
             }}
-            label="Password"
+            label={t('password')}
             required
             onChange={(e) => setPassword(e.target.value)}
             value={password}
@@ -131,13 +133,13 @@ const ResetPassword = () => {
           <TextField
             style={textfieldStyle}
             type={showPassword ? 'text' : 'password'}
-            label="Confirm Password"
+            label={t('confirm_password')}
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
           ></TextField>
           <Button variant="contained" type="submit" style={btn}>
-            Change Password
+            {t('change_password')}
           </Button>
           <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
             <Alert

@@ -24,6 +24,8 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CreditCardOffIcon from '@mui/icons-material/CreditCardOff';
 import Spinner from './Spinner';
+import { useTranslation } from 'react-i18next';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -32,6 +34,7 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const LockGroups = () => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [severity, setSeverity] = useState('error');
   const [defaultLocks, setdefaultLocks] = useState([]);
@@ -264,13 +267,13 @@ const LockGroups = () => {
       <>
         <div className="home-locks-container">
           <TextField
-            label="Enter a group name"
+            label={t('enter_group_name')}
             style={txtStyle}
             variant="outlined"
             onChange={(e) => setSearch(e.target.value)}
           ></TextField>
           <Button variant="contained" onClick={handleClickOpenCreate}>
-            New Group
+            {t('new_group')}
           </Button>
         </div>
         <div className="locks-container">
@@ -307,10 +310,10 @@ const LockGroups = () => {
                       color="text.secondary"
                       component="div"
                     >
-                      Remark: {d.remark}
+                      {t('remark')} {d.remark}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Updated {handleDate(d.updatedAt)}
+                      {t('updated')} {handleDate(d.updatedAt)}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -321,7 +324,7 @@ const LockGroups = () => {
                         set_id(d._id);
                       }}
                     >
-                      Edit
+                      {t('edit')}
                     </Button>
                     <Button
                       color="error"
@@ -332,7 +335,7 @@ const LockGroups = () => {
                         setDeleteId(d._id);
                       }}
                     >
-                      Delete
+                      {t('delete')}
                     </Button>
                   </CardActions>
                 </Card>
@@ -340,16 +343,14 @@ const LockGroups = () => {
             })}
         </div>
         <Dialog open={openForm} onClose={handleCloseForm}>
-          <DialogTitle>Edit</DialogTitle>
+          <DialogTitle>{t('edit')}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Edit lock group name, remark, and locks
-            </DialogContentText>
+            <DialogContentText>{t('edit_lock_group_text')}</DialogContentText>
             <TextField
               autoFocus
               required
               margin="dense"
-              label="Name"
+              label={t('name')}
               fullWidth
               variant="standard"
               value={name}
@@ -357,7 +358,7 @@ const LockGroups = () => {
             />
             <TextField
               margin="dense"
-              label="Remark"
+              label={t('remark')}
               fullWidth
               variant="standard"
               value={remark}
@@ -389,21 +390,21 @@ const LockGroups = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Locks"
-                  placeholder="Choose locks to issue"
+                  label={t('locks')}
+                  placeholder={t('choose_locks')}
                 />
               )}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseForm}>Cancel</Button>
+            <Button onClick={handleCloseForm}>{t('go_back')}</Button>
             <Button
               onClick={() => {
                 handleCloseForm();
                 handleUpdate(editGroup._id);
               }}
             >
-              Confirm
+              {t('confirm')}
             </Button>
           </DialogActions>
         </Dialog>
@@ -428,16 +429,15 @@ const LockGroups = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {'Are you sure you want to delete this card?'}
+            {t('delete_lock_group_tite')}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Deleting a lock group is irreversible, are you sure you want to
-              continue?
+              {t('delete_lock_group_warning')}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Go Back</Button>
+            <Button onClick={handleClose}>{t('go_back')}</Button>
             <Button
               color="error"
               onClick={() => {
@@ -446,22 +446,19 @@ const LockGroups = () => {
               }}
               autoFocus
             >
-              Delete
+              {t('delete')}
             </Button>
           </DialogActions>
         </Dialog>
         <Dialog open={openCreate} onClose={handleCloseCreate}>
-          <DialogTitle>Lock Group</DialogTitle>
+          <DialogTitle>{t('create_new_lock_group')}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </DialogContentText>
+            <DialogContentText>{t('new_lock_group_title')}</DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Name"
+              label={t('name')}
               type="input"
               required
               fullWidth
@@ -471,7 +468,7 @@ const LockGroups = () => {
             <TextField
               margin="dense"
               id="name"
-              label="Remark"
+              label={t('remark')}
               type="input"
               fullWidth
               variant="standard"
@@ -502,21 +499,21 @@ const LockGroups = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Locks"
-                  placeholder="Choose Locks"
+                  label={t('locks')}
+                  placeholder={t('choose_locks')}
                 />
               )}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseCreate}>Cancel</Button>
+            <Button onClick={handleCloseCreate}>{t('go_back')}</Button>
             <Button
               onClick={() => {
                 handleCloseCreate();
                 handleSubmit();
               }}
             >
-              Create
+              {t('confirm')}
             </Button>
           </DialogActions>
         </Dialog>
@@ -527,13 +524,13 @@ const LockGroups = () => {
     return (
       <div className="not-found">
         <CreditCardOffIcon style={iconStyle} />
-        <div className="not-found-title">No lock groups</div>
+        <div className="not-found-title">{t('no_lock_groups')}</div>
         <Button
           variant="contained"
           style={btnStyle}
           onClick={handleClickOpenCreate}
         >
-          Create new lock group
+          {t('create_new_lock_group')}
         </Button>
         <Snackbar
           open={openSnack}
@@ -549,17 +546,14 @@ const LockGroups = () => {
           </Alert>
         </Snackbar>
         <Dialog open={openCreate} onClose={handleCloseCreate}>
-          <DialogTitle>Lock Group</DialogTitle>
+          <DialogTitle>{t('create_new_lock_group')}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </DialogContentText>
+            <DialogContentText>{t('new_lock_group_title')}</DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Name"
+              label={t('name')}
               type="input"
               required
               fullWidth
@@ -569,7 +563,7 @@ const LockGroups = () => {
             <TextField
               margin="dense"
               id="name"
-              label="Remark"
+              label={t('remark')}
               type="input"
               fullWidth
               variant="standard"
@@ -600,21 +594,21 @@ const LockGroups = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Locks"
-                  placeholder="Choose Locks"
+                  label={t('locks')}
+                  placeholder={t('choose_locks')}
                 />
               )}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseCreate}>Cancel</Button>
+            <Button onClick={handleCloseCreate}>{t('go_back')}</Button>
             <Button
               onClick={() => {
                 handleCloseCreate();
                 handleSubmit();
               }}
             >
-              Create
+              {t('confirm')}
             </Button>
           </DialogActions>
         </Dialog>

@@ -102,5 +102,17 @@
   "male": "Male",
   "female": "Female",
   "change_password": "Change Password",
-  "gender": "Gender"
+  "gender": "Gender",
+  "make_sure_8_chars": "Make sure it's atleast 8 characters long",
+  "email_verified": "Email Verified",
+  "invalid_link": "Invalid Link",
+  "request_new_link": "Request New Link",
+  "no_lock_groups": "No Lock Groups",
+  "create_new_lock_group": "Create New Lock Group",
+  "new_lock_group_title": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+  "delete_lock_group_warning": "Deleting a lock group is irreversible, are you sure you want to continue?",
+  "delete_lock_group_tite": "Are you sure you want to delete this group",
+  "enter_group_name": "Enter a group name",
+  "new_group": "New Group",
+  "edit_lock_group_text": "Edit lock group name, remark, and locks"
 }

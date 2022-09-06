@@ -9,11 +9,13 @@ import MuiAlert from '@mui/material/Alert';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import * as React from 'react';
 import Spinner from './Spinner';
+import { useTranslation } from 'react-i18next';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 export default function EmailVerify() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [severity, setSeverity] = useState('');
   const [open, setOpen] = useState(false);
@@ -60,7 +62,6 @@ export default function EmailVerify() {
         setError('Email Verified');
         setValid(true);
         setOpen(true);
-        navigate('/login');
       })
       .catch((error) => {
         setError(error.response.data.error || error.response.data);
@@ -77,7 +78,7 @@ export default function EmailVerify() {
     return (
       <div className="not-found">
         <VerifiedIcon style={iconStyle} />
-        <div className="not-found-title">Email Verified</div>
+        <div className="not-found-title">{t('email_verified')}</div>
         <Button
           variant="contained"
           style={btnStyle}
@@ -85,7 +86,7 @@ export default function EmailVerify() {
             navigate('/login');
           }}
         >
-          Login
+          {t('login')}
         </Button>
         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
           <Alert
@@ -104,7 +105,7 @@ export default function EmailVerify() {
       <div className="not-found">
         <SmartToyIcon style={iconStyle} />
         <div className="not-found-title">404</div>
-        <div className="not-found-title">Invalid Link</div>
+        <div className="not-found-title">{t('invalid_link')}</div>
         <Button
           variant="contained"
           style={btnStyle}
@@ -112,7 +113,7 @@ export default function EmailVerify() {
             navigate('/login');
           }}
         >
-          Request a new link
+          {t('request_new_link')}
         </Button>
         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
           <Alert

@@ -9,11 +9,14 @@ import MuiAlert from '@mui/material/Alert';
 import * as React from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Spinner from './Spinner';
+import { useTranslation } from 'react-i18next';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 function SignUp() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState('');
@@ -99,12 +102,12 @@ function SignUp() {
       <Paper style={paperStyle} elevation={6}>
         <form onSubmitCapture={registerHandler} className="sign-up-container">
           <LockOutlinedIcon style={iconStyle} />
-          <div className="title-signup">Add Lock</div>
-          <div className="title-signup-bottom">To your ASG App account</div>
+          <div className="title-signup">{t('add_lock')}</div>
+          <div className="title-signup-bottom">{t('')}</div>
           <TextField
             style={textfieldStyle}
             type="input"
-            label="Lock Name"
+            label={t('enter_lock_name')}
             required
             onChange={(e) => setlockName(e.target.value)}
             value={lockName}
@@ -112,13 +115,13 @@ function SignUp() {
           <TextField
             style={textfieldStyle}
             type="number"
-            label="Mac Address"
+            label={t('MAC')}
             required
             onChange={(e) => setlockMac(e.target.value)}
             value={lockMac}
           ></TextField>
           <Button type="submit" style={btn} variant="contained">
-            Add Lock
+            {t('add_lock')}
           </Button>
           <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
             <Alert
