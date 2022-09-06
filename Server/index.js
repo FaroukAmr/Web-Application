@@ -21,7 +21,7 @@ import bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
-const cacheTime = 86400000 * 10; //10 days
+const cacheTime = 86400000 * 1; //1 day
 const sslRedirect = herokuSSLRedirect.default;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Origin',
     'https://asg-smartlock.herokuapp.com/'
   );
-  // res.setHeader('Cache-Control', `public, max-age=${cacheTime}`);
+  res.setHeader('Cache-Control', `must-revalidate`);
   next();
 });
 app.use(
