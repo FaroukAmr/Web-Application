@@ -25,7 +25,9 @@
     "react-i18next": "^11.18.5",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
-    "react-spinners": "^0.13.4"
+    "react-spinners": "^0.13.4",
+    "stylis": "^4.1.1",
+    "stylis-plugin-rtl": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
