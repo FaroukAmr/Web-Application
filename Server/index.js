@@ -20,6 +20,10 @@ import csrf from 'csurf';
 import bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import { WebSocketServer } from 'ws';
+
+import http from 'http';
+const server = http.createServer();
 
 const cacheTime = 86400000 * 1; //1 day
 const sslRedirect = herokuSSLRedirect.default;
@@ -40,6 +44,19 @@ const apiLimiter = rateLimit({
 });
 
 const app = express();
+const wss = new WebSocketServer({ server: server });
+
+server.on('request', app);
+
+wss.on('connection', function connection(ws) {
+  ws.send('hello');
+  console.log('here');
+  ws.on('message', function message(data) {
+    console.log('received: %s', data);
+  });
+
+  ws.send('something');
+});
 
 app.disable('x-powered-by');
 app.use((req, res, next) => {
@@ -131,7 +148,7 @@ app.use(errorHandler);
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
-    app.listen(PORT, () =>
+    server.listen(PORT, () =>
       console.log(`Conntected to MongoDB, Running on port ${PORT}!`)
     )
   )
