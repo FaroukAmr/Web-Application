@@ -25,6 +25,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import TranslateIcon from '@mui/icons-material/Translate';
 const languages = [
   {
     code: 'en',
@@ -130,8 +131,49 @@ const ResponsiveAppBar = () => {
             <div className="nv-3">
               {signupButton ? (
                 <>
+                  <TranslateIcon
+                    className="link"
+                    onClick={handleClickLang}
+                    style={{
+                      color: '000000',
+                      opacity: '0.5',
+                      margin: '0.2em 0.4em',
+                    }}
+                  />
+                  <Menu
+                    id="language-menu"
+                    anchorEl={anchorElLang}
+                    open={openLang}
+                    onClose={handleCloseLang}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+                  >
+                    {languages.map(({ code, name, country_code }) => (
+                      <MenuItem
+                        key={code}
+                        onClick={() => {
+                          handleCloseLang();
+                          handleClose();
+                          i18next.changeLanguage(code);
+                        }}
+                        disabled={code === currentLanguageCode}
+                      >
+                        <Typography component={'div'} textAlign="center">
+                          <ListItemIcon>
+                            <span
+                              className={`fi fi-${country_code}`}
+                              style={{
+                                opacity: code === currentLanguageCode ? 0.5 : 1,
+                              }}
+                            ></span>
+                          </ListItemIcon>
+                          {name}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
                   <Button
-                    // variant="contained"
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.55)',
                       color: '#eee',
