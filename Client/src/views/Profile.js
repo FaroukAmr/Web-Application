@@ -27,11 +27,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Spinner from './Spinner';
 import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 export default function Profile() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [openDialog, setOpenDialog] = React.useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -93,10 +95,18 @@ export default function Profile() {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error.response.data.error || error.response.data);
-        setSeverity('error');
-        setOpen(true);
-        setLoading(false);
+        if (
+          error.response.data.error === 'Not authorized to access this route'
+        ) {
+          localStorage.removeItem('authToken');
+          navigate('/login');
+          setLoading(false);
+        } else {
+          setError(error.response.data.error || error.response.data);
+          setSeverity('error');
+          setOpen(true);
+          setLoading(false);
+        }
       });
   };
   const handleChangePassword = async () => {
