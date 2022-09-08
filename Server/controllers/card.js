@@ -1,8 +1,10 @@
+import { checkCardName, checkCardNumber } from '../regex/checkCard.js';
+
 import Card from '../models/Card.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import User from '../models/User.js';
 import Lock from '../models/Lock.js';
-import { checkCardNumber, checkCardName } from '../regex/checkCard.js';
+import User from '../models/User.js';
+
 export async function getCards(req, res, next) {
   const userId = req.user.email;
 

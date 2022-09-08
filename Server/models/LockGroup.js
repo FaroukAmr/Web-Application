@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const LockGroupSchema = new mongoose.Schema(
   {
     userId: {

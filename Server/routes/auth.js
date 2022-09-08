@@ -1,17 +1,18 @@
-import express from 'express';
-import csrf from 'csurf';
-import rateLimit from 'express-rate-limit';
-var csrfProtection = csrf({ cookie: true });
-const router = express.Router();
-
 import {
-  register,
-  login,
   forgotpassword,
+  handleExternalAuth,
+  login,
+  register,
   resetpassword,
   verifyUser,
-  handleExternalAuth,
 } from '../controllers/auth.js';
+
+import csrf from 'csurf';
+import express from 'express';
+import rateLimit from 'express-rate-limit';
+
+var csrfProtection = csrf({ cookie: true });
+const router = express.Router();
 
 const emailLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 mins

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const EkeySchema = new mongoose.Schema(
   {
     userId: {

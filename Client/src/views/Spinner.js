@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 function Spinner() {

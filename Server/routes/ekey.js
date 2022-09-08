@@ -1,14 +1,16 @@
-import express from 'express';
-const router = express.Router();
 import {
   createEkey,
+  deleteEkey,
+  deleteLockEkeys,
   getEkeys,
   getLockEkeys,
-  deleteLockEkeys,
-  deleteEkey,
   updateEkey,
 } from '../controllers/ekey.js';
+
+import express from 'express';
 import { protect } from '../middleware/auth.js';
+
+const router = express.Router();
 
 router.post('/create', protect, createEkey);
 router.get('/all', protect, getEkeys);

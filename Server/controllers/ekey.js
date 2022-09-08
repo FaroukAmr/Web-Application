@@ -1,11 +1,12 @@
 import Ekey from '../models/Ekey.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import User from '../models/User.js';
-import sendEmail from '../utils/sendEmail.js';
 import Lock from '../models/Lock.js';
 import Log from '../models/Logs.js';
-import crypto from 'crypto';
+import User from '../models/User.js';
 import { checkEKeyName } from '../regex/checkEKey.js';
+import crypto from 'crypto';
+import sendEmail from '../utils/sendEmail.js';
+
 export async function getEkeys(req, res, next) {
   const recipient = req.user.email;
   try {

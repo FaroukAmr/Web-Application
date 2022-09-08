@@ -1,21 +1,24 @@
 import '../css/signUp.css';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import logo from '../imgs/logo.webp';
-import { useNavigate } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+
 import * as React from 'react';
+
+import { useEffect, useState } from 'react';
+
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Link } from 'react-router-dom';
+import MuiAlert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
+import axios from 'axios';
+import logo from '../imgs/logo.webp';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Divider from '@mui/material/Divider';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

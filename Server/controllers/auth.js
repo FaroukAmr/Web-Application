@@ -1,11 +1,11 @@
-import User from '../models/User.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import sendEmail from '../utils/sendEmail.js';
-import crypto from 'crypto';
 import Token from '../models/Token.js';
+import User from '../models/User.js';
 import checkPassword from '../regex/checkPassword.js';
 import checkUsername from '../regex/checkUsername.js';
+import crypto from 'crypto';
 import jwt_decode from 'jwt-decode';
+import sendEmail from '../utils/sendEmail.js';
 
 export async function handleExternalAuth(req, res, next) {
   const { response } = req.body;

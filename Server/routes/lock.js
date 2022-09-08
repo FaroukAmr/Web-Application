@@ -1,14 +1,16 @@
-import express from 'express';
-const router = express.Router();
 import {
   createLock,
-  getLocks,
-  getLock,
   deleteLock,
   exportLocks,
   exportLocksXcel,
+  getLock,
+  getLocks,
 } from '../controllers/lock.js';
+
+import express from 'express';
 import { protect } from '../middleware/auth.js';
+
+const router = express.Router();
 
 router.post('/create', protect, createLock);
 router.post('/getLock', protect, getLock);

@@ -1,10 +1,11 @@
-import Lock from '../models/Lock.js';
+import { checkLockMAC, checkLockName } from '../regex/checkLock.js';
+
 import ErrorResponse from '../utils/errorResponse.js';
+import Lock from '../models/Lock.js';
 import LockGroup from '../models/LockGroup.js';
 import Log from '../models/Logs.js';
-import { buildLockPDF } from '../utils/generatePdf.js';
-import { checkLockName, checkLockMAC } from '../regex/checkLock.js';
 import XLSX from 'xlsx';
+import { buildLockPDF } from '../utils/generatePdf.js';
 import moment from 'moment';
 
 export async function createLock(req, res, next) {

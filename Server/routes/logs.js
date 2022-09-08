@@ -1,7 +1,9 @@
+import { exportLogs, exportLogsXcel, getLogs } from '../controllers/logs.js';
+
 import express from 'express';
-const router = express.Router();
-import { getLogs, exportLogs, exportLogsXcel } from '../controllers/logs.js';
 import { protect } from '../middleware/auth.js';
+
+const router = express.Router();
 
 router.post('/', protect, getLogs);
 router.post('/export', protect, exportLogs);

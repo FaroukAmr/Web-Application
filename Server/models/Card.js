@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const CardSchema = new mongoose.Schema(
   {
     userId: {

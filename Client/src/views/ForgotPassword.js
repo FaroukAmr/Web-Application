@@ -1,17 +1,20 @@
-import axios from 'axios';
 import '../css/forgotPassword.css';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import logo from '../imgs/logo.webp';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+
 import * as React from 'react';
+
+import Button from '@mui/material/Button';
 import MailLockOutlinedIcon from '@mui/icons-material/MailLockOutlined';
-import { useTranslation } from 'react-i18next';
+import MuiAlert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
 import Spinner from './Spinner';
+import TextField from '@mui/material/TextField';
+import axios from 'axios';
+import logo from '../imgs/logo.webp';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });

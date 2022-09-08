@@ -1,13 +1,15 @@
-import React from 'react';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 import '../css/footer.css';
+
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import React from 'react';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import { useTranslation } from 'react-i18next';
+
 export default function Footer() {
   const containerStyle = {};
   const socialStyle = { fontSize: '2em', marginRight: '0.3em' };

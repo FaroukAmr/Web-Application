@@ -1,6 +1,8 @@
-import LockGroup from '../models/LockGroup.js';
-import ErrorResponse from '../utils/errorResponse.js';
 import { checkGroupName, checkGroupRemark } from '../regex/checkLogGroups.js';
+
+import ErrorResponse from '../utils/errorResponse.js';
+import LockGroup from '../models/LockGroup.js';
+
 export async function createGroup(req, res, next) {
   const { name, remark, locks } = req.body;
   const userId = req.user.email;

@@ -1,13 +1,15 @@
-import express from 'express';
-const router = express.Router();
 import {
   createCard,
-  getCards,
   deleteCard,
-  updateCard,
+  getCards,
   shareCard,
+  updateCard,
 } from '../controllers/card.js';
+
+import express from 'express';
 import { protect } from '../middleware/auth.js';
+
+const router = express.Router();
 
 router.post('/create', protect, createCard);
 router.get('/', protect, getCards);

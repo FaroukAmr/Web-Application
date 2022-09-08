@@ -2,7 +2,6 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
 import '../css/notFound.css';
 export default function NotFound() {
   const { t } = useTranslation();

@@ -1,31 +1,33 @@
 import '../css/App.css';
-import Login from './Login';
-import Locks from './Locks';
-import SignUp from './SignUp';
-import ResetPassword from './ResetPassword';
-import ForgotPassword from './ForgotPassword';
+import 'flag-icons/css/flag-icons.min.css';
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import { CacheProvider } from '@emotion/react';
+import Cards from './Cards';
+import EmailVerify from './EmailVerify';
 import Footer from './Footer';
+import ForgotPassword from './ForgotPassword';
+import Home from './Home';
+import LockGroups from './LockGroups';
+import Locks from './Locks';
+import Login from './Login';
+import Logs from './Logs';
+import ManageLocks from './ManageLocks';
+import NewCard from './NewCard';
 import NewLock from './NewLock';
 import NotFound from './NotFound';
-import LockGroups from './LockGroups';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
-import Home from './Home';
-import ManageLocks from './ManageLocks';
-import Cards from './Cards';
-import NewCard from './NewCard';
-import EmailVerify from './EmailVerify';
-import Logs from './Logs';
+import Profile from './Profile';
+import ResetPassword from './ResetPassword';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import ScrollToTop from './ScrollToTop';
-import Profile from './Profile';
-import 'flag-icons/css/flag-icons.min.css';
-import rtlPlugin from 'stylis-plugin-rtl';
-import { prefixer } from 'stylis';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
+import SignUp from './SignUp';
 import cookies from 'js-cookie';
+import createCache from '@emotion/cache';
+import { prefixer } from 'stylis';
+import rtlPlugin from 'stylis-plugin-rtl';
 
 const themeLtr = createTheme({
   palette: {

@@ -1,19 +1,22 @@
+import '../css/home.css';
+
 import * as React from 'react';
-import { useEffect } from 'react';
+
 import Card from '@mui/material/Card';
+import { CardActionArea } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import productsImg from '../imgs/products.webp';
-import phoneImg from '../imgs/phoneImg.webp';
-import cardImg from '../imgs/cardImg.webp';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import '../css/home.css';
+import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import cardImg from '../imgs/cardImg.webp';
+import phoneImg from '../imgs/phoneImg.webp';
+import productsImg from '../imgs/products.webp';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 export default function Home() {
   const { t } = useTranslation();
   const navigate = useNavigate();

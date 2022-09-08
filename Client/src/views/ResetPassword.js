@@ -1,19 +1,22 @@
-import axios from 'axios';
 import '../css/resetPassword.css';
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import logo from '../imgs/logo.webp';
-import { useNavigate, useParams } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+
 import * as React from 'react';
+
+import { useNavigate, useParams } from 'react-router-dom';
+
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import MuiAlert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
+import Spinner from './Spinner';
+import TextField from '@mui/material/TextField';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Spinner from './Spinner';
+import axios from 'axios';
+import logo from '../imgs/logo.webp';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Alert = React.forwardRef(function Alert(props, ref) {

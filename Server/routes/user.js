@@ -1,11 +1,13 @@
-import express from 'express';
-import { protect } from '../middleware/auth.js';
 import {
   getUser,
-  updateUser,
-  updatePassword,
   testSMS,
+  updatePassword,
+  updateUser,
 } from '../controllers/user.js';
+
+import express from 'express';
+import { protect } from '../middleware/auth.js';
+
 const router = express.Router();
 
 router.get('/', protect, getUser);

@@ -1,33 +1,36 @@
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import axios from 'axios';
-import * as React from 'react';
 import '../css/profile.css';
-import { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
+
+import * as React from 'react';
+
+import { useEffect, useState } from 'react';
+
 import Avatar from '@mui/material/Avatar';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import FormLabel from '@mui/material/FormLabel';
-import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import { useTranslation } from 'react-i18next';
-import moment from 'moment';
 import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import MuiAlert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import Snackbar from '@mui/material/Snackbar';
+import Spinner from './Spinner';
+import TextField from '@mui/material/TextField';
+import { Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import Spinner from './Spinner';
-import { Typography } from '@mui/material';
+import axios from 'axios';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

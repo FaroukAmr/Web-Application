@@ -1,9 +1,9 @@
-import User from '../models/User.js';
 import ErrorResponse from '../utils/errorResponse.js';
+import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
-import sendSMS from '../utils/sendSMS.js';
 import checkPassword from '../regex/checkPassword.js';
 import checkUsername from '../regex/checkUsername.js';
+import sendSMS from '../utils/sendSMS.js';
 
 export async function getUser(req, res, next) {
   const { email } = req.user;
