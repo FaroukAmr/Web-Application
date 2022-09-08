@@ -8,6 +8,7 @@ import ekeyRoutes from './routes/ekey.js';
 import logsRoutes from './routes/logs.js';
 import lockGroupRoutes from './routes/lockGroup.js';
 import userRoutes from './routes/user.js';
+import demoRoutes from './routes/demoStuff.js';
 import errorHandler from './middleware/error.js';
 import cors from 'cors';
 import herokuSSLRedirect from 'heroku-ssl-redirect';
@@ -116,6 +117,7 @@ app.use('/api/logs', apiLimiter, csrfProtection, logsRoutes);
 app.use('/api/lockgroup', apiLimiter, csrfProtection, lockGroupRoutes);
 app.use('/api/user', apiLimiter, csrfProtection, userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/demo', demoRoutes);
 
 //PRODUCTION BUILD
 
