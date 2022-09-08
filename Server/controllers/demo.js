@@ -6,6 +6,12 @@ import Lock from '../models/Lock.js';
 export async function getDemo(req, res, next) {
   const userId = 'faroukzach@gmail.com';
   const lock = await Lock.findOne({ userId });
-  const cards = await Card.find({ userId });
-  res.status(200).json({ success: true, data: { lock, cards } });
+  let cards = await Card.find({ userId }).select('cardNumber');
+  let tempOutput = [];
+  for (let i = 0; i < cards.length; i++) {
+    tempOutput.push(cards[i].cardNumber);
+  }
+  res
+    .status(200)
+    .json({ success: true, data: { lock: lock._id, cards: tempOutput } });
 }
