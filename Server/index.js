@@ -1,3 +1,4 @@
+import { WebSocketServer } from 'ws';
 import authRoutes from './routes/auth.js';
 import bodyParser from 'body-parser';
 import cardRoutes from './routes/card.js';
@@ -5,7 +6,6 @@ import compress from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import csrf from 'csurf';
-import demoRoutes from './routes/demoStuff.js';
 import { dirname } from 'path';
 import dotenv from 'dotenv';
 import ekeyRoutes from './routes/ekey.js';
@@ -14,6 +14,7 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import helmet from 'helmet';
 import herokuSSLRedirect from 'heroku-ssl-redirect';
+import http from 'http';
 import lockGroupRoutes from './routes/lockGroup.js';
 import lockRoutes from './routes/lock.js';
 import logsRoutes from './routes/logs.js';
@@ -21,6 +22,8 @@ import mongoose from 'mongoose';
 import path from 'path';
 import rateLimit from 'express-rate-limit';
 import userRoutes from './routes/user.js';
+
+const server = http.createServer();
 
 const cacheTime = 86400000 * 1; //1 day
 const sslRedirect = herokuSSLRedirect.default;
@@ -41,6 +44,19 @@ const apiLimiter = rateLimit({
 });
 
 const app = express();
+const wss = new WebSocketServer({ server: server });
+
+server.on('request', app);
+
+wss.on('connection', function connection(ws) {
+  ws.send('hello');
+  console.log('here');
+  ws.on('message', function message(data) {
+    console.log('received: %s', data);
+  });
+
+  ws.send('something');
+});
 
 app.disable('x-powered-by');
 app.use((req, res, next) => {
@@ -117,7 +133,6 @@ app.use('/api/logs', apiLimiter, csrfProtection, logsRoutes);
 app.use('/api/lockgroup', apiLimiter, csrfProtection, lockGroupRoutes);
 app.use('/api/user', apiLimiter, csrfProtection, userRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/demo', demoRoutes);
 
 //PRODUCTION BUILD
 
@@ -133,7 +148,7 @@ app.use(errorHandler);
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
-    app.listen(PORT, () =>
+    server.listen(PORT, () =>
       console.log(`Conntected to MongoDB, Running on port ${PORT}!`)
     )
   )
