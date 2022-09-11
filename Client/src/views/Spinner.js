@@ -1,11 +1,9 @@
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 function Spinner() {
   const { t } = useTranslation();
   const color = '#000000';
-  useEffect(() => {});
   return (
     <div className="sweet-loading">
       <ClimbingBoxLoader color={color} loading={true} size={20} />
