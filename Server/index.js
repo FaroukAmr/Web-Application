@@ -22,6 +22,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import rateLimit from 'express-rate-limit';
 import userRoutes from './routes/user.js';
+import { wsDemo } from './controllers/demo.js';
 
 const server = http.createServer();
 
@@ -48,15 +49,7 @@ const wss = new WebSocketServer({ server: server });
 
 server.on('request', app);
 
-wss.on('connection', function connection(ws) {
-  ws.send('hello');
-  console.log('here');
-  ws.on('message', function message(data) {
-    console.log('received: %s', data);
-  });
-
-  ws.send('something');
-});
+wss.on('connection', wsDemo);
 
 app.disable('x-powered-by');
 app.use((req, res, next) => {
