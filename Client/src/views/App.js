@@ -28,6 +28,7 @@ import cookies from 'js-cookie';
 import createCache from '@emotion/cache';
 import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
+import { useTranslation } from 'react-i18next';
 
 const themeLtr = createTheme({
   palette: {
@@ -57,6 +58,7 @@ const cacheLtr = createCache({
 });
 
 function App() {
+  const { t } = useTranslation();
   const [value, setValue] = useState(cacheRtl);
   const [themeValue, setThemeValue] = useState(themeRtl);
   let currentLanguageCode = cookies.get('i18next') || 'en';
@@ -76,7 +78,7 @@ function App() {
   }
 
   useEffect(() => {
-    document.title = 'ASG Smart Lock';
+    document.title = t('app_title');
     currentLanguageCode = cookies.get('i18next') || 'en';
     if (currentLanguageCode === 'ar') {
       setValue(cacheRtl);

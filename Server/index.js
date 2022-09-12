@@ -60,7 +60,7 @@ wss.on('connection', function connection(ws) {
 
 app.disable('x-powered-by');
 app.use((req, res, next) => {
-  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=()');
+  res.setHeader('Permissions-Policy', '');
   res.setHeader(
     'Access-Control-Allow-Origin',
     'https://asg-smartlock.herokuapp.com/'
