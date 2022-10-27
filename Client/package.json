@@ -15,7 +15,7 @@
     "axios": "^0.27.2",
     "file-saver": "^2.0.5",
     "flag-icons": "^6.6.6",
-    "i18next": "^21.9.2",
+    "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-http-backend": "^1.4.4",
     "js-cookie": "^3.0.1",
